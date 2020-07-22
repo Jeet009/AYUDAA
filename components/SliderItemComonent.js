@@ -27,5 +27,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
     marginLeft: 5,
+    marginBottom: 5,
   },
 });

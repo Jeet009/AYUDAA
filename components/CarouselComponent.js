@@ -1,23 +1,20 @@
 import React from 'react';
 import CarouselItemComponent from './CarouselItemComponent';
 import {ScrollView} from 'react-native-gesture-handler';
-import {View} from 'react-native';
+import {View, Dimensions} from 'react-native';
 
 export default function CarouselComponent() {
   return (
     <View>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <CarouselItemComponent
-          title="A Y U D A A"
-          desc="O R D E R N O W"
-          uri="https://image.ayudaa.in/asset/technicianCount.png"
-        />
-        <CarouselItemComponent
-          count="BETA"
-          title="C O U N T"
-          desc="T E C H N I C I A N S"
-          uri="https://image.ayudaa.in/asset/technicianCount.png"
-        />
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        // disableIntervalMomentum={true}
+        snapToInterval={Dimensions.get('window').width}>
+        <CarouselItemComponent uri="https://image.ayudaa.in/asset/slide0.png" />
+        <CarouselItemComponent uri="https://image.ayudaa.in/asset/slide1.png" />
+        <CarouselItemComponent uri="https://image.ayudaa.in/asset/slide2.png" />
+        <CarouselItemComponent uri="https://image.ayudaa.in/asset/slide3.png" />
       </ScrollView>
     </View>
   );

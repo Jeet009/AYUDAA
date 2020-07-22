@@ -8,11 +8,16 @@ export default function SliderComponent() {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.text}>AYUDAA SAFE SERVICE</Text>
-        <Text style={{fontSize: 10, fontWeight: 'bold'}}>DUE TO COVID 19 </Text>
+        {/* <Text style={styles.text}></Text> */}
+        <Text style={{fontSize: 12, fontWeight: 'bold'}}>
+          AYUDAA SAFE SERVICE
+        </Text>
       </View>
 
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        snapToInterval={Dimensions.get('window').width}>
         <SliderItemComponent uri="https://image.ayudaa.in/asset/safe%20service.png" />
         <SliderItemComponent uri="https://image.ayudaa.in/asset/covid19.png" />
         <SliderItemComponent uri="https://image.ayudaa.in/asset/gloves.png" />
@@ -25,10 +30,11 @@ export default function SliderComponent() {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     margin: 2,
     borderRadius: 5,
     marginTop: 5,
+    backgroundColor: colors.white,
   },
   text: {
     fontSize: 18,
@@ -37,7 +43,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    // backgroundColor: colors.white,
+    backgroundColor: colors.white,
     marginLeft: 5,
     padding: 5,
     borderRadius: 5,

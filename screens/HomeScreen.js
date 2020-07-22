@@ -5,6 +5,7 @@ import CategoryComponent from '../components/CategoryComponent';
 import {ScrollView} from 'react-native-gesture-handler';
 import colors from '../constants/colors';
 import SliderComponent from '../components/SliderComponent';
+import ServiceComponent from '../components/ServiceComponent';
 
 export default function HomeScreen() {
   return (
@@ -16,6 +17,7 @@ export default function HomeScreen() {
           <SliderComponent />
         </>
       }
+      ListFooterComponent={<ServiceComponent />}
     />
   );
 }

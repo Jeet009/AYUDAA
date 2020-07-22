@@ -1,10 +1,7 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, FlatList} from 'react-native';
+import OrderComponent from '../components/OrderComponent';
 
 export default function OrderScreen() {
-  return (
-    <View>
-      <Text>Orders</Text>
-    </View>
-  );
+  return <FlatList ListHeaderComponent={<OrderComponent />} />;
 }

@@ -18,7 +18,8 @@ export default function CarouselItemComponent(props) {
       <ImageBackground
         resizeMode="contain"
         source={{uri: props.uri}}
-        style={styles.Imgcontainer}>
+        style={styles.Imgcontainer}
+        imageStyle={{borderRadius: 5}}>
         <View style={styles.topTextContainer}>
           <Text style={styles.topCount}>{props.count}</Text>
           <Text style={styles.topText}>{props.title}</Text>
