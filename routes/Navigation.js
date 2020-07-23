@@ -8,22 +8,27 @@ import {createStackNavigator} from 'react-navigation-stack';
 import HomeScreen from '../screens/HomeScreen';
 import OrderScreen from '../screens/OrderScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-
+import CategoryScreen from '../screens/CategoryScreen';
+import ServiceScreen from '../screens/ServiceSceen';
 //Others
 import colors from '../constants/colors';
 import {Icon} from 'react-native-elements';
+import CategoryComponent from '../components/CategoryComponent';
 
 const AppNavigator = createStackNavigator(
   {
-    Home: {
-      screen: HomeScreen,
-    },
+    Home: HomeScreen,
+    CategoryComponent: CategoryComponent,
+    CategoryScreen: CategoryScreen,
+    ServiceScreen: ServiceScreen,
   },
   {
     headerMode: 'none',
   },
 );
+
 const AppContainer = createAppContainer(AppNavigator);
+
 //Bottom Tab
 const bottomTab = createMaterialBottomTabNavigator(
   {

@@ -43,6 +43,11 @@ export const CATEGORY = [
     'HOME DEEP CLEANING',
     'https://image.ayudaa.in/asset/electrical.png',
   ),
+  new Photo(
+    'p3',
+    'WASHING MACHINE SERVICE',
+    'https://image.ayudaa.in/asset/electrical.png',
+  ),
 ];
 
 const styles = StyleSheet.create({

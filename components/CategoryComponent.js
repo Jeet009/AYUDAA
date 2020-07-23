@@ -8,13 +8,19 @@ import {
   View,
 } from 'react-native';
 import Photo from '../js/dummyData';
-import {Container} from 'native-base';
 import colors from '../constants/colors';
+import {withNavigation} from 'react-navigation';
 
-export default function CategoryComponent() {
+function CategoryComponent(props) {
   function renderCategory(itemData) {
     return (
-      <TouchableOpacity style={{flex: 1}}>
+      <TouchableOpacity
+        style={{flex: 1}}
+        onPress={() =>
+          props.navigation.navigate('CategoryScreen', {
+            title: itemData.item.text,
+          })
+        }>
         <ImageBackground
           resizeMode="contain"
           source={{uri: itemData.item.url}}
@@ -42,6 +48,7 @@ export default function CategoryComponent() {
   );
 }
 
+export default withNavigation(CategoryComponent);
 export const CATEGORY = [
   new Photo('p1', 'HOME', 'https://image.ayudaa.in/asset/homeServiceFinal.png'),
   new Photo('p2', 'KITCHEN', 'https://image.ayudaa.in/asset/kitchenFinal.png'),

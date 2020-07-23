@@ -8,13 +8,19 @@ import {
   View,
 } from 'react-native';
 import Photo from '../js/dummyData';
-import {Container} from 'native-base';
 import colors from '../constants/colors';
+import {withNavigation} from 'react-navigation';
 
-export default function ServiceComponent() {
+function ServiceComponent(props) {
   function renderCategory(itemData) {
     return (
-      <TouchableOpacity style={{flex: 1}}>
+      <TouchableOpacity
+        style={{flex: 1}}
+        onPress={() =>
+          props.navigation.navigate('ServiceScreen', {
+            title: itemData.item.text,
+          })
+        }>
         <View>
           <ImageBackground
             resizeMode="contain"
@@ -43,6 +49,7 @@ export default function ServiceComponent() {
   );
 }
 
+export default withNavigation(ServiceComponent);
 export const CATEGORY = [
   new Photo('p1', 'ELECTRICAL', 'https://image.ayudaa.in/asset/electrical.png'),
   new Photo('p2', 'APPLIANCE', 'https://image.ayudaa.in/asset/appliance.png'),

@@ -7,7 +7,7 @@ import colors from '../constants/colors';
 import SliderComponent from '../components/SliderComponent';
 import ServiceComponent from '../components/ServiceComponent';
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
   return (
     <FlatList
       ListHeaderComponent={

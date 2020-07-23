@@ -45,6 +45,10 @@ export default function ListComponent(props) {
             </View>
           </View>
           <View style={styles.status}>
+            <Text style={styles.verify}>SERVICE DATE :</Text>
+            <Text style={styles.verify}>JUNE 29, 2020</Text>
+          </View>
+          <View style={styles.status}>
             <Text style={styles.currentStatus}>PENDING</Text>
             <Text style={styles.currentStatus}>CONFIRMED</Text>
             <Text style={styles.verify}>COMPLETED</Text>
@@ -58,7 +62,7 @@ export default function ListComponent(props) {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: 'bold',
   },
   category: {
