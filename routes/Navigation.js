@@ -14,13 +14,14 @@ import ServiceScreen from '../screens/ServiceSceen';
 import colors from '../constants/colors';
 import {Icon} from 'react-native-elements';
 import CategoryComponent from '../components/CategoryComponent';
+import DetailScreen from '../screens/DetailScreen';
 
 const AppNavigator = createStackNavigator(
   {
     Home: HomeScreen,
-    CategoryComponent: CategoryComponent,
     CategoryScreen: CategoryScreen,
     ServiceScreen: ServiceScreen,
+    DetailScreen: DetailScreen,
   },
   {
     headerMode: 'none',
