@@ -15,6 +15,7 @@ import colors from '../constants/colors';
 import {Icon} from 'react-native-elements';
 import CategoryComponent from '../components/CategoryComponent';
 import DetailScreen from '../screens/DetailScreen';
+import FormScreen from '../screens/FormScreen';
 
 const AppNavigator = createStackNavigator(
   {
@@ -22,6 +23,7 @@ const AppNavigator = createStackNavigator(
     CategoryScreen: CategoryScreen,
     ServiceScreen: ServiceScreen,
     DetailScreen: DetailScreen,
+    FormScreen: FormScreen,
   },
   {
     headerMode: 'none',

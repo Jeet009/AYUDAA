@@ -4,8 +4,8 @@ import {
   StyleSheet,
   FlatList,
   ImageBackground,
-  TouchableOpacity,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import Photo from '../js/dummyData';
 import colors from '../constants/colors';
