@@ -1,0 +1,64 @@
+{
+  "project_info": {
+    "project_number": "56434499013",
+    "firebase_url": "https://ayuda-firebase.firebaseio.com",
+    "project_id": "ayuda-firebase",
+    "storage_bucket": "ayuda-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56434499013:android:7403cf9e49afb6a6d3ffac",
+        "android_client_info": {
+          "package_name": "com.ayudaa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56434499013-hbjv4rvoa9iu1a2l71l2jm7i57reb16g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ayudaa",
+            "certificate_hash": "b92cbd75eb8cb838e4dc115645907a809cdb4d9a"
+          }
+        },
+        {
+          "client_id": "56434499013-07mf6ncn0c7il9gi6abl9s84hrt2ek0a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ayudaa",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "56434499013-q4clos5j18qd5h5qkubtcgf28i7s7v4b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ayudaa",
+            "certificate_hash": "82b98a6333ea4315da0966ade61eb49546df582e"
+          }
+        },
+        {
+          "client_id": "56434499013-c5p80djdgbkug4u31ffbq25flqjl9c9m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-izGw8ejJgYv0mpDfm9b6p5l9yadud6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56434499013-c5p80djdgbkug4u31ffbq25flqjl9c9m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

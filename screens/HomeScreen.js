@@ -1,13 +1,22 @@
 import React from 'react';
-import {View, Text, StyleSheet, FlatList, ImageBackground} from 'react-native';
+import {StyleSheet, FlatList, ImageBackground} from 'react-native';
 import CarouselComponent from '../components/CarouselComponent';
 import CategoryComponent from '../components/CategoryComponent';
-import {ScrollView} from 'react-native-gesture-handler';
-import colors from '../constants/colors';
 import SliderComponent from '../components/SliderComponent';
 import ServiceComponent from '../components/ServiceComponent';
+import firestore from '@react-native-firebase/firestore';
 
 export default function HomeScreen(props) {
+  // firestore()
+  //   .collection('orders')
+  //   .get()
+  //   .then((item) => {
+  //     console.log(item.size);
+  //     item.forEach((documentSnapshot) => {
+  //       console.log(documentSnapshot.data());
+  //     });
+  //   });
+
   return (
     <FlatList
       ListHeaderComponent={

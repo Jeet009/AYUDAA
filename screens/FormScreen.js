@@ -19,7 +19,6 @@ import {
   Right,
   DatePicker,
 } from 'native-base';
-import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function FormScreen(props) {
   const [show, setShow] = useState(true);
