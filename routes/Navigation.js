@@ -68,5 +68,4 @@ const bottomTab = createMaterialBottomTabNavigator(
     labeled: false,
   },
 );
-
 export default createAppContainer(bottomTab);

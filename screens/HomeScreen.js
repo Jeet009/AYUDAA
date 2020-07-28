@@ -6,7 +6,7 @@ import SliderComponent from '../components/SliderComponent';
 import ServiceComponent from '../components/ServiceComponent';
 import firestore from '@react-native-firebase/firestore';
 
-export default function HomeScreen(props) {
+export default function HomeScreen() {
   // firestore()
   //   .collection('orders')
   //   .get()
