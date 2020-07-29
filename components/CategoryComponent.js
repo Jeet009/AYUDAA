@@ -4,9 +4,11 @@ import {
   StyleSheet,
   FlatList,
   ImageBackground,
-  TouchableOpacity,
   View,
+  TouchableNativeFeedback,
+  TouchableOpacity,
 } from 'react-native';
+// import {} from 'react-native-gesture-handler';
 import Photo from '../js/dummyData';
 import colors from '../constants/colors';
 import {withNavigation} from 'react-navigation';
@@ -50,10 +52,30 @@ function CategoryComponent(props) {
 
 export default withNavigation(CategoryComponent);
 export const CATEGORY = [
-  new Photo('p1', 'HOME', 'https://image.ayudaa.in/asset/homeServiceFinal.png'),
-  new Photo('p2', 'KITCHEN', 'https://image.ayudaa.in/asset/kitchenFinal.png'),
-  new Photo('p3', 'LAUNDRY', 'https://image.ayudaa.in/asset/laundryFinal.png'),
-  new Photo('p4', 'SALOON', 'https://image.ayudaa.in/asset/saloonFinal.png'),
+  new Photo(
+    'p1',
+    'HOME',
+    '',
+    'https://image.ayudaa.in/asset/homeServiceFinal.png',
+  ),
+  new Photo(
+    'p2',
+    'KITCHEN',
+    '',
+    'https://image.ayudaa.in/asset/kitchenFinal.png',
+  ),
+  new Photo(
+    'p3',
+    'LAUNDRY',
+    '',
+    'https://image.ayudaa.in/asset/laundryFinal.png',
+  ),
+  new Photo(
+    'p4',
+    'SALOON',
+    '',
+    'https://image.ayudaa.in/asset/saloonFinal.png',
+  ),
 ];
 
 const styles = StyleSheet.create({

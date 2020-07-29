@@ -34,7 +34,7 @@ export default function FormScreen(props) {
                 <Thumbnail
                   large
                   square
-                  source={{uri: props.navigation.getParam('uri')}}
+                  source={{uri: props.navigation.getParam('url')}}
                   style={{borderColor: colors.primary, borderWidth: 1}}
                 />
                 <View
@@ -45,10 +45,93 @@ export default function FormScreen(props) {
                   }}>
                   <Text style={styles.heading}>
                     {' '}
-                    {props.navigation.getParam('title')}
+                    {props.navigation.getParam('name')}
                   </Text>
-                  <Text style={styles.name}> PRICE : 500 /-</Text>
-                  <Text style={styles.name}> HOME SERVICE</Text>
+                  {/* RATE & PRICE  */}
+                  {(() => {
+                    if (props.navigation.getParam('rate')) {
+                      return (
+                        <View style={styles.title}>
+                          <Text style={styles.name}>
+                            {' '}
+                            PRICE : {props.navigation.getParam('rate')} /-
+                          </Text>
+                        </View>
+                      );
+                    } else {
+                      return (
+                        <View>
+                          <View style={styles.title}>
+                            <Text style={styles.name}>
+                              RATE FOR REPAIR :{' '}
+                              {props.navigation.getParam('rateForRepair')}
+                            </Text>
+                          </View>
+                          <View style={styles.title}>
+                            <Text style={styles.name}>
+                              RATE FOR SERVICE :{' '}
+                              {props.navigation.getParam('rateForService')}
+                            </Text>
+                          </View>
+                        </View>
+                      );
+                    }
+                  })()}
+
+                  {/* CATEGORY  */}
+                  {(() => {
+                    switch (props.navigation.getParam('category')) {
+                      case '1':
+                        return (
+                          <View style={styles.title}>
+                            <Text style={styles.name}>
+                              {' '}
+                              CATEGORY : HOME SERVICE{' '}
+                            </Text>
+                          </View>
+                        );
+
+                      case '2':
+                        return (
+                          <View style={styles.title}>
+                            <Text style={styles.name}>
+                              {' '}
+                              CATEGORY : KITCHEN SERVICE{' '}
+                            </Text>
+                          </View>
+                        );
+
+                      case '3':
+                        return (
+                          <View style={styles.title}>
+                            <Text style={styles.name}>
+                              {' '}
+                              CATEGORY : LAUNDRY SERVICE{' '}
+                            </Text>
+                          </View>
+                        );
+
+                      case '4':
+                        return (
+                          <View style={styles.title}>
+                            <Text style={styles.name}>
+                              {' '}
+                              CATEGORY : SALOON AT HOME{' '}
+                            </Text>
+                          </View>
+                        );
+
+                      default:
+                        return (
+                          <View style={styles.title}>
+                            <Text style={styles.name}>
+                              {' '}
+                              CATEGORY : CATEGORY TYPE{' '}
+                            </Text>
+                          </View>
+                        );
+                    }
+                  })()}
                 </View>
                 <Text style={styles.heading}>ADDRESS & DETAILS</Text>
                 <View>
@@ -139,6 +222,7 @@ const styles = StyleSheet.create({
   heading: {
     fontWeight: 'bold',
     marginTop: 10,
+    textTransform: 'uppercase',
   },
   name: {
     fontSize: 12,
@@ -174,5 +258,12 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginTop: 5,
+  },
+  title: {
+    flex: 1,
+    backgroundColor: colors.smoke,
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
   },
 });

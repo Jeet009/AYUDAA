@@ -21,35 +21,133 @@ export default function DetailScreen(props) {
                     <Thumbnail
                       large
                       square
-                      source={{uri: props.navigation.getParam('uri')}}
+                      source={{uri: props.navigation.getParam('url')}}
                       style={{borderColor: colors.primary, borderWidth: 1}}
                     />
                     <View>
                       <Text style={styles.heading}>
                         {' '}
-                        {props.navigation.getParam('title')}
+                        {props.navigation.getParam('name')}
                       </Text>
-                      <Text style={styles.name}> PRICE : 500 /-</Text>
-                      <Text style={styles.name}> HOME SERVICE</Text>
+                      {/* RATE & PRICE  */}
+                      {(() => {
+                        if (props.navigation.getParam('rate')) {
+                          return (
+                            <View style={styles.title}>
+                              <Text style={styles.name}>
+                                PRICE : {props.navigation.getParam('rate')} /-
+                              </Text>
+                            </View>
+                          );
+                        } else {
+                          return (
+                            <View>
+                              <View style={styles.title}>
+                                <Text style={styles.name}>
+                                  RATE FOR REPAIR :{' '}
+                                  {props.navigation.getParam('rateForRepair')}
+                                </Text>
+                              </View>
+                              <View style={styles.title}>
+                                <Text style={styles.name}>
+                                  RATE FOR SERVICE :{' '}
+                                  {props.navigation.getParam('rateForService')}
+                                </Text>
+                              </View>
+                            </View>
+                          );
+                        }
+                      })()}
+                      {/* CATEGORY  */}
+                      {(() => {
+                        switch (props.navigation.getParam('category')) {
+                          case '1':
+                            return (
+                              <View style={styles.title}>
+                                <Text style={styles.name}>
+                                  CATEGORY : HOME SERVICE{' '}
+                                </Text>
+                              </View>
+                            );
+
+                          case '2':
+                            return (
+                              <View style={styles.title}>
+                                <Text style={styles.name}>
+                                  CATEGORY : KITCHEN SERVICE{' '}
+                                </Text>
+                              </View>
+                            );
+
+                          case '3':
+                            return (
+                              <View style={styles.title}>
+                                <Text style={styles.name}>
+                                  CATEGORY : LAUNDRY SERVICE{' '}
+                                </Text>
+                              </View>
+                            );
+
+                          case '4':
+                            return (
+                              <View style={styles.title}>
+                                <Text style={styles.name}>
+                                  CATEGORY : SALOON AT HOME{' '}
+                                </Text>
+                              </View>
+                            );
+
+                          default:
+                            return (
+                              <View style={styles.title}>
+                                <Text style={styles.name}>
+                                  CATEGORY : CATEGORY TYPE{' '}
+                                </Text>
+                              </View>
+                            );
+                        }
+                      })()}
                     </View>
+                    {/* Description  */}
                     <View style={styles.title}>
                       <Text style={styles.para}>
-                        What is Lorem Ipsum Lorem Ipsum is simply dummy text of
-                        the printing and typesetting industry Lorem Ipsum has
-                        been the industry's standard.
+                        {props.navigation.getParam('desc')}
                       </Text>
                     </View>
-                    <View style={styles.title}>
-                      <Text style={styles.name}> Available Technician : 1</Text>
-                      <Text style={styles.name}>
-                        {' '}
-                        ONLINE PAYMENT : Not Available
-                      </Text>
-                      <Text style={styles.name}>
-                        {' '}
-                        OFFLINE PAYMENT : Available
-                      </Text>
-                    </View>
+                    {/* PAYMENT TYPE  */}
+                    {(() => {
+                      if (props.navigation.getParam('rate')) {
+                        return (
+                          <View style={styles.title}>
+                            {/* <Text style={styles.name}> Available Technician : 1</Text> */}
+                            <Text style={styles.name}>
+                              {' '}
+                              ONLINE PAYMENT : Available
+                            </Text>
+                            <Text style={styles.name}>
+                              {' '}
+                              OFFLINE PAYMENT : Not Available
+                            </Text>
+                          </View>
+                        );
+                      } else {
+                        return (
+                          <View style={styles.title}>
+                            {/* <Text style={styles.name}> Available Technician : 1</Text> */}
+                            <Text style={styles.name}>
+                              {' '}
+                              ONLINE PAYMENT : Not Available
+                            </Text>
+                            <Text style={styles.name}>
+                              {' '}
+                              OFFLINE PAYMENT : Available
+                            </Text>
+                          </View>
+                        );
+                      }
+                    })()}
+
+                    {/* OTHERS  */}
                     <Text style={styles.text}>COMMUNITY & SUPPORT</Text>
                     <View style={styles.horizontal}>
                       <Icon
@@ -77,8 +175,16 @@ export default function DetailScreen(props) {
                       style={styles.button}
                       onPress={() => {
                         props.navigation.navigate('FormScreen', {
-                          title: props.navigation.getParam('title'),
-                          uri: props.navigation.getParam('uri'),
+                          name: props.navigation.getParam('name'),
+                          url: props.navigation.getParam('url'),
+                          rate: props.navigation.getParam('rate'),
+                          rateForService: props.navigation.getParam(
+                            'rateForService',
+                          ),
+                          rateForRepair: props.navigation.getParam(
+                            'rateForRepair',
+                          ),
+                          category: props.navigation.getParam('category'),
                         });
                       }}>
                       <Text style={styles.confirmButton}>PLACE ORDER</Text>
@@ -116,6 +222,7 @@ const styles = StyleSheet.create({
   heading: {
     fontWeight: 'bold',
     marginTop: 10,
+    textTransform: 'uppercase',
   },
   title: {
     flex: 1,

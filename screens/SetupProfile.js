@@ -59,7 +59,7 @@ function SetUpProfile(props) {
             user.updateProfile({
               displayName: ayudaaId,
             });
-            props.navigation.navigate('App');
+            props.navigation.navigate('SuccessProfile');
           })
           .catch((err) => {
             console.log(err);

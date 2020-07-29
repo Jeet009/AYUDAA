@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {
   Container,
   Header,
@@ -16,7 +16,24 @@ import {View, StyleSheet, FlatList} from 'react-native';
 import colors from '../constants/colors';
 import ServiceComponent from '../components/ServiceComponent';
 import SliderComponent from '../components/SliderComponent';
+
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
 export default function ProfileScreen(props) {
+  const [name, setName] = useState('Your Name');
+  const [phoneNo, setPhoneNo] = useState('Your Phone Number');
+  const [email, setEmail] = useState('Your Email');
+
+  var user = auth().currentUser;
+  firestore()
+    .collection('users')
+    .doc(user.uid)
+    .onSnapshot((doc) => {
+      setName(doc.data().name);
+      setPhoneNo(doc.data().phone);
+      setEmail(doc.data().email);
+    });
   return (
     <FlatList
       style={{marginTop: 15, flex: 1}}
@@ -36,14 +53,12 @@ export default function ProfileScreen(props) {
               </Left>
               <Body>
                 <View style={styles.title}>
-                  <Text style={styles.text}>Jeet Mukherjee</Text>
-                  <Text style={styles.name}>Phone : 8001268005</Text>
+                  <Text style={styles.text}>{name}</Text>
+                  <Text style={styles.name}>Phone : {phoneNo}</Text>
                 </View>
                 <View style={styles.title}>
                   <Text style={styles.name}>ORDER COUNT : 3</Text>
-                  <Text style={styles.name}>
-                    Email : jeetmukherjee009@gmail.com
-                  </Text>
+                  <Text style={styles.name}>Email : {email}</Text>
                 </View>
               </Body>
               <Right></Right>

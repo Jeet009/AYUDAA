@@ -19,6 +19,7 @@ function ServiceComponent(props) {
         onPress={() =>
           props.navigation.navigate('ServiceScreen', {
             title: itemData.item.text,
+            dbName: itemData.item.dbName,
           })
         }>
         <View>
@@ -51,20 +52,52 @@ function ServiceComponent(props) {
 
 export default withNavigation(ServiceComponent);
 export const CATEGORY = [
-  new Photo('p1', 'ELECTRICAL', 'https://image.ayudaa.in/asset/electrical.png'),
-  new Photo('p2', 'APPLIANCE', 'https://image.ayudaa.in/asset/appliance.png'),
-  new Photo('p3', 'CLEANING', 'https://image.ayudaa.in/asset/cleaning.png'),
-  new Photo('p4', 'CARPENTRY', 'https://image.ayudaa.in/asset/carpentry.png'),
-  new Photo('p5', 'PLUMBERY', 'https://image.ayudaa.in/asset/plumbery.png'),
+  new Photo(
+    'p1',
+    'ELECTRICAL',
+    'electrical',
+    'https://image.ayudaa.in/asset/electrical.png',
+  ),
+  new Photo(
+    'p2',
+    'APPLIANCE',
+    'appliances',
+    'https://image.ayudaa.in/asset/appliance.png',
+  ),
+  new Photo(
+    'p3',
+    'CLEANING',
+    'cleaning',
+    'https://image.ayudaa.in/asset/cleaning.png',
+  ),
+  new Photo(
+    'p4',
+    'CARPENTRY',
+    'carpentry',
+    'https://image.ayudaa.in/asset/carpentry.png',
+  ),
+  new Photo(
+    'p5',
+    'PLUMBERY',
+    'plumbery',
+    'https://image.ayudaa.in/asset/plumbery.png',
+  ),
   new Photo(
     'p6',
     'HOME PEST CONTROL',
+    'pestControl',
     'https://image.ayudaa.in/asset/pest%20controll.png',
   ),
-  new Photo('p7', 'LAUNDRY', 'https://image.ayudaa.in/asset/wash.png'),
+  new Photo(
+    'p7',
+    'LAUNDRY',
+    'laundry',
+    'https://image.ayudaa.in/asset/wash.png',
+  ),
   new Photo(
     'p1',
     'EVENT MANAGEMENT',
+    'event',
     'https://image.ayudaa.in/asset/event.png',
   ),
 ];
