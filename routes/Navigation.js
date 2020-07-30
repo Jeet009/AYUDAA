@@ -16,6 +16,7 @@ import {Icon} from 'react-native-elements';
 import CategoryComponent from '../components/CategoryComponent';
 import DetailScreen from '../screens/DetailScreen';
 import FormScreen from '../screens/FormScreen';
+import SuccessOrder from '../screens/SuccessOrder';
 
 const AppNavigator = createStackNavigator(
   {
@@ -24,6 +25,7 @@ const AppNavigator = createStackNavigator(
     ServiceScreen: ServiceScreen,
     DetailScreen: DetailScreen,
     FormScreen: FormScreen,
+    SuccessOrder: SuccessOrder,
   },
   {
     headerMode: 'none',

@@ -19,9 +19,21 @@ import {
   Right,
   DatePicker,
 } from 'native-base';
+import {Picker} from '@react-native-community/picker';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 export default function FormScreen(props) {
-  const [show, setShow] = useState(true);
+  const [paymentMethod, setPaymentMethod] = useState('offline');
+  const [serviceDate, setServiceDate] = useState();
+  const [name, setName] = useState();
+  const [phone, setPhone] = useState();
+  const [email, setEmail] = useState();
+  const [serviceAddress, setServiceAddress] = useState();
+  const [pincode, setPincode] = useState();
+
+  var user = auth().currentUser;
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -138,8 +150,9 @@ export default function FormScreen(props) {
                   <View style={styles.input}>
                     <Text style={styles.para}>NAME</Text>
                     <TextInput
+                      value={name}
+                      onChangeText={(text) => setName(text)}
                       style={styles.textInput}
-                      textAlign="center"
                       maxLength={25}
                     />
                   </View>
@@ -147,49 +160,155 @@ export default function FormScreen(props) {
                   <View style={styles.input}>
                     <Text style={styles.para}>PHONE</Text>
                     <TextInput
+                      value={phone}
+                      onChangeText={(text) => setPhone(text)}
+                      keyboardType="phone-pad"
                       style={styles.textInput}
-                      textAlign="center"
-                      maxLength={25}
+                      maxLength={10}
                     />
                   </View>
 
                   <View style={styles.input}>
                     <Text style={styles.para}>EMAIL</Text>
                     <TextInput
+                      value={email}
+                      onChangeText={(text) => setEmail(text)}
                       style={styles.textInput}
-                      textAlign="center"
-                      maxLength={25}
+                      maxLength={50}
                     />
                   </View>
 
                   <View style={styles.input}>
                     <Text style={styles.para}>SERVICE ADDRESS</Text>
                     <TextInput
+                      value={serviceAddress}
+                      onChangeText={(text) => setServiceAddress(text)}
                       style={styles.textInput}
-                      textAlign="center"
                       maxLength={25}
+                    />
+                  </View>
+
+                  <View style={styles.input}>
+                    <Text style={styles.para}>PIN NUMBER</Text>
+                    <TextInput
+                      value={pincode}
+                      onChangeText={(text) => setPincode(text)}
+                      style={styles.textInput}
+                      maxLength={25}
+                      keyboardType="phone-pad"
                     />
                   </View>
 
                   <View style={styles.input}>
                     <Text style={styles.para}>SERVICE DATE</Text>
                     <DatePicker
-                      defaultDate={new Date(2018, 4, 4)}
-                      minimumDate={new Date(2018, 1, 1)}
-                      maximumDate={new Date(2018, 12, 31)}
+                      defaultDate={new Date(Date.now())}
+                      minimumDate={new Date(Date.now())}
+                      maximumDate={new Date(2030, 12, 31)}
                       locale={'en'}
                       timeZoneOffsetInMinutes={undefined}
                       modalTransparent={false}
                       animationType={'fade'}
                       androidMode={'default'}
                       placeHolderText="Choose Date"
-                      textStyle={{color: 'green'}}
+                      textStyle={{color: colors.ypsDark}}
                       placeHolderTextStyle={{color: '#d3d3d3'}}
                       disabled={false}
+                      value={serviceDate}
+                      selectedDate={serviceDate}
+                      onDateChange={(itemValue) => setServiceDate(itemValue)}
                     />
                   </View>
+                  {/* PAYMENT METHODS  */}
+                  {(() => {
+                    if (props.navigation.getParam('rate')) {
+                      return (
+                        <View style={styles.input}>
+                          <Text style={styles.para}>PAYMENT METHODS</Text>
+                          <Picker
+                            selectedValue={paymentMethod}
+                            onValueChange={(itemValue) =>
+                              setPaymentMethod(itemValue)
+                            }>
+                            <Picker.Item
+                              label="OFFLINE PAYMENT"
+                              value="offline"
+                            />
+                            <Picker.Item
+                              label="ONLINE PAYMENT"
+                              value="online"
+                            />
+                          </Picker>
+                        </View>
+                      );
+                    } else {
+                      return (
+                        <View style={styles.input}>
+                          <Text style={styles.para}>
+                            PAYMENT METHODS - OFFLINE PAYMENT
+                          </Text>
+                          {/* <Picker
+                            selectedValue={paymentMethod}
+                            onValueChange={(itemValue) =>
+                              setPaymentMethod(itemValue)
+                            }>
+                            <Picker.Item
+                              label="OFFLINE PAYMENT"
+                              value="offline"
+                            />
+                          </Picker> */}
+                          <TextInput
+                            // value={paymentMethod}
+                            onChangeText={(text) => setPaymentMethod(text)}
+                            editable={false}
+                            selectTextOnFocus={false}
+                            label={'OFFLINE PAYMENT'}
+                          />
+                        </View>
+                      );
+                    }
+                  })()}
                 </View>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    firestore()
+                      .collection('orders')
+                      .add({
+                        //SERVICE DETAILS
+                        name: props.navigation.getParam('name'),
+                        servicePhotoUrl: props.navigation.getParam('url'),
+                        totalAmount: props.navigation.getParam('rate'),
+                        rateForService: props.navigation.getParam(
+                          'rateForService',
+                        ),
+                        rateForRepair: props.navigation.getParam(
+                          'rateForRepair',
+                        ),
+                        category: props.navigation.getParam('category'),
+                        desc: props.navigation.getParam('desc'),
+
+                        //CUSTOMER DETAILS
+                        customerId: user.uid,
+                        customerName: name,
+                        customerPhoneNumber: phone,
+                        customerEmail: email,
+                        customerServiceAddress: serviceAddress,
+                        pinCode: pincode,
+                        serviceDate: serviceDate,
+                        paymentMethod: paymentMethod,
+
+                        //ORDER DETAILS
+                        status: 3,
+                        technician: '',
+                        orderedAt: firestore.FieldValue.serverTimestamp(),
+                      })
+                      .then(() => {
+                        //console.log('User updated!');
+                        props.navigation.navigate('SuccessOrder');
+                      })
+                      .catch((err) => console.log(err));
+                  }}>
                   <Text style={styles.confirmButton}>CONFIRM ORDER</Text>
                 </TouchableOpacity>
               </View>
@@ -249,9 +368,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     marginTop: 5,
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 16,
+    // fontWeight: 'bold',
     backgroundColor: colors.white,
+    paddingLeft: 10,
   },
   input: {
     backgroundColor: colors.smoke,

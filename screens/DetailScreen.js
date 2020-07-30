@@ -126,7 +126,7 @@ export default function DetailScreen(props) {
                             </Text>
                             <Text style={styles.name}>
                               {' '}
-                              OFFLINE PAYMENT : Not Available
+                              OFFLINE PAYMENT : Available
                             </Text>
                           </View>
                         );
@@ -185,6 +185,7 @@ export default function DetailScreen(props) {
                             'rateForRepair',
                           ),
                           category: props.navigation.getParam('category'),
+                          desc: props.navigation.getParam('desc'),
                         });
                       }}>
                       <Text style={styles.confirmButton}>PLACE ORDER</Text>

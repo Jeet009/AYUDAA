@@ -13,29 +13,30 @@ import {
   Alert,
 } from 'react-native';
 import colors from '../constants/colors';
-function SuccessProfile(props) {
+function SuccessOrder(props) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.scrollview}>
         <View style={styles.profile}>
-          <Text style={styles.text}>A Y U D A A</Text>
-          <Text style={styles.para}>THANK YOU FOR JOINING US</Text>
-        </View>
+          {/* <Text style={styles.text}>A Y U D A A</Text> */}
+          <Text style={styles.label}>Successfully Placed Your Order</Text>
 
-        <View>
-          <Text style={styles.label}>Successfully Created Profile</Text>
+          <TouchableOpacity // eslint-disable-next-line prettier/prettier
+            style={styles.button}
+            onPress={() => {
+              props.navigation.navigate('Home');
+            }}>
+            <Text style={styles.buttonText}>PROCEED</Text>
+          </TouchableOpacity>
+
+          <Text style={styles.para}>THANK YOU FOR USING OUR SERVICE</Text>
+          <Text style={styles.para}> OUR TEAM WILL GET BACK TO YOU ASAP</Text>
         </View>
 
         {/* <Button title="Confirm Code" onPress={() => confirmCode()} /> */}
-        <TouchableOpacity // eslint-disable-next-line prettier/prettier
-          style={styles.button}
-          onPress={() => {
-            props.navigation.navigate('App');
-          }}>
-          <Text style={styles.buttonText}>PROCEED</Text>
-        </TouchableOpacity>
+
         <View style={styles.profile}>
-          <Text style={styles.text}>WELCOME TO AYUDAA</Text>
+          <Text style={styles.text}>A Y U D A A</Text>
           <Text style={styles.label}>YOUR HOME SERVICE ASSISTANT</Text>
         </View>
         <StatusBar
@@ -48,7 +49,7 @@ function SuccessProfile(props) {
   );
 }
 
-export default SuccessProfile;
+export default SuccessOrder;
 
 const styles = StyleSheet.create({
   buttonText: {
@@ -56,6 +57,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: colors.ypsDark,
     margin: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   button: {
     justifyContent: 'center',
@@ -89,6 +92,8 @@ const styles = StyleSheet.create({
   para: {
     fontSize: 12,
     fontWeight: 'bold',
+    marginLeft: 40,
+    marginRight: 40,
   },
   label: {
     fontSize: 15,
