@@ -22,7 +22,7 @@ export default function ListComponent(props) {
           <Thumbnail
             large
             square
-            source={{uri: 'https://image.ayudaa.in/asset/electrical.png'}}
+            source={{uri: 'https://image.ayudaa.in/asset/orderLogo.png'}}
             style={{borderRadius: 5}}
           />
         </Left>

@@ -23,7 +23,10 @@ import {Picker} from '@react-native-community/picker';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
+import LoadingScreen from '../screens/LoadingScreen';
+
 export default function FormScreen(props) {
+  const [loading, setLoading] = useState();
   const [paymentMethod, setPaymentMethod] = useState('offline');
   const [serviceDate, setServiceDate] = useState();
   const [name, setName] = useState();
@@ -33,7 +36,9 @@ export default function FormScreen(props) {
   const [pincode, setPincode] = useState();
 
   var user = auth().currentUser;
-
+  if (loading) {
+    return <LoadingScreen />;
+  }
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -47,7 +52,11 @@ export default function FormScreen(props) {
                   large
                   square
                   source={{uri: props.navigation.getParam('url')}}
-                  style={{borderColor: colors.primary, borderWidth: 1}}
+                  style={{
+                    borderColor: colors.primary,
+                    borderWidth: 1,
+                    borderRadius: 5,
+                  }}
                 />
                 <View
                   style={{
@@ -272,6 +281,7 @@ export default function FormScreen(props) {
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => {
+                    setLoading(true);
                     firestore()
                       .collection('orders')
                       .add({

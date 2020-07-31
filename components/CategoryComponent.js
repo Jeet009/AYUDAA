@@ -21,6 +21,7 @@ function CategoryComponent(props) {
         onPress={() =>
           props.navigation.navigate('CategoryScreen', {
             title: itemData.item.text,
+            dbName: itemData.item.dbName,
           })
         }>
         <ImageBackground
@@ -55,25 +56,25 @@ export const CATEGORY = [
   new Photo(
     'p1',
     'HOME',
-    '',
+    '1',
     'https://image.ayudaa.in/asset/homeServiceFinal.png',
   ),
   new Photo(
     'p2',
     'KITCHEN',
-    '',
+    '2',
     'https://image.ayudaa.in/asset/kitchenFinal.png',
   ),
   new Photo(
     'p3',
     'LAUNDRY',
-    '',
+    '3',
     'https://image.ayudaa.in/asset/laundryFinal.png',
   ),
   new Photo(
     'p4',
     'SALOON',
-    '',
+    '4',
     'https://image.ayudaa.in/asset/saloonFinal.png',
   ),
 ];

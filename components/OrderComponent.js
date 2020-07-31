@@ -14,6 +14,8 @@ import ListComponent from './ListComponent';
 
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import LoadingScreen from '../screens/LoadingScreen';
+import NullScreen from '../screens/NullScreen';
 
 export default function OrderComponent(props) {
   // Fetching Data
@@ -44,6 +46,13 @@ export default function OrderComponent(props) {
     return () => subscriber();
   }, [data]);
 
+  if (loading) {
+    return (
+      <View style={styles.category}>
+        <LoadingScreen />
+      </View>
+    );
+  }
   function renderCategory({item}) {
     return (
       <TouchableOpacity style={styles.category}>
@@ -62,15 +71,23 @@ export default function OrderComponent(props) {
     );
   }
 
-  return (
-    <View>
-      <FlatList
-        ListHeaderComponent={<Text style={styles.text}>YOUR ORDERS</Text>}
-        renderItem={renderCategory}
-        data={data}
-      />
-    </View>
-  );
+  if (data.length) {
+    return (
+      <View>
+        <FlatList
+          ListHeaderComponent={<Text style={styles.text}>YOUR ORDERS</Text>}
+          renderItem={renderCategory}
+          data={data}
+        />
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.category}>
+        <NullScreen />
+      </View>
+    );
+  }
 }
 
 // export const CATEGORY = [

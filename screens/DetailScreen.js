@@ -22,7 +22,11 @@ export default function DetailScreen(props) {
                       large
                       square
                       source={{uri: props.navigation.getParam('url')}}
-                      style={{borderColor: colors.primary, borderWidth: 1}}
+                      style={{
+                        borderColor: colors.primary,
+                        borderWidth: 1,
+                        borderRadius: 5,
+                      }}
                     />
                     <View>
                       <Text style={styles.heading}>

@@ -13,8 +13,11 @@ import {
   Button,
 } from 'native-base';
 
+import LoadingScreen from '../screens/LoadingScreen';
+
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import NullScreen from './NullScreen';
 
 export default function ServiceScreen(props) {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
@@ -40,6 +43,13 @@ export default function ServiceScreen(props) {
     // Unsubscribe from events when no longer in use
     return () => subscriber();
   }, [data]);
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <LoadingScreen />
+      </View>
+    );
+  }
   function renderCategory({item}) {
     return (
       <TouchableOpacity
@@ -63,7 +73,11 @@ export default function ServiceScreen(props) {
                   large
                   square
                   source={{uri: item.url}}
-                  style={{borderColor: colors.primary, borderWidth: 1}}
+                  style={{
+                    borderColor: colors.primary,
+                    borderWidth: 1,
+                    borderRadius: 5,
+                  }}
                 />
                 <View style={styles.title}>
                   <View style={styles.whiteContainer}>
@@ -144,20 +158,25 @@ export default function ServiceScreen(props) {
       </TouchableOpacity>
     );
   }
-  return (
-    <View>
-      <FlatList
-        ListHeaderComponent={
-          <Text style={styles.topTitle}>
-            {props.navigation.getParam('title')}
-          </Text>
-        }
-        renderItem={renderCategory}
-        data={data}
-        numColumns={1}
-      />
-    </View>
-  );
+  if (data.length) {
+    // console.log(data);
+    return (
+      <View>
+        <FlatList
+          ListHeaderComponent={
+            <Text style={styles.topTitle}>
+              {props.navigation.getParam('title')}
+            </Text>
+          }
+          renderItem={renderCategory}
+          data={data}
+          numColumns={1}
+        />
+      </View>
+    );
+  } else {
+    return <NullScreen />;
+  }
 }
 
 // export const CATEGORY = [
