@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   StyleSheet,
@@ -12,11 +12,52 @@ import {Container} from 'native-base';
 import colors from '../constants/colors';
 import ListComponent from './ListComponent';
 
-export default function OrderComponent() {
-  function renderCategory(itemData) {
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
+export default function OrderComponent(props) {
+  // Fetching Data
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]); // Initial empty array of users
+  var user = auth().currentUser;
+
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('orders')
+      .where('customerId', '==', user.uid)
+      .onSnapshot((querySnapshot) => {
+        const data = [].reverse();
+
+        querySnapshot.forEach((documentSnapshot) => {
+          data.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+
+        setData(data);
+        // console.log(data);
+        setLoading(false);
+      });
+
+    // Unsubscribe from events when no longer in use
+    return () => subscriber();
+  }, [data]);
+
+  function renderCategory({item}) {
     return (
       <TouchableOpacity style={styles.category}>
-        <ListComponent title={itemData.item.text} />
+        <ListComponent
+          title={item.name}
+          rate={item.totalAmount}
+          rateForService={item.rateForService}
+          rateForRepair={item.rateForRepair}
+          url={item.url}
+          serviceDate={item.serviceDate}
+          orderDate={item.orderedAt}
+          status={item.status}
+          technician={item.technician}
+        />
       </TouchableOpacity>
     );
   }
@@ -26,29 +67,29 @@ export default function OrderComponent() {
       <FlatList
         ListHeaderComponent={<Text style={styles.text}>YOUR ORDERS</Text>}
         renderItem={renderCategory}
-        data={CATEGORY}
+        data={data}
       />
     </View>
   );
 }
 
-export const CATEGORY = [
-  new Photo(
-    'p1',
-    'AC SERVICE & REPAIR',
-    'https://image.ayudaa.in/asset/electrical.png',
-  ),
-  new Photo(
-    'p2',
-    'HOME DEEP CLEANING',
-    'https://image.ayudaa.in/asset/electrical.png',
-  ),
-  new Photo(
-    'p3',
-    'WASHING MACHINE SERVICE',
-    'https://image.ayudaa.in/asset/electrical.png',
-  ),
-];
+// export const CATEGORY = [
+//   new Photo(
+//     'p1',
+//     'AC SERVICE & REPAIR',
+//     'https://image.ayudaa.in/asset/electrical.png',
+//   ),
+//   new Photo(
+//     'p2',
+//     'HOME DEEP CLEANING',
+//     'https://image.ayudaa.in/asset/electrical.png',
+//   ),
+//   new Photo(
+//     'p3',
+//     'WASHING MACHINE SERVICE',
+//     'https://image.ayudaa.in/asset/electrical.png',
+//   ),
+// ];
 
 const styles = StyleSheet.create({
   text: {

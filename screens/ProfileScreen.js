@@ -24,6 +24,7 @@ export default function ProfileScreen(props) {
   const [name, setName] = useState('Your Name');
   const [phoneNo, setPhoneNo] = useState('Your Phone Number');
   const [email, setEmail] = useState('Your Email');
+  // const [orderCount, setOrderCount] = useState();
 
   var user = auth().currentUser;
   firestore()
@@ -34,6 +35,22 @@ export default function ProfileScreen(props) {
       setPhoneNo(doc.data().phone);
       setEmail(doc.data().email);
     });
+
+  // useEffect(() => {
+  //   const subscriber = () =>
+  //     firestore()
+  //       .collection('orders')
+  //       .where('customerId', '==', user.uid)
+  //       .get()
+  //       .then((querySnapshot) => {
+  //         // console.log(querySnapshot.size);
+  //         setOrderCount(querySnapshot.size);
+  //       });
+
+  //   // Stop listening for updates when no longer required
+  //   return () => subscriber();
+  // }, [orderCount]);
+
   return (
     <FlatList
       style={{marginTop: 15, flex: 1}}
@@ -57,7 +74,7 @@ export default function ProfileScreen(props) {
                   <Text style={styles.name}>Phone : {phoneNo}</Text>
                 </View>
                 <View style={styles.title}>
-                  <Text style={styles.name}>ORDER COUNT : 3</Text>
+                  {/* <Text style={styles.name}>ORDER COUNT : {orderCount}</Text> */}
                   <Text style={styles.name}>Email : {email}</Text>
                 </View>
               </Body>

@@ -39,7 +39,7 @@ export default function ServiceScreen(props) {
 
     // Unsubscribe from events when no longer in use
     return () => subscriber();
-  }, []);
+  }, [data]);
   function renderCategory({item}) {
     return (
       <TouchableOpacity
