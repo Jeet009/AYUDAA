@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  Alert,
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import colors from '../constants/colors';
@@ -281,43 +282,55 @@ export default function FormScreen(props) {
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => {
-                    setLoading(true);
-                    firestore()
-                      .collection('orders')
-                      .add({
-                        //SERVICE DETAILS
-                        name: props.navigation.getParam('name'),
-                        servicePhotoUrl: props.navigation.getParam('url'),
-                        totalAmount: props.navigation.getParam('rate'),
-                        rateForService: props.navigation.getParam(
-                          'rateForService',
-                        ),
-                        rateForRepair: props.navigation.getParam(
-                          'rateForRepair',
-                        ),
-                        category: props.navigation.getParam('category'),
-                        desc: props.navigation.getParam('desc'),
+                    if (
+                      name &&
+                      email &&
+                      phone &&
+                      pincode &&
+                      serviceAddress &&
+                      serviceDate &&
+                      paymentMethod
+                    ) {
+                      setLoading(true);
+                      firestore()
+                        .collection('orders')
+                        .add({
+                          //SERVICE DETAILS
+                          name: props.navigation.getParam('name'),
+                          servicePhotoUrl: props.navigation.getParam('url'),
+                          totalAmount: props.navigation.getParam('rate'),
+                          rateForService: props.navigation.getParam(
+                            'rateForService',
+                          ),
+                          rateForRepair: props.navigation.getParam(
+                            'rateForRepair',
+                          ),
+                          category: props.navigation.getParam('category'),
+                          desc: props.navigation.getParam('desc'),
 
-                        //CUSTOMER DETAILS
-                        customerId: user.uid,
-                        customerName: name,
-                        customerPhoneNumber: phone,
-                        customerEmail: email,
-                        customerServiceAddress: serviceAddress,
-                        pinCode: pincode,
-                        serviceDate: serviceDate,
-                        paymentMethod: paymentMethod,
+                          //CUSTOMER DETAILS
+                          customerId: user.uid,
+                          customerName: name,
+                          customerPhoneNumber: phone,
+                          customerEmail: email,
+                          customerServiceAddress: serviceAddress,
+                          pinCode: pincode,
+                          serviceDate: serviceDate,
+                          paymentMethod: paymentMethod,
 
-                        //ORDER DETAILS
-                        status: 3,
-                        technician: '',
-                        orderedAt: firestore.FieldValue.serverTimestamp(),
-                      })
-                      .then(() => {
-                        //console.log('User updated!');
-                        props.navigation.navigate('SuccessOrder');
-                      })
-                      .catch((err) => console.log(err));
+                          //ORDER DETAILS
+                          status: 3,
+                          technician: '',
+                          orderedAt: firestore.FieldValue.serverTimestamp(),
+                        })
+                        .then(() => {
+                          //console.log('User updated!');
+                          props.navigation.navigate('SuccessOrder');
+                        })
+                        .catch((err) => console.log(err));
+                    } else {
+                      Alert.alert('INVALID DATA.', 'FILL UP THE FORM PROPERLY');
+                    }
                   }}>
                   <Text style={styles.confirmButton}>CONFIRM ORDER</Text>
                 </TouchableOpacity>

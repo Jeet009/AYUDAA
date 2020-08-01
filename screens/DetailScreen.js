@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Linking} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import colors from '../constants/colors';
 import {List, ListItem, Thumbnail, Left, Body, Right} from 'native-base';
@@ -154,26 +154,50 @@ export default function DetailScreen(props) {
                     {/* OTHERS  */}
                     <Text style={styles.text}>COMMUNITY & SUPPORT</Text>
                     <View style={styles.horizontal}>
-                      <Icon
-                        name="whatsapp"
-                        type="font-awesome"
-                        style={styles.circle}
-                      />
-                      <Icon
-                        name="safari"
-                        type="font-awesome"
-                        style={styles.circle}
-                      />
-                      <Icon
-                        name="facebook-official"
-                        type="font-awesome"
-                        style={styles.circle}
-                      />
-                      <Icon
-                        name="phone-square"
-                        type="font-awesome"
-                        style={styles.circle}
-                      />
+                      <TouchableOpacity
+                        onPress={() => {
+                          Linking.openURL('https://wa.me/919832358173');
+                        }}>
+                        <Icon
+                          name="whatsapp"
+                          type="font-awesome"
+                          style={styles.circle}
+                        />
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        onPress={() => {
+                          Linking.openURL('https://www.ayudaa.in');
+                        }}>
+                        <Icon
+                          name="safari"
+                          type="font-awesome"
+                          style={styles.circle}
+                        />
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        onPress={() => {
+                          // Linking.openURL('https://m.facebook.com');
+                          Linking.openURL('m.facebook.com');
+                        }}>
+                        <Icon
+                          name="facebook-official"
+                          type="font-awesome"
+                          style={styles.circle}
+                        />
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        onPress={() => {
+                          Linking.openURL(`tel:${8001268005}`);
+                        }}>
+                        <Icon
+                          name="phone-square"
+                          type="font-awesome"
+                          style={styles.circle}
+                        />
+                      </TouchableOpacity>
                     </View>
                     <TouchableOpacity
                       style={styles.button}

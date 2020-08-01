@@ -17,6 +17,7 @@ import CategoryComponent from '../components/CategoryComponent';
 import DetailScreen from '../screens/DetailScreen';
 import FormScreen from '../screens/FormScreen';
 import SuccessOrder from '../screens/SuccessOrder';
+import RateCardScreen from '../screens/RateCardScreen';
 
 const AppNavigator = createStackNavigator(
   {
@@ -41,7 +42,14 @@ const bottomTab = createMaterialBottomTabNavigator(
       screen: AppContainer,
       navigationOptions: {
         tabBarIcon: (tabInfo) => {
-          return <Icon name="home" size={25} color={tabInfo.tintColor} />;
+          return (
+            <Icon
+              name="home"
+              type="font-awesome"
+              // size={25}
+              color={tabInfo.tintColor}
+            />
+          );
         },
       },
     },
@@ -49,7 +57,29 @@ const bottomTab = createMaterialBottomTabNavigator(
       screen: OrderScreen,
       navigationOptions: {
         tabBarIcon: (tabInfo) => {
-          return <Icon name="local-mall" size={25} color={tabInfo.tintColor} />;
+          return (
+            <Icon
+              name="shopping-cart"
+              type="font-awesome"
+              // size={20}
+              color={tabInfo.tintColor}
+            />
+          );
+        },
+      },
+    },
+    RateCard: {
+      screen: RateCardScreen,
+      navigationOptions: {
+        tabBarIcon: (tabInfo) => {
+          return (
+            <Icon
+              name="tasks"
+              type="font-awesome"
+              // size={20}
+              color={tabInfo.tintColor}
+            />
+          );
         },
       },
     },
@@ -57,7 +87,14 @@ const bottomTab = createMaterialBottomTabNavigator(
       screen: ProfileScreen,
       navigationOptions: {
         tabBarIcon: (tabInfo) => {
-          return <Icon name="person-pin" size={25} color={tabInfo.tintColor} />;
+          return (
+            <Icon
+              name="user-circle-o"
+              type="font-awesome"
+              // size={25}
+              color={tabInfo.tintColor}
+            />
+          );
         },
       },
     },
