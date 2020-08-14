@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import colors from '../constants/colors';
 import Photo from '../js/dummyData';
 import {
@@ -20,6 +20,7 @@ import NullScreen from './NullScreen';
 export default function CategoryScreen(props) {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [data, setData] = useState([]); // Initial empty array of users
+  const [refreshing, setRefreshing] = useState(false);
   useEffect(() => {
     const subscriber = firestore()
       .collection('appliances')
@@ -50,6 +51,33 @@ export default function CategoryScreen(props) {
       </View>
     );
   }
+
+  //Controlling Refresh
+  const onRefresh = () => {
+    setRefreshing(true);
+    setLoading(true);
+    const subscriber = firestore()
+      .collection('appliances')
+      .where('category', '==', props.navigation.getParam('dbName'))
+      .onSnapshot((querySnapshot) => {
+        const data = [];
+
+        querySnapshot.forEach((documentSnapshot) => {
+          data.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+
+        setData(data);
+        // console.log(data);
+        setLoading(false);
+        setRefreshing(false);
+      });
+
+    // Unsubscribe from events when no longer in use
+    return () => subscriber();
+  };
 
   function renderCategory({item}) {
     return (
@@ -134,8 +162,10 @@ export default function CategoryScreen(props) {
             </Text>
           }
           renderItem={renderCategory}
-          data={data}
+          data={data.sort((a, b) => a.name.localeCompare(b.name))}
           numColumns={1}
+          onRefresh={() => onRefresh()}
+          refreshing={refreshing}
         />
       </View>
     );

@@ -244,10 +244,10 @@ export default function FormScreen(props) {
                               label="OFFLINE PAYMENT"
                               value="offline"
                             />
-                            <Picker.Item
+                            {/* <Picker.Item
                               label="ONLINE PAYMENT"
                               value="online"
-                            />
+                            /> */}
                           </Picker>
                         </View>
                       );

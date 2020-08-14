@@ -126,7 +126,7 @@ export default function DetailScreen(props) {
                             {/* <Text style={styles.name}> Available Technician : 1</Text> */}
                             <Text style={styles.name}>
                               {' '}
-                              ONLINE PAYMENT : Available
+                              ONLINE PAYMENT : Not Available
                             </Text>
                             <Text style={styles.name}>
                               {' '}

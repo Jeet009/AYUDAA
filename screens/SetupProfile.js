@@ -54,6 +54,9 @@ function SetUpProfile(props) {
             email: ayudaaId,
             phone: phoneno,
             displayName: ayudaaId,
+            firstPincode: ' ',
+            secondPincode: ' ',
+            isVerified: false,
           })
           .then(() => {
             user.updateProfile({
