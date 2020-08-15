@@ -46,7 +46,7 @@ export default function OrderComponent(props) {
 
     // Unsubscribe from events when no longer in use
     return () => subscriber();
-  }, [data]);
+  }, [setData]);
 
   if (loading) {
     return (

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -36,10 +36,54 @@ export default function FormScreen(props) {
   const [serviceAddress, setServiceAddress] = useState();
   const [pincode, setPincode] = useState();
 
+  //Pincode To Realtime Check
+  const [pincodeArray, setPincodeArray] = useState([]);
+
+  // Fetching Pincode Data
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('availablePincode')
+      .onSnapshot((querySnapshot) => {
+        const data = [];
+
+        querySnapshot.forEach((documentSnapshot) => {
+          data.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+
+        setPincodeArray(data);
+      });
+
+    // Unsubscribe from events when no longer in use
+    return () => subscriber();
+  }, [setPincodeArray]);
+
   var user = auth().currentUser;
   if (loading) {
     return <LoadingScreen />;
   }
+
+  // Variable To Store Typed Pincode
+  var pinCode;
+
+  const handleChange = (e) => {
+    if (e.nativeEvent.text.length == 6) {
+      for (var i = 0; i < pincodeArray.length; i++) {
+        if (pincodeArray[i].code == e.nativeEvent.text) {
+          pinCode = pincodeArray[i].code;
+        }
+      }
+      // console.log(pinCode, e.nativeEvent.text);
+      if (!pinCode) {
+        Alert.alert(
+          'We Are Not Here Yet!',
+          'Sorry, Our service is not available in this area for now!',
+        );
+      }
+    }
+  };
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -206,6 +250,7 @@ export default function FormScreen(props) {
                       style={styles.textInput}
                       maxLength={25}
                       keyboardType="phone-pad"
+                      onChange={handleChange}
                     />
                   </View>
 

@@ -43,7 +43,7 @@ export default function ServiceScreen(props) {
 
     // Unsubscribe from events when no longer in use
     return () => subscriber();
-  }, [data]);
+  }, [setData]);
   if (loading) {
     return (
       <View style={styles.container}>

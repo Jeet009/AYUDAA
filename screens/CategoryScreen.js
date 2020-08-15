@@ -42,7 +42,7 @@ export default function CategoryScreen(props) {
 
     // Unsubscribe from events when no longer in use
     return () => subscriber();
-  }, [data]);
+  }, [setData]);
 
   if (loading) {
     return (
