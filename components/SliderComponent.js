@@ -5,7 +5,7 @@ import SliderItemComponent from './SliderItemComonent';
 import colors from '../constants/colors';
 
 export default function SliderComponent() {
-  const [selectedIndex, setSelectedIndex] = useState();
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const images = ['kkk', 'gggg'];
 
   const indexSelection = (e) => {

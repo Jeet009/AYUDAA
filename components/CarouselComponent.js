@@ -2,10 +2,15 @@ import React, {useEffect, useState} from 'react';
 import CarouselItemComponent from './CarouselItemComponent';
 import {ScrollView} from 'react-native-gesture-handler';
 import {View, Dimensions, StyleSheet} from 'react-native';
+import firestore from '@react-native-firebase/firestore';
 
 export default function CarouselComponent() {
   const [selectedIndex, setSelectedIndex] = useState();
-  const images = ['kkk', 'gggg', 'dddd', 'hhh'];
+  const [images, setImage] = useState([]);
+  const [imageOne, setImageOne] = useState();
+  const [imageTwo, setImageTwo] = useState();
+  const [imageThree, setImageThree] = useState();
+  const [imageFour, setImageFour] = useState();
 
   const indexSelection = (e) => {
     const contentOffset = e.nativeEvent.contentOffset;
@@ -16,6 +21,31 @@ export default function CarouselComponent() {
     setSelectedIndex(index);
   };
 
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('topCarousel')
+      .onSnapshot((querySnapshot) => {
+        const data = [];
+
+        querySnapshot.forEach((documentSnapshot) => {
+          data.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+
+        setImage(data);
+        // console.log(data[3].uri);
+        setImageOne(data[0].uri);
+        setImageTwo(data[1].uri);
+        setImageThree(data[2].uri);
+        setImageFour(data[3].uri);
+      });
+
+    // Unsubscribe from events when no longer in use
+    return () => subscriber();
+  }, [setImage]);
+
   return (
     <View>
       <ScrollView
@@ -24,10 +54,10 @@ export default function CarouselComponent() {
         pagingEnabled
         onMomentumScrollEnd={indexSelection}
         snapToInterval={Dimensions.get('window').width}>
-        <CarouselItemComponent uri="https://image.ayudaa.in/asset/slide0.png" />
-        <CarouselItemComponent uri="https://image.ayudaa.in/asset/slide1.png" />
-        <CarouselItemComponent uri="https://image.ayudaa.in/asset/slide2.png" />
-        <CarouselItemComponent uri="https://image.ayudaa.in/asset/slide3.png" />
+        <CarouselItemComponent uri={imageOne} />
+        <CarouselItemComponent uri={imageTwo} />
+        <CarouselItemComponent uri={imageThree} />
+        <CarouselItemComponent uri={imageFour} />
       </ScrollView>
       <View style={styles.circleDiv}>
         {images.map((image, i) => (
@@ -41,7 +71,7 @@ export default function CarouselComponent() {
                 borderRadius: i === selectedIndex ? 4 : 3,
               },
             ]}
-            key={image}
+            key={image.key}
             active={i === selectedIndex}
           />
         ))}

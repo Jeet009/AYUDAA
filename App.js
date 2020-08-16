@@ -13,10 +13,11 @@ import LoginScreen from './screens/LoginScreen';
 import SetUpProfile from './screens/SetupProfile';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import SplashScreen from 'react-native-splash-screen';
 
 export default function App() {
   const [initializing, setInitializing] = useState(true);
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState();
 
   function onAuthStateChanged(user) {
@@ -24,6 +25,7 @@ export default function App() {
     if (initializing) setInitializing(false);
   }
   useEffect(() => {
+    SplashScreen.hide();
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   });
