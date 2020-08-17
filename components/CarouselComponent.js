@@ -5,7 +5,7 @@ import {View, Dimensions, StyleSheet} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 
 export default function CarouselComponent() {
-  const [selectedIndex, setSelectedIndex] = useState();
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [images, setImage] = useState([]);
   const [imageOne, setImageOne] = useState();
   const [imageTwo, setImageTwo] = useState();

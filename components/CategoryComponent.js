@@ -56,25 +56,25 @@ export const CATEGORY = [
   new Photo(
     'p1',
     'HOME',
-    '1',
+    'Home',
     'https://image.ayudaa.in/asset/homeServiceFinal.png',
   ),
   new Photo(
     'p2',
     'KITCHEN',
-    '2',
+    'Kitchen',
     'https://image.ayudaa.in/asset/kitchenFinal.png',
   ),
   new Photo(
     'p3',
     'LAUNDRY',
-    '3',
+    'Laundry',
     'https://image.ayudaa.in/asset/laundryFinal.png',
   ),
   new Photo(
     'p4',
     'SALOON',
-    '4',
+    'Saloon',
     'https://image.ayudaa.in/asset/saloonFinal.png',
   ),
 ];

@@ -23,7 +23,7 @@ export default function CategoryScreen(props) {
   const [refreshing, setRefreshing] = useState(false);
   useEffect(() => {
     const subscriber = firestore()
-      .collection('appliances')
+      .collection('services')
       .where('category', '==', props.navigation.getParam('dbName'))
       .onSnapshot((querySnapshot) => {
         const data = [];
@@ -57,7 +57,7 @@ export default function CategoryScreen(props) {
     setRefreshing(true);
     setLoading(true);
     const subscriber = firestore()
-      .collection('appliances')
+      .collection('services')
       .where('category', '==', props.navigation.getParam('dbName'))
       .onSnapshot((querySnapshot) => {
         const data = [];

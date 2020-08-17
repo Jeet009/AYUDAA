@@ -77,9 +77,20 @@ export default function FormScreen(props) {
       }
       // console.log(pinCode, e.nativeEvent.text);
       if (!pinCode) {
+        // e.nativeEvent.text.clear();
+
         Alert.alert(
           'We Are Not Here Yet!',
           'Sorry, Our service is not available in this area for now!',
+          [
+            {
+              text: 'ok',
+              onPress: () => {
+                setPincode();
+              },
+            },
+          ],
+          {cancelable: false},
         );
       }
     }

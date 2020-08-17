@@ -12,9 +12,12 @@ import {
   Right,
   Button,
 } from 'native-base';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import colors from '../constants/colors';
-export default function ListComponent(props) {
+// import {} from 'react-native';
+import {withNavigation} from 'react-navigation';
+
+function ListComponent(props) {
   return (
     <List style={{marginTop: 15}}>
       <ListItem thumbnail>
@@ -105,7 +108,13 @@ export default function ListComponent(props) {
 
           {/* ORDER STATUS  */}
           {(() => {
-            if (props.status <= 3) {
+            if (props.status == 0) {
+              return (
+                <View style={styles.status}>
+                  <Text style={styles.cancel}>ORDER CANCELED BY YOU</Text>
+                </View>
+              );
+            } else if (props.status <= 3) {
               return (
                 <View style={styles.status}>
                   <Text style={styles.currentStatus}>PENDING</Text>
@@ -131,6 +140,23 @@ export default function ListComponent(props) {
               );
             }
           })()}
+
+          {/* Cancel Button  */}
+          {(() => {
+            if (props.status != 0) {
+              return (
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    props.navigation.navigate('ConfirmCancelScreen', {
+                      id: props.id,
+                    });
+                  }}>
+                  <Text style={styles.cancel}>CANCEL</Text>
+                </TouchableOpacity>
+              );
+            }
+          })()}
         </Body>
         <Right></Right>
       </ListItem>
@@ -138,6 +164,7 @@ export default function ListComponent(props) {
   );
 }
 
+export default withNavigation(ListComponent);
 const styles = StyleSheet.create({
   text: {
     fontSize: 12,
@@ -179,6 +206,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 5,
   },
+  button: {
+    flex: 1,
+    // flexDirection: 'row',
+    backgroundColor: colors.primary,
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 5,
+  },
   title: {
     flex: 1,
     backgroundColor: colors.smoke,
@@ -190,5 +225,11 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: `bold`,
     color: 'lightgreen',
+  },
+  cancel: {
+    fontSize: 12,
+    fontWeight: `bold`,
+    color: 'black',
+    alignSelf: 'center',
   },
 });

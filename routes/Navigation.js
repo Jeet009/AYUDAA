@@ -18,6 +18,8 @@ import DetailScreen from '../screens/DetailScreen';
 import FormScreen from '../screens/FormScreen';
 import SuccessOrder from '../screens/SuccessOrder';
 import RateCardScreen from '../screens/RateCardScreen';
+import ConfirmCancelScreen from '../screens/ConfirmCancelScreen';
+import CanceledScreen from '../screens/CanceledScreen';
 
 const AppNavigator = createStackNavigator(
   {
@@ -27,6 +29,8 @@ const AppNavigator = createStackNavigator(
     DetailScreen: DetailScreen,
     FormScreen: FormScreen,
     SuccessOrder: SuccessOrder,
+    ConfirmCancelScreen: ConfirmCancelScreen,
+    CanceledScreen: CanceledScreen,
   },
   {
     headerMode: 'none',

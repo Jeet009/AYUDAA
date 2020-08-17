@@ -90,8 +90,8 @@ export const CATEGORY = [
   ),
   new Photo(
     'p7',
-    'LAUNDRY',
-    'laundry',
+    'CONTRACTRY',
+    'contractry',
     'https://image.ayudaa.in/asset/wash.png',
   ),
   new Photo(

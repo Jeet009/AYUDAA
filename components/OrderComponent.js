@@ -6,6 +6,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   View,
+  Alert,
 } from 'react-native';
 import Photo from '../js/dummyData';
 import {Container} from 'native-base';
@@ -85,8 +86,9 @@ export default function OrderComponent(props) {
 
   function renderCategory({item}) {
     return (
-      <TouchableOpacity style={styles.category}>
+      <View style={styles.category}>
         <ListComponent
+          id={item.key}
           title={item.name}
           rate={item.totalAmount}
           rateForService={item.rateForService}
@@ -97,7 +99,7 @@ export default function OrderComponent(props) {
           status={item.status}
           technician={item.technician}
         />
-      </TouchableOpacity>
+      </View>
     );
   }
 
