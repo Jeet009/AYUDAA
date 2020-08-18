@@ -62,6 +62,8 @@ function SetUpProfile(props) {
             user.updateProfile({
               displayName: ayudaaId,
             });
+          })
+          .then(() => {
             props.navigation.navigate('SuccessProfile');
           })
           .catch((err) => {

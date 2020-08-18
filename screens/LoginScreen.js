@@ -10,6 +10,9 @@ import {
   TouchableOpacity,
   Keyboard,
   Alert,
+  Modal,
+  TouchableHighlight,
+  Dimensions,
 } from 'react-native';
 import {List, ListItem, Left, Right, Thumbnail, Body} from 'native-base';
 import colors from '../constants/colors';
@@ -17,10 +20,14 @@ import {Icon} from 'react-native-elements';
 import {TouchableNativeFeedback, TextInput} from 'react-native-gesture-handler';
 import auth from '@react-native-firebase/auth';
 
+import WelcomeComponent from '../components/WelcomeComponent';
+
 //Phone Auth
 export default function LoginScreen(props) {
   // If null, no SMS has been sent
   const [confirm, setConfirm] = useState(null);
+
+  const [modalVisible, setModalVisible] = useState(true);
 
   const [code, setCode] = useState('');
   const [phoneNo, setPhoneNo] = useState('');
@@ -46,6 +53,31 @@ export default function LoginScreen(props) {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <SafeAreaView style={styles.scrollview}>
+          <Modal
+            animationType="fade"
+            transparent={false}
+            visible={modalVisible}>
+            <View style={styles.centeredView}>
+              <WelcomeComponent />
+              <View style={styles.modalView}>
+                <Text style={styles.textStyle}>A Y U D A A</Text>
+
+                <Text style={styles.modalText}>
+                  Your Home Service Assistance
+                </Text>
+                <TouchableHighlight
+                  style={{
+                    ...styles.openButton,
+                    backgroundColor: colors.primary,
+                  }}
+                  onPress={() => {
+                    setModalVisible(!modalVisible);
+                  }}>
+                  <Text style={styles.textStyle}>Let's Start</Text>
+                </TouchableHighlight>
+              </View>
+            </View>
+          </Modal>
           <View style={styles.profile}>
             <Text style={styles.text}>A Y U D A A</Text>
             <Text style={styles.para}>YOUR HOME SERVICE ASSISTANT</Text>
@@ -176,4 +208,50 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   label: {fontSize: 12, fontWeight: 'bold', textAlign: 'center'},
+  centeredView: {
+    flex: 1,
+    marginTop: Dimensions.get('window').height / 4,
+  },
+  modalView: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    backgroundColor: 'white',
+  },
+  openButton: {
+    backgroundColor: colors.primary,
+    borderRadius: 20,
+    padding: 10,
+    paddingLeft: 50,
+    paddingRight: 50,
+    elevation: 2,
+    // marginTop: 20,
+  },
+  textStyle: {
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textTransform: 'uppercase',
+  },
+  modalText: {
+    marginBottom: 12,
+    textAlign: 'left',
+    padding: 20,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    fontSize: 12,
+    color: 'black',
+  },
+  modalTextWhite: {
+    marginBottom: 12,
+    textAlign: 'left',
+    padding: 20,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    fontSize: 12,
+    color: 'white',
+  },
 });

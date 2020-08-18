@@ -112,12 +112,14 @@ export default function OrderComponent(props) {
           data={data.sort((a, b) => a.name.localeCompare(b.name))}
           onRefresh={() => onRefresh()}
           refreshing={refreshing}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     );
   } else {
     return (
       <View style={styles.category}>
+        <Text style={styles.text}>YOUR ORDERS</Text>
         <NullScreen />
       </View>
     );

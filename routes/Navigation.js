@@ -21,6 +21,7 @@ import RateCardScreen from '../screens/RateCardScreen';
 import ConfirmCancelScreen from '../screens/ConfirmCancelScreen';
 import CanceledScreen from '../screens/CanceledScreen';
 
+//Home Screen
 const AppNavigator = createStackNavigator(
   {
     Home: HomeScreen,
@@ -29,6 +30,18 @@ const AppNavigator = createStackNavigator(
     DetailScreen: DetailScreen,
     FormScreen: FormScreen,
     SuccessOrder: SuccessOrder,
+  },
+  {
+    headerMode: 'none',
+  },
+);
+
+const AppContainer = createAppContainer(AppNavigator);
+
+//Order Screen
+const OrderNavigator = createStackNavigator(
+  {
+    Order: OrderScreen,
     ConfirmCancelScreen: ConfirmCancelScreen,
     CanceledScreen: CanceledScreen,
   },
@@ -37,7 +50,7 @@ const AppNavigator = createStackNavigator(
   },
 );
 
-const AppContainer = createAppContainer(AppNavigator);
+const OrderContainer = createAppContainer(OrderNavigator);
 
 //Bottom Tab
 const bottomTab = createMaterialBottomTabNavigator(
@@ -58,7 +71,7 @@ const bottomTab = createMaterialBottomTabNavigator(
       },
     },
     Orders: {
-      screen: OrderScreen,
+      screen: OrderContainer,
       navigationOptions: {
         tabBarIcon: (tabInfo) => {
           return (

@@ -25,7 +25,8 @@ export default function ServiceScreen(props) {
   const [refreshing, setRefreshing] = useState(false);
   useEffect(() => {
     const subscriber = firestore()
-      .collection(props.navigation.getParam('dbName'))
+      .collection('services')
+      .where('serviceName', '==', props.navigation.getParam('dbName'))
       .onSnapshot((querySnapshot) => {
         const data = [];
 

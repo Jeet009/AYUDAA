@@ -84,14 +84,14 @@ export const CATEGORY = [
   ),
   new Photo(
     'p6',
-    'HOME PEST CONTROL',
-    'pestControl',
+    'INTERIOR DESIGN',
+    'interiorDesign',
     'https://image.ayudaa.in/asset/pest%20controll.png',
   ),
   new Photo(
     'p7',
-    'CONTRACTRY',
-    'contractry',
+    'HOME CONTRACTOR',
+    'homeContractor',
     'https://image.ayudaa.in/asset/wash.png',
   ),
   new Photo(

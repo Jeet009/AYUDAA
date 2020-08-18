@@ -5,7 +5,13 @@ import {
   StyleSheet,
   SafeAreaView,
   StatusBar,
-  ActivityIndicator,
+  AsyncStorage,
+  Modal,
+  ScrollView,
+  TouchableHighlight,
+  Text,
+  Image,
+  Dimensions,
 } from 'react-native';
 import Navigation from './routes/Navigation';
 import NavigationService from './routes/NavigationService';
@@ -14,11 +20,14 @@ import SetUpProfile from './screens/SetupProfile';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import SplashScreen from 'react-native-splash-screen';
+import colors from './constants/colors';
 
 export default function App() {
   const [initializing, setInitializing] = useState(true);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState();
+
+  let visited = AsyncStorage['alreadyVisited'];
 
   function onAuthStateChanged(user) {
     setUser(user);

@@ -143,7 +143,7 @@ function ListComponent(props) {
 
           {/* Cancel Button  */}
           {(() => {
-            if (props.status != 0) {
+            if (props.status != 0 && props.status != 4) {
               return (
                 <TouchableOpacity
                   style={styles.button}

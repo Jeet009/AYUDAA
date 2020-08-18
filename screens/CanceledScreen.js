@@ -33,9 +33,9 @@ function CanceledOrder(props) {
         <TouchableOpacity // eslint-disable-next-line prettier/prettier
           style={styles.button}
           onPress={() => {
-            props.navigation.navigate('Home');
+            props.navigation.navigate('Order');
           }}>
-          <Text style={styles.buttonText}>HOME</Text>
+          <Text style={styles.buttonText}>MANAGE ORDERS</Text>
         </TouchableOpacity>
         <Text style={styles.para}>
           SORRY, THAT YOU HAD TO CANCEL YOUR ORDER,
@@ -49,7 +49,7 @@ function CanceledOrder(props) {
 
       <View style={styles.profile}>
         <Text style={styles.text}>A Y U D A A</Text>
-        <Text style={styles.label}>YOUR HOME SERVICE ASSISTANT</Text>
+        <Text style={styles.label}>YOUR HOME SERVICE ASSISTANCE</Text>
       </View>
       <StatusBar barStyle="dark-content" hidden={true} backgroundColor="#fff" />
     </SafeAreaView>
