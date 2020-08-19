@@ -63,9 +63,6 @@ function SetUpProfile(props) {
               displayName: ayudaaId,
             });
           })
-          .then(() => {
-            props.navigation.navigate('SuccessProfile');
-          })
           .catch((err) => {
             console.log(err);
             setSubmitButtonText('TRY AGAIN');
@@ -121,13 +118,14 @@ function SetUpProfile(props) {
             style={styles.button}
             onPress={() => {
               setSubmitButtonText('MAKING...');
-              confirmProfile().then(() => {
-                // Alert.alert(
-                //   'Success',
-                //   'You have successfully initialized your account. Please Restart The App.',
-                // ),
-                setSubmitButtonText('INITIALIZED');
-              });
+              confirmProfile()
+                .then(() => {
+                  setSubmitButtonText('INITIALIZED');
+                })
+                .then(() => {
+                  props.navigation.navigate('SuccessProfile');
+                })
+                .catch((err) => console.log(err));
             }}>
             <Text style={styles.buttonText}>{submitButtonText}</Text>
           </TouchableOpacity>
