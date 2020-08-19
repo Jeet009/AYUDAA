@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 12,
     fontWeight: 'bold',
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
     margin: 2,
   },
 });
