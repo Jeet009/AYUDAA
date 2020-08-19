@@ -20,6 +20,7 @@ function ServiceComponent(props) {
           props.navigation.navigate('ServiceScreen', {
             title: itemData.item.text,
             dbName: itemData.item.dbName,
+            uri: itemData.item.url,
           })
         }>
         <View>

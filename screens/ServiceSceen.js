@@ -100,7 +100,7 @@ export default function ServiceScreen(props) {
                 <Thumbnail
                   large
                   square
-                  source={{uri: item.url}}
+                  source={{uri: props.navigation.getParam('uri')}}
                   style={{
                     borderColor: colors.primary,
                     borderWidth: 1,
@@ -209,33 +209,6 @@ export default function ServiceScreen(props) {
   }
 }
 
-// export const CATEGORY = [
-//   new Photo(
-//     'p1',
-//     'AC SERVICE & REPAIR',
-//     'https://image.ayudaa.in/asset/electrical.png',
-//   ),
-//   new Photo(
-//     'p2',
-//     'WASHING MACHINE SERVICE',
-//     'https://image.ayudaa.in/asset/appliance.png',
-//   ),
-//   new Photo(
-//     'p3',
-//     'HOME DEEP CLEANING',
-//     'https://image.ayudaa.in/asset/cleaning.png',
-//   ),
-//   new Photo(
-//     'p4',
-//     'WEDDING PLANNING',
-//     'https://image.ayudaa.in/asset/carpentry.png',
-//   ),
-//   new Photo(
-//     'p5',
-//     'PHOTOGRAPHY SERVICE',
-//     'https://image.ayudaa.in/asset/plumbery.png',
-//   ),
-// ];
 const styles = StyleSheet.create({
   text: {
     fontSize: 15,
