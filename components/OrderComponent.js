@@ -98,6 +98,7 @@ export default function OrderComponent(props) {
           orderDate={item.orderedAt}
           status={item.status}
           technician={item.technician}
+          technicianPhoto={item.technicianPhoto}
         />
       </View>
     );
@@ -125,24 +126,6 @@ export default function OrderComponent(props) {
     );
   }
 }
-
-// export const CATEGORY = [
-//   new Photo(
-//     'p1',
-//     'AC SERVICE & REPAIR',
-//     'https://image.ayudaa.in/asset/electrical.png',
-//   ),
-//   new Photo(
-//     'p2',
-//     'HOME DEEP CLEANING',
-//     'https://image.ayudaa.in/asset/electrical.png',
-//   ),
-//   new Photo(
-//     'p3',
-//     'WASHING MACHINE SERVICE',
-//     'https://image.ayudaa.in/asset/electrical.png',
-//   ),
-// ];
 
 const styles = StyleSheet.create({
   text: {

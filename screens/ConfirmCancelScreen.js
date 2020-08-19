@@ -49,7 +49,7 @@ function ConfirmCancelOrder(props) {
                 });
               // console.log(props.navigation.getParam('id'));
             }}>
-            <Text style={styles.buttonText}>PROCEED</Text>
+            <Text style={styles.buttonText}>CANCEL NOW</Text>
           </TouchableOpacity>
         </View>
 

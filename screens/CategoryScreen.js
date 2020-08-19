@@ -85,7 +85,7 @@ export default function CategoryScreen(props) {
         onPress={() =>
           props.navigation.navigate('DetailScreen', {
             name: item.name,
-            url: item.url,
+            url: 'https://image.ayudaa.in/asset/orderLogo.png',
             rate: item.rate,
             rateForService: item.rateForService,
             rateForRepair: item.rateForRepair,
@@ -101,7 +101,7 @@ export default function CategoryScreen(props) {
                 <Thumbnail
                   large
                   square
-                  source={{uri: item.url}}
+                  source={{uri: 'https://image.ayudaa.in/asset/orderLogo.png'}}
                   style={{
                     borderColor: colors.primary,
                     borderWidth: 1,
@@ -109,7 +109,10 @@ export default function CategoryScreen(props) {
                   }}
                 />
                 <View style={styles.title}>
-                  <Text style={styles.text}> {item.name}</Text>
+                  <View style={styles.whiteContainer}>
+                    <Text style={styles.text}> {item.name}</Text>
+                  </View>
+
                   {/* PRICE  */}
                   {(() => {
                     if (item.rate) {

@@ -249,7 +249,7 @@ export default function FormScreen(props) {
                       value={serviceAddress}
                       onChangeText={(text) => setServiceAddress(text)}
                       style={styles.textInput}
-                      maxLength={25}
+                      maxLength={50}
                     />
                   </View>
 

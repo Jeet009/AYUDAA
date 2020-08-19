@@ -19,7 +19,7 @@ function LoadingScreen(props) {
       <View>
         <Image
           source={{
-            uri: 'https://image.ayudaa.in/asset/loading.png',
+            uri: 'https://image.ayudaa.in/final/newLogo.png',
           }}
           resizeMode="contain"
           style={{

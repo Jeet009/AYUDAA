@@ -38,7 +38,7 @@ export default function SliderItemComponent(props) {
             </Text>
             <Image
               source={{
-                uri: 'https://image.ayudaa.in/final/undraw_survey_05s5.png',
+                uri: 'https://image.ayudaa.in/final/safecover.png',
               }}
               resizeMode="contain"
               style={{

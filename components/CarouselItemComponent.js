@@ -10,11 +10,12 @@ import colors from '../constants/colors';
 import {
   TouchableOpacity,
   TouchableNativeFeedback,
+  TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
 
 export default function CarouselItemComponent(props) {
   return (
-    <TouchableOpacity>
+    <TouchableWithoutFeedback>
       <ImageBackground
         resizeMode="contain"
         source={{uri: props.uri}}
@@ -26,7 +27,7 @@ export default function CarouselItemComponent(props) {
           <Text style={styles.regularText}>{props.desc}</Text>
         </View>
       </ImageBackground>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 }
 const styles = StyleSheet.create({

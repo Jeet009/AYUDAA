@@ -58,7 +58,8 @@ export default function ServiceScreen(props) {
     setRefreshing(true);
     setLoading(true);
     const subscriber = firestore()
-      .collection(props.navigation.getParam('dbName'))
+      .collection('services')
+      .where('serviceName', '==', props.navigation.getParam('dbName'))
       .onSnapshot((querySnapshot) => {
         const data = [];
 
@@ -84,7 +85,7 @@ export default function ServiceScreen(props) {
         onPress={() =>
           props.navigation.navigate('DetailScreen', {
             name: item.name,
-            url: item.url,
+            url: props.navigation.getParam('uri'),
             rate: item.rate,
             rateForService: item.rateForService,
             rateForRepair: item.rateForRepair,
@@ -141,28 +142,28 @@ export default function ServiceScreen(props) {
 
                   {(() => {
                     switch (item.category) {
-                      case '1':
+                      case 'Home':
                         return (
                           <View style={styles.whiteContainer}>
                             <Text style={styles.name}>HOME SERVICE </Text>
                           </View>
                         );
 
-                      case '2':
+                      case 'Kitchen':
                         return (
                           <View style={styles.whiteContainer}>
                             <Text style={styles.name}>KITCHEN SERVICE </Text>
                           </View>
                         );
 
-                      case '3':
+                      case 'Laundry':
                         return (
                           <View style={styles.whiteContainer}>
                             <Text style={styles.name}>LAUNDRY SERVICE </Text>
                           </View>
                         );
 
-                      case '4':
+                      case 'Saloon':
                         return (
                           <View style={styles.whiteContainer}>
                             <Text style={styles.name}>SALOON AT HOME </Text>

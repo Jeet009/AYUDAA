@@ -63,12 +63,11 @@ function ListComponent(props) {
                   <Thumbnail
                     small
                     source={{
-                      uri:
-                        'https://scontent.fccu16-1.fna.fbcdn.net/v/t1.0-9/s960x960/96562921_111788813865374_7375178138289963008_o.jpg?_nc_cat=105&_nc_sid=85a577&_nc_ohc=H2Bu_Z8OMiUAX8U4MmC&_nc_ht=scontent.fccu16-1.fna&_nc_tp=7&oh=7744e3a84f81ca878440dd57254f148d&oe=5F2E40D2',
+                      uri: props.technicianPhoto,
                     }}
                   />
                   <View>
-                    <Text style={styles.name}> {'  '}Jeet Mukherjee</Text>
+                    <Text style={styles.name}> {props.technician}</Text>
                     <Text style={styles.verify}> {'   '}VERIFIED</Text>
                   </View>
                 </View>

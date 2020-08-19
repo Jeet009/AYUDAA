@@ -29,7 +29,7 @@ function ServiceComponent(props) {
             source={{uri: itemData.item.url}}
             style={styles.catImage}
             imageStyle={{
-              borderRadius: 10,
+              borderRadius: 5,
             }}
           />
           <Text style={styles.title}>{itemData.item.text}</Text>
@@ -43,7 +43,7 @@ function ServiceComponent(props) {
       <FlatList
         ListHeaderComponent={<Text style={styles.text}>ORDER BY SERVICE</Text>}
         renderItem={renderCategory}
-        data={CATEGORY}
+        data={CATEGORY.sort((a, b) => a.text.localeCompare(b.text))}
         numColumns={4}
         style={styles.category}
       />
@@ -63,7 +63,7 @@ export const CATEGORY = [
     'p2',
     'APPLIANCE',
     'appliances',
-    'https://image.ayudaa.in/asset/appliance.png',
+    'https://image.ayudaa.in/asset/wash.png',
   ),
   new Photo(
     'p3',
@@ -87,13 +87,13 @@ export const CATEGORY = [
     'p6',
     'INTERIOR DESIGN',
     'interiorDesign',
-    'https://image.ayudaa.in/asset/pest%20controll.png',
+    'https://image.ayudaa.in/asset/appliance.png',
   ),
   new Photo(
     'p7',
     'HOME CONTRACTOR',
     'homeContractor',
-    'https://image.ayudaa.in/asset/wash.png',
+    'https://image.ayudaa.in/asset/homeContractor.png',
   ),
   new Photo(
     'p1',
@@ -111,6 +111,10 @@ const styles = StyleSheet.create({
     maxHeight: 100,
     margin: 2,
     marginTop: 20,
+    borderColor: colors.ypsDark,
+    borderWidth: 0.5,
+    borderRadius: 5,
+    overflow: 'hidden',
   },
   text: {
     fontSize: 12,
@@ -127,7 +131,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 12,
     fontWeight: 'bold',
-    alignSelf: 'center',
+    textAlign: 'center',
     margin: 2,
   },
 });
