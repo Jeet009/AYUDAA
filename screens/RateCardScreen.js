@@ -110,7 +110,7 @@ function RateCardScreen(props) {
     <FlatList
       ListHeaderComponent={<Text style={styles.text}>RATE CARD</Text>}
       renderItem={renderCategory}
-      data={data}
+      data={data.sort((a, b) => a.name.localeCompare(b.name))}
       onRefresh={() => onRefresh()}
       refreshing={refreshing}
     />

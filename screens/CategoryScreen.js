@@ -110,7 +110,7 @@ export default function CategoryScreen(props) {
                 />
                 <View style={styles.title}>
                   <View style={styles.whiteContainer}>
-                    <Text style={styles.text}> {item.name}</Text>
+                    <Text style={styles.text}>{item.name}</Text>
                   </View>
 
                   {/* PRICE  */}
