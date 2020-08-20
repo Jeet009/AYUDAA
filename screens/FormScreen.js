@@ -377,6 +377,7 @@ export default function FormScreen(props) {
                           //ORDER DETAILS
                           status: 3,
                           technician: '',
+                          technicianPhoto: '',
                           orderedAt: firestore.FieldValue.serverTimestamp(),
                         })
                         .then(() => {

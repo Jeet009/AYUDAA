@@ -65,7 +65,7 @@ export default function DetailScreen(props) {
                       {/* CATEGORY  */}
                       {(() => {
                         switch (props.navigation.getParam('category')) {
-                          case '1':
+                          case 'Home':
                             return (
                               <View style={styles.title}>
                                 <Text style={styles.name}>
@@ -74,7 +74,7 @@ export default function DetailScreen(props) {
                               </View>
                             );
 
-                          case '2':
+                          case 'Kitchen':
                             return (
                               <View style={styles.title}>
                                 <Text style={styles.name}>
@@ -83,7 +83,7 @@ export default function DetailScreen(props) {
                               </View>
                             );
 
-                          case '3':
+                          case 'Laundry':
                             return (
                               <View style={styles.title}>
                                 <Text style={styles.name}>
@@ -92,7 +92,7 @@ export default function DetailScreen(props) {
                               </View>
                             );
 
-                          case '4':
+                          case 'Saloon':
                             return (
                               <View style={styles.title}>
                                 <Text style={styles.name}>

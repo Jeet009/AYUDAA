@@ -67,8 +67,12 @@ function ListComponent(props) {
                     }}
                   />
                   <View>
-                    <Text style={styles.name}> {props.technician}</Text>
-                    <Text style={styles.verify}> {'   '}VERIFIED</Text>
+                    <Text style={styles.name}>
+                      {' '}
+                      {'  '}
+                      {props.technician}
+                    </Text>
+                    <Text style={styles.verify}> {'  '}VERIFIED</Text>
                   </View>
                 </View>
               );
