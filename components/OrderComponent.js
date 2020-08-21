@@ -22,7 +22,6 @@ export default function OrderComponent(props) {
   // Fetching Data
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]); // Initial empty array of users
-  const [refreshing, setRefreshing] = useState(false);
 
   var user = auth().currentUser;
 
@@ -31,7 +30,7 @@ export default function OrderComponent(props) {
       .collection('orders')
       .where('customerId', '==', user.uid)
       .onSnapshot((querySnapshot) => {
-        const data = [].reverse();
+        const data = [];
 
         querySnapshot.forEach((documentSnapshot) => {
           data.push({
@@ -58,31 +57,6 @@ export default function OrderComponent(props) {
   }
 
   //Controlling Refresh
-  const onRefresh = () => {
-    setRefreshing(true);
-    setLoading(true);
-    const subscriber = firestore()
-      .collection('orders')
-      .where('customerId', '==', user.uid)
-      .onSnapshot((querySnapshot) => {
-        const data = [];
-
-        querySnapshot.forEach((documentSnapshot) => {
-          data.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-          });
-        });
-
-        setData(data);
-        // console.log(data);
-        setLoading(false);
-        setRefreshing(false);
-      });
-
-    // Unsubscribe from events when no longer in use
-    return () => subscriber();
-  };
 
   function renderCategory({item}) {
     return (
@@ -111,8 +85,6 @@ export default function OrderComponent(props) {
           ListHeaderComponent={<Text style={styles.text}>YOUR ORDERS</Text>}
           renderItem={renderCategory}
           data={data.sort((a, b) => a.name.localeCompare(b.name))}
-          onRefresh={() => onRefresh()}
-          refreshing={refreshing}
           showsVerticalScrollIndicator={false}
         />
       </View>

@@ -1,33 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import HeaderComponent from './components/HeaderComponent';
-import {
-  View,
-  StyleSheet,
-  SafeAreaView,
-  StatusBar,
-  AsyncStorage,
-  Modal,
-  ScrollView,
-  TouchableHighlight,
-  Text,
-  Image,
-  Dimensions,
-} from 'react-native';
+import {StyleSheet, SafeAreaView, StatusBar} from 'react-native';
 import Navigation from './routes/Navigation';
 import NavigationService from './routes/NavigationService';
 import LoginScreen from './screens/LoginScreen';
-import SetUpProfile from './screens/SetupProfile';
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 import SplashScreen from 'react-native-splash-screen';
-import colors from './constants/colors';
 
 export default function App() {
   const [initializing, setInitializing] = useState(true);
-  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState();
-
-  let visited = AsyncStorage['alreadyVisited'];
 
   function onAuthStateChanged(user) {
     setUser(user);
