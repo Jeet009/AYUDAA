@@ -107,13 +107,15 @@ function RateCardScreen(props) {
   }
 
   return (
-    <FlatList
-      ListHeaderComponent={<Text style={styles.text}>RATE CARD</Text>}
-      renderItem={renderCategory}
-      data={data.sort((a, b) => a.name.localeCompare(b.name))}
-      onRefresh={() => onRefresh()}
-      refreshing={refreshing}
-    />
+    <View style={styles.bg}>
+      <FlatList
+        ListHeaderComponent={<Text style={styles.text}>RATE CARD</Text>}
+        renderItem={renderCategory}
+        data={data.sort((a, b) => a.name.localeCompare(b.name))}
+        onRefresh={() => onRefresh()}
+        refreshing={refreshing}
+      />
+    </View>
   );
 }
 
@@ -122,29 +124,16 @@ export default RateCardScreen;
 const styles = StyleSheet.create({
   text: {
     fontSize: 15,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins-SemiBold',
     textTransform: 'uppercase',
     alignSelf: 'center',
   },
-  heading: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-  },
-  category: {
-    backgroundColor: colors.white,
-    margin: 5,
-    padding: 10,
-    borderRadius: 5,
-  },
-  para: {
-    fontSize: 15,
-    fontWeight: `100`,
-  },
   name: {
-    fontSize: 12,
-    fontWeight: `bold`,
-    textTransform: 'uppercase',
+    fontSize: 15,
+    // fontWeight: `bold`,
+    // textTransform: 'uppercase',
+    fontFamily: 'Poppins-Regular',
   },
   title: {
     backgroundColor: colors.smoke,
@@ -157,5 +146,9 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 5,
     borderRadius: 5,
+  },
+  bg: {
+    flex: 1,
+    backgroundColor: colors.lightPrimary,
   },
 });

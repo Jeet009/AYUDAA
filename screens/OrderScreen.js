@@ -1,8 +1,12 @@
 import React from 'react';
 import {View, Text, FlatList} from 'react-native';
 import OrderComponent from '../components/OrderComponent';
-import LoadingScreen from '../screens/LoadingScreen';
+import colors from '../constants/colors';
 
 export default function OrderScreen() {
-  return <FlatList ListHeaderComponent={<OrderComponent />} />;
+  return (
+    <View style={{flex: 1, backgroundColor: colors.lightPrimary}}>
+      <FlatList ListHeaderComponent={<OrderComponent />} />
+    </View>
+  );
 }

@@ -28,15 +28,7 @@ function LoadingScreen(props) {
           }}
         />
         <Text style={styles.text}>L O A D I N G . . .</Text>
-        {/* <Text style={styles.label}>STAY THERE</Text> */}
       </View>
-
-      {/* <Button title="Confirm Code" onPress={() => confirmCode()} /> */}
-
-      {/* <View style={styles.profile}>
-        <Text style={styles.text}>L O A D I N G . . .</Text>
-      </View> */}
-      <StatusBar barStyle="dark-content" hidden={true} backgroundColor="#fff" />
     </SafeAreaView>
   );
 }

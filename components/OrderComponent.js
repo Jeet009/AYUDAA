@@ -50,7 +50,7 @@ export default function OrderComponent(props) {
 
   if (loading) {
     return (
-      <View style={styles.category}>
+      <View style={{flex: 1, backgroundColor: colors.lightPrimary}}>
         <LoadingScreen />
       </View>
     );
@@ -102,7 +102,8 @@ export default function OrderComponent(props) {
 const styles = StyleSheet.create({
   text: {
     fontSize: 15,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins-SemiBold',
     alignSelf: 'center',
     margin: 2,
     marginTop: 10,

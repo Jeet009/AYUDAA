@@ -10,6 +10,7 @@ import {
 import Photo from '../js/dummyData';
 import colors from '../constants/colors';
 import {withNavigation} from 'react-navigation';
+import bgServices from '../assets/images/bg-service.jpg';
 
 function ServiceComponent(props) {
   function renderCategory(itemData) {
@@ -39,15 +40,22 @@ function ServiceComponent(props) {
   }
 
   return (
-    <View>
-      <FlatList
-        ListHeaderComponent={<Text style={styles.text}>ORDER BY SERVICE</Text>}
-        renderItem={renderCategory}
-        data={CATEGORY.sort((a, b) => a.text.localeCompare(b.text))}
-        numColumns={4}
-        style={styles.category}
-      />
-    </View>
+    <ImageBackground
+      resizeMode="cover"
+      source={bgServices}
+      style={styles.bgImage}>
+      <View style={styles.overlay}>
+        <FlatList
+          ListHeaderComponent={
+            <Text style={styles.text}>ORDER BY SERVICE</Text>
+          }
+          renderItem={renderCategory}
+          data={CATEGORY.sort((a, b) => a.text.localeCompare(b.text))}
+          numColumns={4}
+          style={styles.category}
+        />
+      </View>
+    </ImageBackground>
   );
 }
 
@@ -111,27 +119,37 @@ const styles = StyleSheet.create({
     maxHeight: 100,
     margin: 2,
     marginTop: 20,
-    borderColor: colors.ypsDark,
-    borderWidth: 0.5,
+    // borderColor: colors.ypsDark,
+    // borderWidth: 0.5,
     borderRadius: 5,
     overflow: 'hidden',
   },
   text: {
     fontSize: 12,
-    fontWeight: 'bold',
+    // fontWeight: '800',
     alignSelf: 'center',
     margin: 2,
+    fontFamily: 'Poppins-SemiBold',
   },
   category: {
     backgroundColor: colors.white,
     margin: 5,
     padding: 10,
     borderRadius: 5,
+    elevation: 1.5,
   },
   title: {
     fontSize: 12,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     textAlign: 'center',
     margin: 2,
+    fontFamily: 'Poppins-Regular',
+  },
+  bgImage: {
+    // backgroundColor: colors.white,
+  },
+  overlay: {
+    padding: 2,
+    backgroundColor: 'rgba(255,255,143,0.5)',
   },
 });

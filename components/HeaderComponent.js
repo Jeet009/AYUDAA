@@ -1,27 +1,37 @@
 import React from 'react';
-import {Text, StyleSheet, TouchableOpacity, Linking} from 'react-native';
+import {StyleSheet, TouchableOpacity, Linking, View} from 'react-native';
 import {Header, Right, Body} from 'native-base';
 import {Icon} from 'react-native-elements';
+import Text from './MyText';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function HeaderComponent() {
   return (
-    <Header transparent hasSegment>
-      <Body>
-        <Text style={styles.text}>A Y U D A A</Text>
-      </Body>
-      <Right style={styles.thumbnail}>
-        <TouchableOpacity
-          onPress={() => {
-            Linking.openURL('https://wa.me/919832358173');
-          }}>
-          <Icon name="whatsapp" type="font-awesome" color="black" />
-        </TouchableOpacity>
-      </Right>
-    </Header>
+    <LinearGradient
+      start={{x: 0, y: 1}}
+      end={{x: 1, y: 0}}
+      colors={['#ffffba', '#ffff8d']}>
+      <Header transparent hasSegment>
+        <Body>
+          <Text style={styles.text}>A Y U D A A</Text>
+        </Body>
+        <Right style={styles.thumbnail}>
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL('https://wa.me/919832358173');
+            }}>
+            <Icon name="whatsapp" type="font-awesome" color="black" />
+          </TouchableOpacity>
+        </Right>
+      </Header>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
+  header: {
+    elevation: 5,
+  },
   iconColor: {
     color: 'black',
   },
@@ -29,7 +39,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 20,
   },

@@ -4,20 +4,22 @@ import CarouselComponent from '../components/CarouselComponent';
 import CategoryComponent from '../components/CategoryComponent';
 import SliderComponent from '../components/SliderComponent';
 import ServiceComponent from '../components/ServiceComponent';
-import firestore from '@react-native-firebase/firestore';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function HomeScreen() {
   return (
-    <FlatList
-      ListHeaderComponent={
-        <>
-          <CarouselComponent />
-          <CategoryComponent />
-          <SliderComponent />
-        </>
-      }
-      ListFooterComponent={<ServiceComponent />}
-    />
+    <LinearGradient colors={['#ffffba', '#ffffbe']}>
+      <FlatList
+        ListHeaderComponent={
+          <>
+            <CarouselComponent />
+            <CategoryComponent />
+            <SliderComponent />
+          </>
+        }
+        ListFooterComponent={<ServiceComponent />}
+      />
+    </LinearGradient>
   );
 }
 

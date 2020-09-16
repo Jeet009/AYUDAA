@@ -36,7 +36,7 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <HeaderComponent />
       <Navigation />
-      <StatusBar barStyle="dark-content" hidden={true} backgroundColor="#fff" />
+      <StatusBar barStyle="dark-content" backgroundColor="#ffffba" />
     </SafeAreaView>
   );
 }

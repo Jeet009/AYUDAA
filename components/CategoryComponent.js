@@ -12,6 +12,7 @@ import {
 import Photo from '../js/dummyData';
 import colors from '../constants/colors';
 import {withNavigation} from 'react-navigation';
+import LinearGradient from 'react-native-linear-gradient';
 
 function CategoryComponent(props) {
   function renderCategory(itemData) {
@@ -38,15 +39,16 @@ function CategoryComponent(props) {
 
   return (
     <View>
-      <FlatList
-        ListHeaderComponent={
-          <Text style={styles.text}>ORDER BY CATEGORIES</Text>
-        }
-        renderItem={renderCategory}
-        data={CATEGORY}
-        numColumns={2}
-        style={styles.category}
-      />
+      <LinearGradient style={styles.category} colors={['#ffffef', '#ffffba']}>
+        <FlatList
+          ListHeaderComponent={
+            <Text style={styles.text}>ORDER BY CATEGORIES</Text>
+          }
+          renderItem={renderCategory}
+          data={CATEGORY}
+          numColumns={2}
+        />
+      </LinearGradient>
     </View>
   );
 }
@@ -90,14 +92,16 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 12,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins-SemiBold',
     alignSelf: 'center',
     margin: 2,
   },
   category: {
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     margin: 5,
     padding: 10,
     borderRadius: 5,
+    elevation: 10,
   },
 });

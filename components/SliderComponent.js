@@ -20,7 +20,7 @@ export default function SliderComponent() {
     <View style={styles.container}>
       <View style={styles.textContainer}>
         {/* <Text style={styles.text}></Text> */}
-        <Text style={{fontSize: 12, fontWeight: 'bold'}}>
+        <Text style={{fontSize: 12, fontFamily: 'Poppins-SemiBold'}}>
           AYUDAA SAFE SERVICE
         </Text>
       </View>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // margin: 2,
     // borderRadius: 5,
-    marginTop: 5,
+    marginTop: 15,
     backgroundColor: colors.white,
   },
   text: {

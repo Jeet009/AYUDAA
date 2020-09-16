@@ -36,59 +36,46 @@ export default function ProfileScreen(props) {
       setEmail(doc.data().email);
     });
 
-  // useEffect(() => {
-  //   const subscriber = () =>
-  //     firestore()
-  //       .collection('orders')
-  //       .where('customerId', '==', user.uid)
-  //       .get()
-  //       .then((querySnapshot) => {
-  //         // console.log(querySnapshot.size);
-  //         setOrderCount(querySnapshot.size);
-  //       });
-
-  //   // Stop listening for updates when no longer required
-  //   return () => subscriber();
-  // }, [orderCount]);
-
   return (
-    <FlatList
-      style={{marginTop: 15, flex: 1}}
-      ListHeaderComponent={
-        <View>
-          <List style={styles.container}>
-            <ListItem thumbnail>
-              <Left>
-                <Thumbnail
-                  large
-                  source={{
-                    uri: 'https://image.ayudaa.in/asset/profilePhoto.png',
-                  }}
-                  style={{borderColor: colors.primary, borderWidth: 1.5}}
-                />
-              </Left>
-              <Body>
-                <View style={styles.title}>
-                  <Text style={styles.text}>{name}</Text>
-                  <Text style={styles.name}>Phone : {phoneNo}</Text>
-                </View>
-                <View style={styles.title}>
-                  {/* <Text style={styles.name}>ORDER COUNT : {orderCount}</Text> */}
-                  <Text style={styles.name}>Email : {email}</Text>
-                </View>
-              </Body>
-              <Right></Right>
-            </ListItem>
-          </List>
-        </View>
-      }
-      ListFooterComponent={
-        <View>
-          <ServiceComponent />
-          <SliderComponent />
-        </View>
-      }
-    />
+    <View style={styles.bg}>
+      <FlatList
+        style={{marginTop: 15, flex: 1}}
+        ListHeaderComponent={
+          <View>
+            <List style={styles.container}>
+              <ListItem thumbnail>
+                <Left>
+                  <Thumbnail
+                    large
+                    source={{
+                      uri: 'https://image.ayudaa.in/asset/profilePhoto.png',
+                    }}
+                    style={{borderColor: colors.primary, borderWidth: 1.5}}
+                  />
+                </Left>
+                <Body>
+                  <View style={styles.title}>
+                    <Text style={styles.text}>{name}</Text>
+                    <Text style={styles.name}>Phone : {phoneNo}</Text>
+                  </View>
+                  <View style={styles.title}>
+                    {/* <Text style={styles.name}>ORDER COUNT : {orderCount}</Text> */}
+                    <Text style={styles.name}>Email : {email}</Text>
+                  </View>
+                </Body>
+                <Right></Right>
+              </ListItem>
+            </List>
+          </View>
+        }
+        ListFooterComponent={
+          <View>
+            <ServiceComponent />
+            <SliderComponent />
+          </View>
+        }
+      />
+    </View>
   );
 }
 
@@ -114,15 +101,19 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   title: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.white,
     padding: 10,
     borderRadius: 5,
     marginBottom: 5,
   },
   container: {
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     padding: 10,
     margin: 5,
     borderRadius: 5,
+  },
+  bg: {
+    flex: 1,
+    backgroundColor: colors.lightPrimary,
   },
 });

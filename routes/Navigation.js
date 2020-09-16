@@ -120,7 +120,7 @@ const bottomTab = createMaterialBottomTabNavigator(
     initialRouteName: 'Home',
     activeColor: colors.night,
     inactiveColor: colors.grey,
-    barStyle: {backgroundColor: colors.white},
+    barStyle: {backgroundColor: colors.lightPrimary},
     labeled: false,
   },
 );

@@ -1,5 +1,6 @@
 const colors = {
   primary: '#ffff8d',
+  lightPrimary: '#ffffba',
   black: '#000000',
   night: '#333333',
   charcoal: '#474747',
