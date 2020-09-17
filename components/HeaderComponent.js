@@ -4,6 +4,7 @@ import {Header, Right, Body} from 'native-base';
 import {Icon} from 'react-native-elements';
 import Text from './MyText';
 import LinearGradient from 'react-native-linear-gradient';
+import SearchModal from './SearchModal';
 
 export default function HeaderComponent() {
   return (
@@ -24,6 +25,7 @@ export default function HeaderComponent() {
           </TouchableOpacity>
         </Right>
       </Header>
+      <SearchModal />
     </LinearGradient>
   );
 }

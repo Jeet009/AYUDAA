@@ -39,7 +39,7 @@ function CategoryComponent(props) {
 
   return (
     <View>
-      <LinearGradient style={styles.category} colors={['#ffffef', '#ffffba']}>
+      <LinearGradient style={styles.category} colors={['#ffffaa', '#ffffcf']}>
         <FlatList
           ListHeaderComponent={
             <Text style={styles.text}>ORDER BY CATEGORIES</Text>

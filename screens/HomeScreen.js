@@ -8,8 +8,9 @@ import LinearGradient from 'react-native-linear-gradient';
 
 export default function HomeScreen() {
   return (
-    <LinearGradient colors={['#ffffba', '#ffffbe']}>
+    <LinearGradient colors={['#ffff', '#fff']}>
       <FlatList
+        showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <>
             <CarouselComponent />
