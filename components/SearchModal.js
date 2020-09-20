@@ -41,12 +41,15 @@ const SearchModal = () => {
     setSearchFor(e.nativeEvent.text);
   };
   const handleSubmit = () => {
-    let typedValue = searchFor.toString().toLowerCase();
-    // console.log(typedValue);
+    let typedValue =
+      searchFor.indexOf(' ') == -1
+        ? searchFor
+        : searchFor.substr(0, searchFor.indexOf(' '));
+    let typedValueLowerCase = typedValue.toString().toLowerCase();
     if (searchFor) {
       firestore()
         .collection('services')
-        .where('serviceName', '==', typedValue)
+        .where('tags', 'array-contains-any', [typedValueLowerCase])
         .onSnapshot((querySnapshot) => {
           const data = [];
 
@@ -56,6 +59,7 @@ const SearchModal = () => {
               key: documentSnapshot.id,
             });
           });
+          // console.log(data);
           data.length > 0
             ? setSearchResult(data)
             : Alert.alert('Sorry!', 'Nothing Found');
