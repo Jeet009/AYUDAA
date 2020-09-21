@@ -7,6 +7,7 @@ import {Icon} from 'react-native-elements';
 import LoadingScreen from '../screens/LoadingScreen';
 
 import firestore from '@react-native-firebase/firestore';
+import HeaderComponent from '../components/HeaderComponent';
 
 function RateCardScreen(props) {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
@@ -107,15 +108,18 @@ function RateCardScreen(props) {
   }
 
   return (
-    <View style={styles.bg}>
-      <FlatList
-        ListHeaderComponent={<Text style={styles.text}>RATE CARD</Text>}
-        renderItem={renderCategory}
-        data={data.sort((a, b) => a.name.localeCompare(b.name))}
-        onRefresh={() => onRefresh()}
-        refreshing={refreshing}
-      />
-    </View>
+    <>
+      <HeaderComponent />
+      <View style={styles.bg}>
+        <FlatList
+          ListHeaderComponent={<Text style={styles.text}>RATE CARD</Text>}
+          renderItem={renderCategory}
+          data={data.sort((a, b) => a.name.localeCompare(b.name))}
+          onRefresh={() => onRefresh()}
+          refreshing={refreshing}
+        />
+      </View>
+    </>
   );
 }
 

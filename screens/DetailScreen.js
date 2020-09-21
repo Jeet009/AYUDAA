@@ -202,7 +202,7 @@ export default function DetailScreen(props) {
                     <TouchableOpacity
                       style={styles.button}
                       onPress={() => {
-                        props.navigation.navigate('FormScreen', {
+                        props.navigation.navigate('Enter Details', {
                           name: props.navigation.getParam('name'),
                           url: props.navigation.getParam('url'),
                           rate: props.navigation.getParam('rate'),

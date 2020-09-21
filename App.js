@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import HeaderComponent from './components/HeaderComponent';
-import {StyleSheet, SafeAreaView, StatusBar} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
 import Navigation from './routes/Navigation';
 import NavigationService from './routes/NavigationService';
 import LoginScreen from './screens/LoginScreen';
@@ -34,9 +33,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderComponent />
       <Navigation />
-      <StatusBar barStyle="dark-content" backgroundColor="#ffffba" />
     </SafeAreaView>
   );
 }

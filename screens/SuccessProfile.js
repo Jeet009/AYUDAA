@@ -38,11 +38,6 @@ function SuccessProfile(props) {
           <Text style={styles.text}>WELCOME TO AYUDAA</Text>
           <Text style={styles.label}>YOUR HOME SERVICE ASSISTANT</Text>
         </View>
-        <StatusBar
-          barStyle="dark-content"
-          hidden={true}
-          backgroundColor="#fff"
-        />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

@@ -382,7 +382,7 @@ export default function FormScreen(props) {
                         })
                         .then(() => {
                           //console.log('User updated!');
-                          props.navigation.navigate('SuccessOrder');
+                          props.navigation.navigate('Order Placed');
                         })
                         .catch((err) => console.log(err));
                     } else {

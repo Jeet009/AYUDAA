@@ -18,7 +18,7 @@ function ServiceComponent(props) {
       <TouchableOpacity
         style={{flex: 1}}
         onPress={() =>
-          props.navigation.navigate('ServiceScreen', {
+          props.navigation.navigate('ORDER BY SERVICES', {
             title: itemData.item.text,
             dbName: itemData.item.dbName,
             uri: itemData.item.url,

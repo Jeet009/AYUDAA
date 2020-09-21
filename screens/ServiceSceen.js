@@ -83,7 +83,7 @@ export default function ServiceScreen(props) {
     return (
       <TouchableOpacity
         onPress={() =>
-          props.navigation.navigate('DetailScreen', {
+          props.navigation.navigate('Confirm Your Booking', {
             name: item.name,
             url: props.navigation.getParam('uri'),
             rate: item.rate,

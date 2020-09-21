@@ -20,19 +20,55 @@ import SuccessOrder from '../screens/SuccessOrder';
 import RateCardScreen from '../screens/RateCardScreen';
 import ConfirmCancelScreen from '../screens/ConfirmCancelScreen';
 import CanceledScreen from '../screens/CanceledScreen';
+import SearchPage from '../stacks/SearchStack/screens/SearchPage';
+
+//SearchScreen
+const SearchNavigator = createStackNavigator(
+  {
+    'Search Services': SearchPage,
+    'Order Details': DetailScreen,
+  },
+  {
+    headerMode: 'screen',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: colors.lightPrimary,
+      },
+      headerTintColor: '#000',
+      headerTitleStyle: {
+        fontFamily: 'Poppins-Light',
+        fontSize: 18,
+      },
+    },
+  },
+);
+
+const SearchContainer = createAppContainer(SearchNavigator);
 
 //Home Screen
 const AppNavigator = createStackNavigator(
   {
-    Home: HomeScreen,
-    CategoryScreen: CategoryScreen,
-    ServiceScreen: ServiceScreen,
-    DetailScreen: DetailScreen,
-    FormScreen: FormScreen,
-    SuccessOrder: SuccessOrder,
+    'A Y U D A A': HomeScreen,
+    'ORDER BY SERVICES': ServiceScreen,
+    'ORDER BY CATEGORY': CategoryScreen,
+    'Confirm Your Booking': DetailScreen,
+    'Enter Details': FormScreen,
+    'Order Placed': SuccessOrder,
+    'Search Services': SearchContainer,
   },
   {
-    headerMode: 'none',
+    mode: 'modal',
+    headerMode: 'screen',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: colors.lightPrimary,
+      },
+      headerTintColor: '#000',
+      headerTitleStyle: {
+        fontFamily: 'Poppins-Light',
+        fontSize: 18,
+      },
+    },
   },
 );
 

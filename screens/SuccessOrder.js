@@ -24,7 +24,7 @@ function SuccessOrder(props) {
           <TouchableOpacity // eslint-disable-next-line prettier/prettier
             style={styles.button}
             onPress={() => {
-              props.navigation.navigate('Home');
+              props.navigation.navigate('A Y U D A A');
             }}>
             <Text style={styles.buttonText}>PROCEED</Text>
           </TouchableOpacity>
@@ -39,11 +39,6 @@ function SuccessOrder(props) {
           <Text style={styles.text}>A Y U D A A</Text>
           <Text style={styles.label}>YOUR HOME SERVICE ASSISTANT</Text>
         </View>
-        <StatusBar
-          barStyle="dark-content"
-          hidden={true}
-          backgroundColor="#fff"
-        />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

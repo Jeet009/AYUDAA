@@ -20,7 +20,7 @@ function CategoryComponent(props) {
       <TouchableOpacity
         style={{flex: 1}}
         onPress={() =>
-          props.navigation.navigate('CategoryScreen', {
+          props.navigation.navigate('ORDER BY CATEGORY', {
             title: itemData.item.text,
             dbName: itemData.item.dbName,
           })

@@ -83,7 +83,7 @@ export default function CategoryScreen(props) {
     return (
       <TouchableOpacity
         onPress={() =>
-          props.navigation.navigate('DetailScreen', {
+          props.navigation.navigate('Confirm Your Booking', {
             name: item.name,
             url: 'https://image.ayudaa.in/asset/orderLogo.png',
             rate: item.rate,

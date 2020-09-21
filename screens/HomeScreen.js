@@ -5,7 +5,7 @@ import CategoryComponent from '../components/CategoryComponent';
 import SliderComponent from '../components/SliderComponent';
 import ServiceComponent from '../components/ServiceComponent';
 import LinearGradient from 'react-native-linear-gradient';
-
+import HeaderComponent from '../components/HeaderComponent';
 export default function HomeScreen() {
   return (
     <LinearGradient colors={['#ffff', '#fff']}>
@@ -13,6 +13,8 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <>
+            <HeaderComponent />
+
             <CarouselComponent />
             <CategoryComponent />
             <SliderComponent />
