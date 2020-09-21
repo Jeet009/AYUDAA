@@ -1,6 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Text, Thumbnail, View, Item, Input} from 'native-base';
-import {ImageBackground, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import electrician from '../../../assets/images/electrician-1080554_1920.jpg';
 import electric from '../../../assets/images/electric-1080584_1920.jpg';
