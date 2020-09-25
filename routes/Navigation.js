@@ -21,6 +21,7 @@ import RateCardScreen from '../screens/RateCardScreen';
 import ConfirmCancelScreen from '../screens/ConfirmCancelScreen';
 import CanceledScreen from '../screens/CanceledScreen';
 import SearchPage from '../stacks/SearchStack/screens/SearchPage';
+import SubCategoryScreen from '../stacks/ServiceStack/screens/SubCategoryScreen';
 
 //SearchScreen
 const SearchNavigator = createStackNavigator(
@@ -42,7 +43,6 @@ const SearchNavigator = createStackNavigator(
     },
   },
 );
-
 const SearchContainer = createAppContainer(SearchNavigator);
 
 //Home Screen
@@ -51,6 +51,9 @@ const AppNavigator = createStackNavigator(
     'A Y U D A A': HomeScreen,
     'ORDER BY SERVICES': ServiceScreen,
     'ORDER BY CATEGORY': CategoryScreen,
+    ChooseService: {
+      screen: SubCategoryScreen,
+    },
     'Confirm Your Booking': DetailScreen,
     'Enter Details': FormScreen,
     'Order Placed': SuccessOrder,
