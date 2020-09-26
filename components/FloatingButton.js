@@ -9,13 +9,17 @@ import {
 } from 'react-native';
 
 export default function FloatingButton() {
+  const clickHandler = () => {
+    //function to handle click on floating Action Button
+    Alert.alert('Floating Button Clicked');
+  };
   return (
     <View style={styles.MainContainer}>
       <Text>Example of Floating Action Button</Text>
       <Text>Click on Action Button to see Alert</Text>
       <TouchableOpacity
         activeOpacity={0.7}
-        onPress={this.clickHandler}
+        onPress={clickHandler}
         style={styles.TouchableOpacityStyle}>
         <Image
           //We are making FAB using TouchableOpacity with an image

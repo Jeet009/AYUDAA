@@ -49,7 +49,7 @@ function SubCategoryScreen(props) {
       <LinearGradient
         //   ref={(r) => (this.gradiant = r)}
         // locations={[0, 1.0]}
-        colors={['rgba(0,0,0,0.50)', colors.lightPrimary]}
+        colors={['rgba(0,0,0,0.50)', colors.ypsDark]}
         style={styles.overlay}>
         <SubCategoryComponent data={subCategory} />
       </LinearGradient>

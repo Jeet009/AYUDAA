@@ -1,21 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  ImageBackground,
-  Dimensions,
-  FlatList,
-  Image,
-} from 'react-native';
+import React from 'react';
+import {Text, View, StyleSheet, FlatList, Image} from 'react-native';
 import colors from '../../../constants/colors';
 import {withNavigation} from 'react-navigation';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 function SubCategoryComponent(props) {
   function renderSubCategory(itemData) {
     return (
       <View style={{flex: 1}}>
-        <TouchableOpacity
+        <TouchableNativeFeedback
           onPress={() =>
             props.navigation.navigate('ORDER BY SERVICES', {
               title: itemData.item.name,
@@ -36,7 +28,7 @@ function SubCategoryComponent(props) {
             </View>
             <Text style={styles.title}>A Y U D A A</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableNativeFeedback>
       </View>
     );
   }
@@ -53,7 +45,7 @@ function SubCategoryComponent(props) {
         <Text style={styles.heading}>Good Morning, Jeet</Text>
       }
       renderItem={renderSubCategory}
-      data={props.data}
+      data={props.data.sort((a, b) => a.name.localeCompare(b.name))}
       numColumns={2}
       //   contentContainerStyle={{padding: 0}}
     />
