@@ -11,6 +11,7 @@ import LoadingScreen from '../screens/LoadingScreen';
 import firestore from '@react-native-firebase/firestore';
 import NullScreen from './NullScreen';
 import {Icon} from 'react-native-elements';
+import FloatingButton from '../components/FloatingButton';
 
 export default function ServiceScreen(props) {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
@@ -172,6 +173,7 @@ export default function ServiceScreen(props) {
           onRefresh={() => onRefresh()}
           refreshing={refreshing}
         />
+        <FloatingButton />
       </View>
     );
   } else {

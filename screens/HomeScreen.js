@@ -6,6 +6,7 @@ import SliderComponent from '../components/SliderComponent';
 import ServiceComponent from '../components/ServiceComponent';
 import LinearGradient from 'react-native-linear-gradient';
 import HeaderComponent from '../components/HeaderComponent';
+import FloatingButton from '../components/FloatingButton';
 
 export default function HomeScreen() {
   return (
@@ -15,15 +16,14 @@ export default function HomeScreen() {
         ListHeaderComponent={
           <>
             <HeaderComponent />
-
             <CarouselComponent />
             <CategoryComponent />
-
             <SliderComponent />
           </>
         }
         ListFooterComponent={<ServiceComponent />}
       />
+      <FloatingButton />
     </LinearGradient>
   );
 }

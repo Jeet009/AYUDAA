@@ -1,5 +1,12 @@
 import React from 'react';
-import {Text, View, StyleSheet, FlatList, Image} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  FlatList,
+  Image,
+  Dimensions,
+} from 'react-native';
 import colors from '../../../constants/colors';
 import {withNavigation} from 'react-navigation';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
@@ -75,11 +82,11 @@ const styles = StyleSheet.create({
     elevation: 15,
     backgroundColor: 'white',
     borderRadius: 5,
+    height: Dimensions.get('window').height / 3,
+    maxHeight: Dimensions.get('window').height / 3,
   },
   bgImage: {
     flex: 1,
-    height: 200,
-    maxHeight: 200,
     borderBottomRightRadius: 20,
     borderRadius: 5,
     // margin: 2,
@@ -90,7 +97,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightPrimary,
     borderRadius: 5,
     overflow: 'hidden',
-
+    height: Dimensions.get('window').height / 2.5,
+    maxHeight: Dimensions.get('window').height / 2.5,
     margin: 2,
+    padding: 5,
   },
 });

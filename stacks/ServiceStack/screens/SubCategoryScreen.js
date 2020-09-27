@@ -11,6 +11,7 @@ import SubCategoryComponent from '../components/SubCategoryComponent';
 import {withNavigation} from 'react-navigation';
 import colors from '../../../constants/colors';
 import firestore from '@react-native-firebase/firestore';
+import FloatingButton from '../../../components/FloatingButton';
 
 function SubCategoryScreen(props) {
   const [subCategory, setSubCategory] = useState([]);
@@ -53,6 +54,7 @@ function SubCategoryScreen(props) {
         style={styles.overlay}>
         <SubCategoryComponent data={subCategory} />
       </LinearGradient>
+      <FloatingButton />
     </ImageBackground>
   );
 }

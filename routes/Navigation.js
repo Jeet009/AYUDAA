@@ -22,6 +22,7 @@ import ConfirmCancelScreen from '../screens/ConfirmCancelScreen';
 import CanceledScreen from '../screens/CanceledScreen';
 import SearchPage from '../stacks/SearchStack/screens/SearchPage';
 import SubCategoryScreen from '../stacks/ServiceStack/screens/SubCategoryScreen';
+import CartScreen from '../stacks/CartStack/screens/CartScreen';
 
 //SearchScreen
 const SearchNavigator = createStackNavigator(
@@ -54,6 +55,7 @@ const AppNavigator = createStackNavigator(
     ChooseService: {
       screen: SubCategoryScreen,
     },
+    'My Cart': CartScreen,
     'Confirm Your Booking': DetailScreen,
     'Enter Details': FormScreen,
     'Order Placed': SuccessOrder,
