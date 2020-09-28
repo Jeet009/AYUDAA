@@ -5,40 +5,67 @@ import {
   TouchableNativeFeedback,
 } from 'react-native-gesture-handler';
 import colors from '../constants/colors';
-
 import LoadingScreen from '../screens/LoadingScreen';
-
+import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import NullScreen from './NullScreen';
 import {Icon} from 'react-native-elements';
 import FloatingButton from '../components/FloatingButton';
+import PopUpComponent from './PopUpComponent';
 
 export default function ServiceScreen(props) {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [data, setData] = useState([]); // Initial empty array of users
   const [refreshing, setRefreshing] = useState(false);
+
+  const [cartData, setCartData] = useState();
+  const [addedToCart, setAddedToCart] = useState(false);
+
+  //Fetching Cart Id
+  useEffect(() => {
+    let user = auth().currentUser;
+    const subscriber = firestore()
+      .collection('cart')
+      .where('customerId', '==', user.uid)
+      .onSnapshot((querySnapshot) => {
+        const dataArray = [];
+
+        querySnapshot.forEach((documentSnapshot) => {
+          dataArray.push(documentSnapshot.data().serviceId);
+        });
+        setCartData(dataArray);
+      });
+
+    return () => subscriber();
+  }, [setCartData]);
+
+  //Checking For Add To Cart Status
+  setTimeout(() => {
+    setAddedToCart(false);
+  }, 4000);
+
+  //Fetching Services
   useEffect(() => {
     const subscriber = firestore()
       .collection('services')
       .where('subCategory', '==', props.navigation.getParam('dbName'))
       .onSnapshot((querySnapshot) => {
-        const data = [];
+        const dataArray = [];
 
         querySnapshot.forEach((documentSnapshot) => {
-          data.push({
+          dataArray.push({
             ...documentSnapshot.data(),
             key: documentSnapshot.id,
           });
         });
 
-        setData(data);
-        // console.log(data);
+        setData(dataArray);
         setLoading(false);
       });
-
-    // Unsubscribe from events when no longer in use
     return () => subscriber();
   }, [setData]);
+
+  //Loading
   if (loading) {
     return (
       <View style={styles.container}>
@@ -46,6 +73,25 @@ export default function ServiceScreen(props) {
       </View>
     );
   }
+
+  // Handling Cart
+  const handleCartSubmit = (id, name, price, url) => {
+    let user = auth().currentUser;
+    firestore()
+      .collection('cart')
+      .add({
+        serviceName: name,
+        serviceId: id,
+        price: price,
+        quantity: 1,
+        customerId: user.uid,
+        customerName: user.displayName,
+        url: url,
+      })
+      .then(() => {
+        setAddedToCart(true);
+      });
+  };
 
   //Controlling Refresh
   const onRefresh = () => {
@@ -65,14 +111,14 @@ export default function ServiceScreen(props) {
         });
 
         setData(data);
-        // console.log(data);
+
         setLoading(false);
         setRefreshing(false);
       });
 
-    // Unsubscribe from events when no longer in use
     return () => subscriber();
   };
+
   function renderCategory({item}) {
     return (
       <View style={{flex: 1}}>
@@ -94,8 +140,7 @@ export default function ServiceScreen(props) {
               <Image
                 resizeMode="cover"
                 source={{
-                  uri:
-                    'https://firebasestorage.googleapis.com/v0/b/ayuda-firebase.appspot.com/o/behind-toilet.jpg?alt=media&token=9b63f976-397a-475c-9293-2ecec92c71a3',
+                  uri: item.url,
                 }}
                 style={styles.bgImage}
               />
@@ -142,23 +187,47 @@ export default function ServiceScreen(props) {
               }>
               <Text style={styles.btnBlack}>View Details</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.btnText}>Add To Cart</Text>
-              <Icon
-                name="shopping-bag"
-                type="font-awesome"
-                color="white"
-                style={{fontFamily: 'Poppins-Light', marginLeft: 10}}
-                size={20}
-              />
-            </TouchableOpacity>
+            {cartData.includes(item.key) ? (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => props.navigation.navigate('My Cart')}>
+                <Text style={styles.btnText}>Go To Cart</Text>
+                <Icon
+                  name="shopping-bag"
+                  type="font-awesome"
+                  color="white"
+                  style={{
+                    fontFamily: 'Poppins-Light',
+                    marginLeft: 10,
+                  }}
+                  size={20}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() =>
+                  handleCartSubmit(item.key, item.name, item.rate, item.url)
+                }>
+                <Text style={styles.btnText}>Add To Cart</Text>
+                <Icon
+                  name="shopping-bag"
+                  type="font-awesome"
+                  color="white"
+                  style={{
+                    fontFamily: 'Poppins-Light',
+                    marginLeft: 10,
+                  }}
+                  size={20}
+                />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </View>
     );
   }
   if (data.length) {
-    // console.log(data);
     return (
       <View style={{flex: 1, backgroundColor: colors.white}}>
         <FlatList
@@ -173,6 +242,13 @@ export default function ServiceScreen(props) {
           onRefresh={() => onRefresh()}
           refreshing={refreshing}
         />
+        {addedToCart && (
+          <PopUpComponent
+            name="Added To Cart"
+            color="black"
+            icon="check-square"
+          />
+        )}
         <FloatingButton />
       </View>
     );
@@ -200,7 +276,6 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 15,
-    // fontWeight: `bold`,
     textTransform: 'capitalize',
     fontFamily: 'Poppins-Regular',
   },
@@ -208,7 +283,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Light',
     color: 'black',
     fontSize: 18,
-    // alignSelf: 'flex-left',
     textAlign: 'left',
   },
 
@@ -216,7 +290,6 @@ const styles = StyleSheet.create({
     padding: 5,
     elevation: 5,
     backgroundColor: 'white',
-    // borderRadius: 5,
     borderBottomWidth: 0.5,
     overflow: 'hidden',
   },
@@ -226,7 +299,6 @@ const styles = StyleSheet.create({
     maxHeight: 200,
     borderBottomRightRadius: 20,
     borderRadius: 5,
-    // margin: 2,
   },
   overlayYellow: {
     flex: 1,
