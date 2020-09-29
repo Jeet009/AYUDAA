@@ -50,9 +50,18 @@ export default function CartScreen() {
   }, [setData]);
 
   //Checking For Remove From Cart Status
-  setTimeout(() => {
-    setRemoveFromCart(false);
-  }, 4000);
+  useEffect(() => {
+    let unmounted = false;
+    if (!unmounted) {
+      setRemoveFromCart &&
+        setTimeout(() => {
+          setRemoveFromCart(false);
+        }, 4000);
+    }
+    return () => {
+      unmounted = true;
+    };
+  }, [setRemoveFromCart]);
 
   // Handling Delete
 

@@ -22,6 +22,7 @@ function ServiceComponent(props) {
             title: itemData.item.text,
             dbName: itemData.item.dbName,
             uri: itemData.item.url,
+            parent_category: false,
           })
         }>
         <View>

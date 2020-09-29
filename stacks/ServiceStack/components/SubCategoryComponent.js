@@ -48,9 +48,7 @@ function SubCategoryComponent(props) {
         flex: 1,
         marginTop: 5,
       }}
-      ListHeaderComponent={
-        <Text style={styles.heading}>Good Morning, Jeet</Text>
-      }
+      ListHeaderComponent={<Text style={styles.heading}>Select Service</Text>}
       renderItem={renderSubCategory}
       data={props.data.sort((a, b) => a.name.localeCompare(b.name))}
       numColumns={2}
@@ -64,7 +62,7 @@ const styles = StyleSheet.create({
   heading: {
     alignSelf: 'center',
     fontFamily: 'Poppins-Light',
-    color: 'white',
+    color: colors.ypsDark,
     fontSize: 18,
     marginTop: 10,
   },
@@ -101,5 +99,6 @@ const styles = StyleSheet.create({
     maxHeight: Dimensions.get('window').height / 2.5,
     margin: 2,
     padding: 5,
+    elevation: 2,
   },
 });

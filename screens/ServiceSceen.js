@@ -40,9 +40,20 @@ export default function ServiceScreen(props) {
   }, [setCartData]);
 
   //Checking For Add To Cart Status
-  setTimeout(() => {
-    setAddedToCart(false);
-  }, 4000);
+
+  useEffect(() => {
+    let unmounted = false;
+    if (!unmounted) {
+      setAddedToCart &&
+        setTimeout(() => {
+          setAddedToCart(false);
+        }, 4000);
+    }
+
+    return () => {
+      unmounted = true;
+    };
+  }, [setAddedToCart]);
 
   //Fetching Services
   useEffect(() => {

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import SubCategoryComponent from '../components/SubCategoryComponent';
 import {withNavigation} from 'react-navigation';
 import colors from '../../../constants/colors';
@@ -9,10 +9,17 @@ import color from '../../../constants/colors';
 
 function SubCategoryScreen(props) {
   const [subCategory, setSubCategory] = useState([]);
+  let dbParam;
+  if (props.navigation.getParam('parent_category')) {
+    dbParam = 'parent_category';
+  } else {
+    dbParam = 'categoryName';
+  }
   useEffect(() => {
+    // console.log(props.navigation.getParam('parent_category'));
     const subscriber = firestore()
       .collection('subCategory')
-      .where('categoryName', '==', props.navigation.getParam('dbName'))
+      .where(dbParam, '==', props.navigation.getParam('dbName'))
       .onSnapshot((querySnapshot) => {
         const data = [];
 
@@ -54,6 +61,6 @@ const styles = StyleSheet.create({
     flex: 1,
     // width: '100%',
     // height: Dimensions.get('window').height,
-    backgroundColor: colors.ypsDark,
+    backgroundColor: colors.white,
   },
 });
