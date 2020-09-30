@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, FlatList, ImageBackground} from 'react-native';
+import {StyleSheet, FlatList} from 'react-native';
 import CarouselComponent from '../components/CarouselComponent';
 import CategoryComponent from '../components/CategoryComponent';
 import SliderComponent from '../components/SliderComponent';
@@ -16,6 +16,7 @@ export default function HomeScreen() {
         ListHeaderComponent={
           <>
             <HeaderComponent />
+
             <CarouselComponent />
             <CategoryComponent />
             <SliderComponent />
