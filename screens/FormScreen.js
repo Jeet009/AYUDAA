@@ -18,7 +18,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {DatePicker} from 'native-base';
-
+import {firebase} from '@react-native-firebase/functions';
 import LoadingScreen from '../screens/LoadingScreen';
 
 export default function FormScreen(props) {
@@ -393,7 +393,6 @@ export default function FormScreen(props) {
                       serviceDate: serviceDate,
                       serviceTime: serviceTime,
                       paymentMethod: paymentMethod,
-                      paymentStatus: 'pending',
 
                       //ORDER DETAILS
                       status: 3,
@@ -402,44 +401,68 @@ export default function FormScreen(props) {
                       orderedAt: firestore.FieldValue.serverTimestamp(),
                     })
                     .then((data) => {
-                      setOrderId(data.id);
-                      var options = {
-                        description: props.navigation.getParam('name'),
-                        currency: 'INR',
-                        key: 'rzp_test_kZbHjGLGpAAz0g',
-                        amount: props.navigation.getParam('rate') + '00',
-                        external: {
-                          wallets: ['paytm'],
+                      fetch(`https://api.razorpay.com/v1/orders`, {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                          Authorization:
+                            'Basic cnpwX3Rlc3Rfa1piSGpHTEdwQUF6MGc6UWFjWWt5SE9hZjFjVE1yUFFLQ0thaUdR',
+                          Accept: 'application/json',
                         },
-                        name: name,
-                        prefill: {
-                          email: email,
-                          contact: phone,
-                          name: name,
+                        body: JSON.stringify({
+                          amount: props.navigation.getParam('rate') * 100,
+                          currency: 'INR',
+                        }),
+                        authorization: {
+                          username: 'rzp_test_kZbHjGLGpAAz0g',
+                          password: 'QacYkyHOaf1cTMrPQKCKaiGQ',
                         },
-                      };
+                      })
+                        .then((res) => res.json())
+                        .then((order) => {
+                          var options = {
+                            description: props.navigation.getParam('name'),
+                            currency: 'INR',
+                            key: 'rzp_test_kZbHjGLGpAAz0g',
+                            order_id: order.id,
+                            amount: order.amount,
+                            external: {
+                              wallets: ['paytm'],
+                            },
+                            name: name,
+                            prefill: {
+                              email: email,
+                              contact: phone,
+                              name: name,
+                            },
+                          };
 
-                      RazorpayCheckout.open(options)
-                        .then((data) => {
-                          setLoading(false);
-                          props.navigation.navigate('Order Placed');
-                          console.log(orderId);
-                          // handle success
-                          firestore().collection('orders').doc(orderId).update({
-                            paymentStatus: 'completed',
+                          RazorpayCheckout.open(options)
+                            .then(() => {
+                              // handle success
+                              setLoading(false);
+
+                              props.navigation.navigate('Order Placed');
+                            })
+                            .catch((error) => {
+                              // handle failure
+                              setLoading(false);
+                              alert('Payment Failed, Try Later ');
+                              console.log(error);
+                            });
+                          RazorpayCheckout.onExternalWalletSelection((data) => {
+                            setLoading(false);
+                            alert(
+                              `External Wallet Selected: ${data.external_wallet} `,
+                            );
                           });
                         })
-                        .catch((error) => {
-                          // handle failure
-                          alert('Payment Failed, Try Later ');
-                          console.log(error);
+                        .catch((err) => {
+                          setLoading(false);
+                          console.log(err);
                         });
-                      RazorpayCheckout.onExternalWalletSelection((data) => {
-                        alert(
-                          `External Wallet Selected: ${data.external_wallet} `,
-                        );
-                      });
                     })
+
                     // .then(() => {
                     //   props.navigation.navigate('Order Placed');
                     //   console.log(orderId);
@@ -449,7 +472,10 @@ export default function FormScreen(props) {
                     //   });
                     // })
 
-                    .catch((err) => console.log(err));
+                    .catch((err) => {
+                      setLoading(false);
+                      console.log(err);
+                    });
                 } else {
                   setLoading(true);
                   firestore()

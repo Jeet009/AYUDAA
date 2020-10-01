@@ -12,7 +12,6 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import com.razorpay.rn.RazorpayPackage;
 
 
 public class MainApplication extends Application implements ReactApplication {
@@ -30,8 +29,8 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
-          // packages.add(new RazorpayPackage());
-          return packages;
+            // packages.add(new RazorpayPackage());
+            return packages;
         }
 
         @Override
