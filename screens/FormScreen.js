@@ -14,11 +14,11 @@ import RazorpayCheckout from 'react-native-razorpay';
 import colors from '../constants/colors';
 import {Thumbnail} from 'native-base';
 import {Picker} from '@react-native-community/picker';
-import firestore from '@react-native-firebase/firestore';
+import firestore, {firebase} from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {DatePicker} from 'native-base';
-import {firebase} from '@react-native-firebase/functions';
+import hmacSHA256 from 'crypto-js/hmac-sha256';
 import LoadingScreen from '../screens/LoadingScreen';
 
 export default function FormScreen(props) {
@@ -31,7 +31,6 @@ export default function FormScreen(props) {
   const [email, setEmail] = useState();
   const [serviceAddress, setServiceAddress] = useState();
   const [pincode, setPincode] = useState();
-  const [orderId, setOrderId] = useState();
 
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -400,13 +399,13 @@ export default function FormScreen(props) {
                       technicianPhoto: '',
                       orderedAt: firestore.FieldValue.serverTimestamp(),
                     })
-                    .then((data) => {
+                    .then((docRef) => {
                       fetch(`https://api.razorpay.com/v1/orders`, {
                         method: 'POST',
                         headers: {
                           'Content-Type': 'application/json',
                           Authorization:
-                            'Basic cnpwX3Rlc3Rfa1piSGpHTEdwQUF6MGc6UWFjWWt5SE9hZjFjVE1yUFFLQ0thaUdR',
+                            'Basic cnpwX2xpdmVfeU12SVpKYkdjZmJXMDg6dXBtOTNWTndOZjFiRDB2TG5wU01oRG9j',
                           Accept: 'application/json',
                         },
                         body: JSON.stringify({
@@ -414,8 +413,8 @@ export default function FormScreen(props) {
                           currency: 'INR',
                         }),
                         authorization: {
-                          username: 'rzp_test_kZbHjGLGpAAz0g',
-                          password: 'QacYkyHOaf1cTMrPQKCKaiGQ',
+                          username: 'rzp_live_yMvIZJbGcfbW08',
+                          password: 'upm93VNwNf1bD0vLnpSMhDoc',
                         },
                       })
                         .then((res) => res.json())
@@ -423,7 +422,7 @@ export default function FormScreen(props) {
                           var options = {
                             description: props.navigation.getParam('name'),
                             currency: 'INR',
-                            key: 'rzp_test_kZbHjGLGpAAz0g',
+                            key: 'rzp_live_yMvIZJbGcfbW08',
                             order_id: order.id,
                             amount: order.amount,
                             external: {
@@ -438,16 +437,38 @@ export default function FormScreen(props) {
                           };
 
                           RazorpayCheckout.open(options)
-                            .then(() => {
+                            .then((data) => {
                               // handle success
-                              setLoading(false);
-
-                              props.navigation.navigate('Order Placed');
+                              if (
+                                hmacSHA256(
+                                  order.id + '|' + data.razorpay_payment_id,
+                                  'upm93VNwNf1bD0vLnpSMhDoc',
+                                ) == data.razorpay_signature
+                              ) {
+                                setLoading(false);
+                                props.navigation.navigate('Order Placed');
+                                firestore()
+                                  .collection('orders')
+                                  .doc(docRef.id)
+                                  .update({
+                                    successfulPayment: true,
+                                    razorpay_payment_id:
+                                      data.razorpay_payment_id,
+                                    razorpay_signature: data.razorpay_signature,
+                                    razorpay_order_id: data.razorpay_order_id,
+                                    amount_paid: order.amount_paid,
+                                    amount_due: order.amount_due,
+                                    status: order.status,
+                                  });
+                              } else {
+                                setLoading(false);
+                                alert('Payment Unauthorized, Try Again ');
+                              }
                             })
                             .catch((error) => {
                               // handle failure
                               setLoading(false);
-                              alert('Payment Failed, Try Later ');
+                              alert('Payment Failed, Try Again ');
                               console.log(error);
                             });
                           RazorpayCheckout.onExternalWalletSelection((data) => {
@@ -462,15 +483,6 @@ export default function FormScreen(props) {
                           console.log(err);
                         });
                     })
-
-                    // .then(() => {
-                    //   props.navigation.navigate('Order Placed');
-                    //   console.log(orderId);
-                    //   // handle success
-                    //   firestore().collection('orders').doc(orderId).update({
-                    //     paymentStatus: 'completed',
-                    //   });
-                    // })
 
                     .catch((err) => {
                       setLoading(false);
@@ -502,6 +514,7 @@ export default function FormScreen(props) {
                       serviceDate: serviceDate,
                       serviceTime: serviceTime,
                       paymentMethod: paymentMethod,
+                      successfulPayment: false,
 
                       //ORDER DETAILS
                       status: 3,
