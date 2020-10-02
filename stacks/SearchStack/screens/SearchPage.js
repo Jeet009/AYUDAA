@@ -50,12 +50,12 @@ function SearchPage({navigation}) {
     setSearchFor(e.nativeEvent.text);
   };
   const handleSubmit = () => {
-    let typedValue =
-      searchFor.indexOf(' ') == -1
-        ? searchFor
-        : searchFor.substr(0, searchFor.indexOf(' '));
-    let typedValueLowerCase = typedValue.toString().toLowerCase();
     if (searchFor) {
+      let typedValue =
+        searchFor.indexOf(' ') == -1
+          ? searchFor
+          : searchFor.substr(0, searchFor.indexOf(' '));
+      let typedValueLowerCase = typedValue.toString().toLowerCase();
       firestore()
         .collection('services')
         .where('tags', 'array-contains-any', [typedValueLowerCase])

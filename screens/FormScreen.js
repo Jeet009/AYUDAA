@@ -31,6 +31,9 @@ export default function FormScreen(props) {
   const [email, setEmail] = useState();
   const [serviceAddress, setServiceAddress] = useState();
   const [pincode, setPincode] = useState();
+  const [quantity, setQuantity] = useState(
+    props.navigation.getParam('quantity'),
+  );
 
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -73,7 +76,26 @@ export default function FormScreen(props) {
     return () => subscriber();
   }, [setPincodeArray]);
 
+  //Fetching User Details
   var user = auth().currentUser;
+  useEffect(() => {
+    let unmounted = false;
+    if (!unmounted) {
+      firestore()
+        .collection('users')
+        .doc(user.uid)
+        .get()
+        .then((userData) => {
+          setName(userData.data().name);
+          setPhone(userData.data().phone);
+          setEmail(userData.data().email);
+        });
+    }
+    return () => {
+      unmounted = true;
+    };
+  });
+
   if (loading) {
     return <LoadingScreen />;
   }
@@ -109,113 +131,65 @@ export default function FormScreen(props) {
     }
   };
   return (
-    <ScrollView>
+    <ScrollView style={{backgroundColor: colors.primary}}>
       <View style={styles.container}>
         <Text style={styles.text}>CONFIRM ADDRESS & ORDER</Text>
         <View style={styles.mainContainer}>
-          <Thumbnail
-            large
-            square
-            source={{uri: props.navigation.getParam('url')}}
-            style={{
-              borderColor: colors.primary,
-              borderWidth: 1,
-              borderRadius: 5,
-            }}
-          />
-          <View
-            style={{
-              borderBottomColor: 'black',
-              borderBottomWidth: 1,
-              paddingBottom: 5,
-            }}>
-            <Text style={styles.heading}>
-              {' '}
-              {props.navigation.getParam('name')}
-            </Text>
-            {/* RATE & PRICE  */}
-            {(() => {
-              if (props.navigation.getParam('rate')) {
-                return (
-                  <View style={styles.title}>
-                    <Text style={styles.name}>
-                      {' '}
-                      PRICE : {props.navigation.getParam('rate')} /-
-                    </Text>
-                  </View>
-                );
-              } else {
-                return (
-                  <View>
-                    <View style={styles.title}>
-                      <Text style={styles.name}>
-                        RATE FOR REPAIR :{' '}
-                        {props.navigation.getParam('rateForRepair')}
-                      </Text>
-                    </View>
-                    <View style={styles.title}>
-                      <Text style={styles.name}>
-                        RATE FOR SERVICE :{' '}
-                        {props.navigation.getParam('rateForService')}
-                      </Text>
-                    </View>
-                  </View>
-                );
-              }
-            })()}
+          <Text style={styles.heading}>Service List</Text>
+          {props.navigation.getParam('cart_screen') && (
+            <>
+              <View style={styles.title}>
+                {props.navigation.getParam('name').map((data) => (
+                  <Text style={styles.para}>{data}</Text>
+                ))}
+              </View>
+              <View style={styles.title}>
+                <Text style={styles.heading}>
+                  Total Price : {props.navigation.getParam('rate')} /-
+                </Text>
+              </View>
+            </>
+          )}
+          {props.navigation.getParam('detail_screen') && (
+            <>
+              <Thumbnail
+                large
+                square
+                source={{uri: props.navigation.getParam('url')}}
+                style={{
+                  borderColor: colors.primary,
+                  borderWidth: 1,
+                  borderRadius: 5,
+                }}
+              />
+              <View
+                style={{
+                  borderBottomColor: 'black',
+                  borderBottomWidth: 1,
+                  paddingBottom: 5,
+                }}>
+                <Text style={styles.heading}>
+                  {' '}
+                  {props.navigation.getParam('name')}
+                </Text>
+                {/* RATE & PRICE  */}
+                <View style={styles.title}>
+                  <Text style={styles.name}>
+                    {' '}
+                    PRICE : {props.navigation.getParam('rate')} /-
+                  </Text>
+                </View>
 
-            {/* CATEGORY  */}
-            {(() => {
-              switch (props.navigation.getParam('category')) {
-                case '1':
-                  return (
-                    <View style={styles.title}>
-                      <Text style={styles.name}> CATEGORY : HOME SERVICE </Text>
-                    </View>
-                  );
-
-                case '2':
-                  return (
-                    <View style={styles.title}>
-                      <Text style={styles.name}>
-                        {' '}
-                        CATEGORY : KITCHEN SERVICE{' '}
-                      </Text>
-                    </View>
-                  );
-
-                case '3':
-                  return (
-                    <View style={styles.title}>
-                      <Text style={styles.name}>
-                        {' '}
-                        CATEGORY : LAUNDRY SERVICE{' '}
-                      </Text>
-                    </View>
-                  );
-
-                case '4':
-                  return (
-                    <View style={styles.title}>
-                      <Text style={styles.name}>
-                        {' '}
-                        CATEGORY : SALOON AT HOME{' '}
-                      </Text>
-                    </View>
-                  );
-
-                default:
-                  return (
-                    <View style={styles.title}>
-                      <Text style={styles.name}>
-                        {' '}
-                        CATEGORY : CATEGORY TYPE{' '}
-                      </Text>
-                    </View>
-                  );
-              }
-            })()}
-          </View>
+                {/* CATEGORY  */}
+                <View style={styles.title}>
+                  <Text style={styles.name}>
+                    {' '}
+                    CATEGORY : {props.navigation.getParam('category')}{' '}
+                  </Text>
+                </View>
+              </View>
+            </>
+          )}
           <Text style={styles.heading}>ADDRESS & DETAILS</Text>
           <View>
             <View style={styles.input}>
@@ -233,9 +207,20 @@ export default function FormScreen(props) {
               <TextInput
                 value={phone}
                 onChangeText={(text) => setPhone(text)}
-                keyboardType="phone-pad"
+                keyboardType="numeric"
                 style={styles.textInput}
                 maxLength={10}
+              />
+            </View>
+
+            <View style={styles.input}>
+              <Text style={styles.para}>Quantity</Text>
+              <TextInput
+                value={quantity}
+                onChangeText={(text) => setQuantity(text)}
+                keyboardType="phone-pad"
+                style={styles.textInput}
+                maxLength={2}
               />
             </View>
 
@@ -265,7 +250,7 @@ export default function FormScreen(props) {
                 value={pincode}
                 onChangeText={(text) => setPincode(text)}
                 style={styles.textInput}
-                maxLength={25}
+                maxLength={6}
                 keyboardType="phone-pad"
                 onChange={handleChange}
               />
@@ -360,6 +345,7 @@ export default function FormScreen(props) {
                 email &&
                 phone &&
                 pincode &&
+                quantity &&
                 serviceAddress &&
                 serviceDate &&
                 serviceTime &&
@@ -375,10 +361,6 @@ export default function FormScreen(props) {
                       name: props.navigation.getParam('name'),
                       servicePhotoUrl: props.navigation.getParam('url'),
                       totalAmount: props.navigation.getParam('rate'),
-                      rateForService: props.navigation.getParam(
-                        'rateForService',
-                      ),
-                      rateForRepair: props.navigation.getParam('rateForRepair'),
                       category: props.navigation.getParam('category'),
                       desc: props.navigation.getParam('desc'),
 
@@ -389,6 +371,7 @@ export default function FormScreen(props) {
                       customerEmail: email,
                       customerServiceAddress: serviceAddress,
                       pinCode: pincode,
+                      quantity: quantity,
                       serviceDate: serviceDate,
                       serviceTime: serviceTime,
                       paymentMethod: paymentMethod,
@@ -497,10 +480,6 @@ export default function FormScreen(props) {
                       name: props.navigation.getParam('name'),
                       servicePhotoUrl: props.navigation.getParam('url'),
                       totalAmount: props.navigation.getParam('rate'),
-                      rateForService: props.navigation.getParam(
-                        'rateForService',
-                      ),
-                      rateForRepair: props.navigation.getParam('rateForRepair'),
                       category: props.navigation.getParam('category'),
                       desc: props.navigation.getParam('desc'),
 
@@ -511,6 +490,7 @@ export default function FormScreen(props) {
                       customerEmail: email,
                       customerServiceAddress: serviceAddress,
                       pinCode: pincode,
+                      quantity: quantity,
                       serviceDate: serviceDate,
                       serviceTime: serviceTime,
                       paymentMethod: paymentMethod,

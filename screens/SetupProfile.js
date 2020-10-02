@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   Keyboard,
   Alert,
+  Modal,
 } from 'react-native';
 import {TouchableNativeFeedback, TextInput} from 'react-native-gesture-handler';
 import colors from '../constants/colors';
@@ -18,31 +19,20 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 function SetUpProfile(props) {
-  //   console.log(props);
-  // If null, no SMS has been sent
-  const [confirm, setConfirm] = useState(null);
-  const [initializing, setInitializing] = useState(true);
-  const [submitButtonText, setSubmitButtonText] = useState('SETUP');
+  const [modalVisible, setModalVisible] = useState(true);
+  const [submitButtonText, setSubmitButtonText] = useState('Confirm');
+  const [showOtherInfo, setShowOtherInfo] = useState(false);
 
   const [name, setName] = useState('');
   const [ayudaaId, setAyudaaId] = useState('');
   const [phoneno, setPhoneno] = useState('');
 
-  const [user, setUser] = useState();
-
-  function onAuthStateChanged(user) {
-    setUser(user);
-    if (initializing) setInitializing(false);
-  }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
+  let user = auth().currentUser;
 
   async function confirmProfile() {
     if (!name || !ayudaaId) {
       Alert.alert('INVALID.', 'ENTER A VALID INPUT');
+      setSubmitButtonText('Confirm');
     } else {
       try {
         firestore()
@@ -63,84 +53,103 @@ function SetUpProfile(props) {
               displayName: ayudaaId,
             });
           })
+          .then(() => {
+            setSubmitButtonText('INITIALIZED');
+          })
+          .then(() => {
+            setModalVisible(false);
+          })
           .catch((err) => {
             console.log(err);
             setSubmitButtonText('TRY AGAIN');
           });
       } catch (error) {
-        Alert.alert('INVALID CODE.', 'ENTER A VALID OTP');
+        Alert.alert('INVALID.', 'Something Went Wrong');
       }
     }
   }
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={styles.scrollview}>
-        <View style={styles.profile}>
-          <Text style={styles.text}>A Y U D A A</Text>
-          <Text style={styles.para}>SET UP YOUR PROFILE.</Text>
-        </View>
-        <View>
-          <View style={styles.input}>
-            <Text style={styles.label}>ENTER FULL NAME</Text>
-            <TextInput
-              value={name}
-              style={styles.textInput}
-              textAlign="center"
-              maxLength={25}
-              onChangeText={(text) => setName(text)}
-            />
+    <Modal animationType="slide" visible={modalVisible}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView style={styles.scrollview}>
+          <View style={styles.profile}>
+            <Text style={styles.text}>A Y U D A A</Text>
+            <Text style={styles.para}>SET UP YOUR PROFILE.</Text>
           </View>
+          <View>
+            {!showOtherInfo && (
+              <View style={styles.input}>
+                <Text style={styles.label}>ENTER FULL NAME</Text>
+                <TextInput
+                  value={name}
+                  style={styles.textInput}
+                  textAlign="center"
+                  maxLength={25}
+                  onChangeText={(text) => setName(text)}
+                />
+              </View>
+            )}
+            {showOtherInfo && (
+              <>
+                <View style={styles.input}>
+                  <Text style={styles.label}>ENTER EMAIL ID</Text>
+                  <TextInput
+                    value={ayudaaId}
+                    style={styles.textInput}
+                    textAlign="center"
+                    maxLength={30}
+                    onChangeText={(text) => setAyudaaId(text)}
+                  />
+                  <Text style={styles.label}>CONFIRM PHONE NUMBER</Text>
+                  <TextInput
+                    value={phoneno}
+                    style={styles.textInput}
+                    textAlign="center"
+                    maxLength={10}
+                    keyboardType="phone-pad"
+                    onChangeText={(text) => setPhoneno(text)}
+                  />
+                </View>
+              </>
+            )}
 
-          <View style={styles.input}>
-            <Text style={styles.label}>ENTER EMAIL ID</Text>
-            <TextInput
-              value={ayudaaId}
-              style={styles.textInput}
-              textAlign="center"
-              maxLength={30}
-              onChangeText={(text) => setAyudaaId(text)}
-            />
+            {/* <Button title="Confirm Code" onPress={() => confirmCode()} /> */}
           </View>
-
-          <View style={styles.input}>
-            <Text style={styles.label}>CONFIRM PHONE NUMBER</Text>
-            <TextInput
-              value={phoneno}
-              style={styles.textInput}
-              textAlign="center"
-              maxLength={10}
-              onChangeText={(text) => setPhoneno(text)}
-            />
+          <View style={styles.profile}>
+            <Text style={styles.para}>Welcome To The Family</Text>
+            <Text style={styles.name}>{name}</Text>
           </View>
-
-          {/* <Button title="Confirm Code" onPress={() => confirmCode()} /> */}
-          <TouchableOpacity // eslint-disable-next-line prettier/prettier
-            style={styles.button}
-            onPress={() => {
-              setSubmitButtonText('MAKING...');
-              confirmProfile()
-                .then(() => {
-                  setSubmitButtonText('INITIALIZED');
-                })
-                .then(() => {
-                  props.navigation.navigate('SuccessProfile');
-                })
-                .catch((err) => console.log(err));
-            }}>
-            <Text style={styles.buttonText}>{submitButtonText}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.profile}>
-          <Text style={styles.text}>WELCOME TO AYUDAA</Text>
-          <Text style={styles.para}>YOUR HOME SERVICE ASSISTANT</Text>
-        </View>
-        <StatusBar
-          barStyle="dark-content"
-          hidden={true}
-          backgroundColor="#fff"
-        />
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+          {!showOtherInfo && (
+            <TouchableOpacity // eslint-disable-next-line prettier/prettier
+              style={styles.button}
+              onPress={() => {
+                setShowOtherInfo(true);
+              }}>
+              <Text style={styles.buttonText}>Continue</Text>
+            </TouchableOpacity>
+          )}
+          {showOtherInfo && (
+            <>
+              <TouchableOpacity // eslint-disable-next-line prettier/prettier
+                style={styles.button}
+                onPress={() => {
+                  setSubmitButtonText('Creating...');
+                  confirmProfile();
+                }}>
+                <Text style={styles.buttonText}>{submitButtonText}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity // eslint-disable-next-line prettier/prettier
+                style={styles.buttonBack}
+                onPress={() => {
+                  setShowOtherInfo(false);
+                }}>
+                <Text style={styles.buttonText}>Back</Text>
+              </TouchableOpacity>
+            </>
+          )}
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+    </Modal>
   );
 }
 
@@ -148,8 +157,9 @@ export default SetUpProfile;
 
 const styles = StyleSheet.create({
   buttonText: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 15,
+    textTransform: 'uppercase',
+    fontFamily: 'Poppins-Light',
     color: colors.ypsDark,
     margin: 10,
   },
@@ -157,8 +167,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 10,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.lightPrimary,
     borderRadius: 5,
+    elevation: 10,
+    position: 'absolute',
+    bottom: 20,
+    right: 0,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  buttonBack: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
+    backgroundColor: colors.smoke,
+    borderRadius: 5,
+    elevation: 10,
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   scrollview: {
     flex: 1,
@@ -166,13 +195,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   textInput: {
-    borderColor: colors.ypsDark,
-    borderWidth: 1,
     borderRadius: 5,
-    marginTop: 5,
+    margin: 10,
     fontSize: 15,
-    // fontWeight: 'bold',
+    elevation: 10,
     backgroundColor: colors.white,
+    fontFamily: 'Poppins-Light',
   },
   profile: {
     justifyContent: 'flex-start',
@@ -180,15 +208,28 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins_SemiBold',
   },
   para: {
     fontSize: 12,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins-Regular',
   },
-  label: {fontSize: 12, fontWeight: 'bold'},
+  label: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Light',
+    marginTop: 15,
+    alignSelf: 'center',
+  },
+  name: {
+    fontSize: 18,
+    fontFamily: 'Poppins-Light',
+    alignSelf: 'center',
+    textTransform: 'uppercase',
+  },
   input: {
-    backgroundColor: colors.smoke,
+    backgroundColor: colors.lightPrimary,
     marginLeft: 10,
     marginRight: 10,
     borderRadius: 5,

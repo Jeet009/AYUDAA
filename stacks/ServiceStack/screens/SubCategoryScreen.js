@@ -5,7 +5,6 @@ import {withNavigation} from 'react-navigation';
 import colors from '../../../constants/colors';
 import firestore from '@react-native-firebase/firestore';
 import FloatingButton from '../../../components/FloatingButton';
-import color from '../../../constants/colors';
 
 function SubCategoryScreen(props) {
   const [subCategory, setSubCategory] = useState([]);

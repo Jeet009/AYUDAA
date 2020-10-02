@@ -21,6 +21,7 @@ import {TouchableNativeFeedback, TextInput} from 'react-native-gesture-handler';
 import auth from '@react-native-firebase/auth';
 
 import WelcomeComponent from '../components/WelcomeComponent';
+import LinearGradient from 'react-native-linear-gradient';
 
 //Phone Auth
 export default function LoginScreen(props) {
@@ -52,47 +53,55 @@ export default function LoginScreen(props) {
   if (!confirm) {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView style={styles.scrollview}>
-          <Modal
-            animationType="fade"
-            transparent={false}
-            visible={modalVisible}>
-            <View style={styles.centeredView}>
-              <WelcomeComponent />
-              <View style={styles.modalView}>
-                <Text style={styles.textStyle}>A Y U D A A</Text>
+        <LinearGradient
+          colors={[colors.lightPrimary, '#fff']}
+          style={{flex: 1, paddingBottom: 20}}>
+          <SafeAreaView style={styles.scrollview}>
+            <Modal
+              animationType="fade"
+              transparent={false}
+              visible={modalVisible}>
+              <View style={styles.centeredView}>
+                <WelcomeComponent />
+                <View style={styles.modalView}>
+                  <Text style={styles.textStyle}>A Y U D A A</Text>
 
-                <Text style={styles.modalText}>
-                  Your Home Service Assistance
-                </Text>
-                <TouchableHighlight
-                  style={{
-                    ...styles.openButton,
-                    backgroundColor: colors.primary,
-                  }}
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
-                  }}>
-                  <Text style={styles.textStyle}>Let's Start</Text>
-                </TouchableHighlight>
+                  <Text style={styles.modalText}>
+                    Your Home Service Assistance
+                  </Text>
+                  <TouchableOpacity
+                    style={{
+                      ...styles.openButton,
+                      backgroundColor: colors.primary,
+                    }}
+                    onPress={() => {
+                      setModalVisible(!modalVisible);
+                    }}>
+                    <Text style={styles.textStyle}>Join Now</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+            <View>
+              <Text style={styles.label}>ENTER PHONE NUMBER</Text>
+              <View style={styles.textInputBg}>
+                <Text style={styles.placeholder}>+91</Text>
+                <TextInput
+                  value={phoneNo}
+                  style={styles.textInput}
+                  keyboardType="phone-pad"
+                  textAlign="center"
+                  maxLength={10}
+                  onChangeText={(text) => setPhoneNo(text)}
+                  //color="black"
+                />
               </View>
             </View>
-          </Modal>
-          <View style={styles.profile}>
-            <Text style={styles.text}>A Y U D A A</Text>
-            <Text style={styles.para}>YOUR HOME SERVICE ASSISTANT</Text>
-          </View>
-          <View>
-            <Text style={styles.label}>ENTER PHONE NUMBER</Text>
-            <TextInput
-              value={phoneNo}
-              style={styles.textInput}
-              keyboardType="phone-pad"
-              textAlign="center"
-              maxLength={10}
-              onChangeText={(text) => setPhoneNo(text)}
-              //color="black"
-            />
+            <View style={styles.profile}>
+              <Text style={styles.text}>A Y U D A A</Text>
+              <Text style={styles.para}>Your Home Service Assistance</Text>
+              <Text style={styles.para}>&copy; GOWAVE</Text>
+            </View>
 
             <TouchableOpacity // eslint-disable-next-line prettier/prettier
               style={styles.button}
@@ -103,47 +112,44 @@ export default function LoginScreen(props) {
                   signInWithPhoneNumber('+91' + ' ' + phoneNo);
                 }
               }}>
-              <Text style={styles.buttonText}>LET'S START</Text>
+              <Text style={styles.buttonText}>Continue</Text>
             </TouchableOpacity>
-          </View>
-          <View>
-            <Image
-              source={{
-                uri: 'https://image.ayudaa.in/asset/welcomeScreen.png',
-              }}
-              resizeMode="contain"
-              style={{
-                height: 150,
-                maxHeight: 150,
-              }}
+            <StatusBar
+              barStyle="dark-content"
+              hidden={true}
+              backgroundColor="#fff"
             />
-          </View>
-          <Text style={styles.para}>&copy; GOWAVE</Text>
-          <StatusBar
-            barStyle="dark-content"
-            hidden={true}
-            backgroundColor="#fff"
-          />
-        </SafeAreaView>
+          </SafeAreaView>
+        </LinearGradient>
       </TouchableWithoutFeedback>
     );
   }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={styles.scrollview}>
-        <View>
-          <Text style={styles.label}>ENTER OTP</Text>
-          <TextInput
-            value={code}
-            style={styles.textInput}
-            keyboardType="phone-pad"
-            textAlign="center"
-            maxLength={10}
-            onChangeText={(text) => setCode(text)}
-            required
-          />
-          {/* <Button title="Confirm Code" onPress={() => confirmCode()} /> */}
+      <LinearGradient
+        colors={[colors.lightPrimary, '#fff']}
+        style={{flex: 1, paddingBottom: 20}}>
+        <SafeAreaView style={styles.scrollview}>
+          <View>
+            <Text style={styles.label}>ENTER OTP</Text>
+            <View style={styles.otpInputBg}>
+              <TextInput
+                value={code}
+                style={styles.textInput}
+                keyboardType="phone-pad"
+                textAlign="center"
+                maxLength={10}
+                onChangeText={(text) => setCode(text)}
+                required
+              />
+            </View>
+            {/* <Button title="Confirm Code" onPress={() => confirmCode()} /> */}
+          </View>
+          <View style={styles.profile}>
+            <Text style={styles.text}>WELCOME TO AYUDAA</Text>
+            <Text style={styles.para}>YOUR HOME SERVICE ASSISTANCE</Text>
+          </View>
           <TouchableOpacity // eslint-disable-next-line prettier/prettier
             style={styles.button}
             onPress={() => {
@@ -151,25 +157,22 @@ export default function LoginScreen(props) {
             }}>
             <Text style={styles.buttonText}>CONFIRM OTP</Text>
           </TouchableOpacity>
-        </View>
-        <View style={styles.profile}>
-          <Text style={styles.text}>WELCOME TO AYUDAA</Text>
-          <Text style={styles.para}>YOUR HOME SERVICE ASSISTANT</Text>
-        </View>
-        <StatusBar
-          barStyle="dark-content"
-          hidden={true}
-          backgroundColor="#fff"
-        />
-      </SafeAreaView>
+          <StatusBar
+            barStyle="dark-content"
+            hidden={true}
+            backgroundColor="#fff"
+          />
+        </SafeAreaView>
+      </LinearGradient>
     </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
   buttonText: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 15,
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins-Light',
     color: colors.ypsDark,
     margin: 10,
   },
@@ -177,37 +180,92 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 10,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.lightPrimary,
     borderRadius: 30,
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    left: 0,
+    elevation: 5,
   },
   scrollview: {
     flex: 1,
     justifyContent: 'space-evenly',
-    backgroundColor: 'white',
+    // backgroundColor: colors.lightPrimary,
   },
   textInput: {
-    borderColor: colors.ypsDark,
-    borderWidth: 1,
+    flex: 1,
     borderRadius: 30,
-    margin: 10,
+    borderTopLeftRadius: 2,
+    borderBottomLeftRadius: 2,
+    marginLeft: 20,
     fontSize: 20,
-    fontWeight: 'bold',
-    backgroundColor: colors.smoke,
+    paddingTop: 15,
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins-Light',
+    backgroundColor: colors.white,
+    // elevation: 5,
+  },
+  textInputBg: {
+    // flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    borderRadius: 30,
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 10,
+    fontSize: 20,
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins-Light',
+    backgroundColor: colors.lightPrimary,
+    elevation: 5,
+  },
+  otpInputBg: {
+    // flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    borderRadius: 30,
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 10,
+    fontSize: 20,
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins-Light',
+    backgroundColor: colors.white,
+    elevation: 5,
   },
   profile: {
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   text: {
     fontSize: 20,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins-Regular',
+  },
+  placeholder: {
+    fontSize: 20,
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins-Regular',
+    marginLeft: 10,
+    marginTop: 5,
+    // backgroundColor: 'black',
+    color: colors.ypsDark,
   },
   para: {
     fontSize: 12,
-    fontWeight: 'bold',
+    fontFamily: 'Poppins-Light',
+    alignSelf: 'center',
+    textTransform: 'uppercase',
+  },
+  label: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Light',
+    marginTop: 15,
     alignSelf: 'center',
   },
-  label: {fontSize: 12, fontWeight: 'bold', textAlign: 'center'},
   centeredView: {
     flex: 1,
     marginTop: Dimensions.get('window').height / 4,
@@ -232,7 +290,8 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: 'black',
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins-Regular',
     textAlign: 'center',
     textTransform: 'uppercase',
   },
@@ -240,18 +299,10 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     textAlign: 'left',
     padding: 20,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins-Light',
     textTransform: 'uppercase',
     fontSize: 12,
     color: 'black',
-  },
-  modalTextWhite: {
-    marginBottom: 12,
-    textAlign: 'left',
-    padding: 20,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    fontSize: 12,
-    color: 'white',
   },
 });

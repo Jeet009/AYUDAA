@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, SafeAreaView} from 'react-native';
 import Navigation from './routes/Navigation';
-import NavigationService from './routes/NavigationService';
 import LoginScreen from './screens/LoginScreen';
 import auth from '@react-native-firebase/auth';
 import SplashScreen from 'react-native-splash-screen';
@@ -27,9 +26,9 @@ export default function App() {
     return <LoginScreen />;
   }
 
-  if (!user.displayName) {
-    return <NavigationService />;
-  }
+  // if (!user.displayName) {
+  //   return <NavigationService />;
+  // }
 
   return (
     <SafeAreaView style={styles.container}>

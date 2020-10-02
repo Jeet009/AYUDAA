@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, FlatList} from 'react-native';
 import CarouselComponent from '../components/CarouselComponent';
 import CategoryComponent from '../components/CategoryComponent';
@@ -7,8 +7,13 @@ import ServiceComponent from '../components/ServiceComponent';
 import LinearGradient from 'react-native-linear-gradient';
 import HeaderComponent from '../components/HeaderComponent';
 import FloatingButton from '../components/FloatingButton';
+import auth from '@react-native-firebase/auth';
+import SetUpProfile from './SetupProfile';
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
+  let user = auth().currentUser;
+  // console.log(user.displayName);
+
   return (
     <LinearGradient colors={['#ffff', '#fff']}>
       <FlatList
@@ -16,10 +21,10 @@ export default function HomeScreen() {
         ListHeaderComponent={
           <>
             <HeaderComponent />
-
             <CarouselComponent />
             <CategoryComponent />
             <SliderComponent />
+            {!user.displayName && <SetUpProfile />}
           </>
         }
         ListFooterComponent={<ServiceComponent />}

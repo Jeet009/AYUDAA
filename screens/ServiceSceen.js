@@ -79,7 +79,7 @@ export default function ServiceScreen(props) {
   //Loading
   if (loading) {
     return (
-      <View style={styles.container}>
+      <View style={{backgroundColor: 'white', flex: 1}}>
         <LoadingScreen />
       </View>
     );
@@ -145,6 +145,8 @@ export default function ServiceScreen(props) {
                 rateForRepair: item.rateForRepair,
                 category: item.category,
                 desc: item.description,
+                includes: item.includes,
+                excludes: item.excludes,
               })
             }>
             <View style={styles.imageBg}>
@@ -194,11 +196,13 @@ export default function ServiceScreen(props) {
                   rateForRepair: item.rateForRepair,
                   category: item.category,
                   desc: item.description,
+                  includes: item.includes,
+                  excludes: item.excludes,
                 })
               }>
               <Text style={styles.btnBlack}>View Details</Text>
             </TouchableOpacity>
-            {cartData.includes(item.key) ? (
+            {cartData && cartData.includes(item.key) ? (
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => props.navigation.navigate('My Cart')}>

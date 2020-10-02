@@ -45,9 +45,9 @@ function SearchBar({navigation}) {
             }}
             name="whatsapp"
             type="font-awesome"
-            color="black"
+            color="gray"
             style={{fontFamily: 'Poppins-Light'}}
-            size={20}
+            size={30}
           />
           <Body>
             <Text

@@ -13,7 +13,6 @@ import ServiceScreen from '../screens/ServiceSceen';
 //Others
 import colors from '../constants/colors';
 import {Icon} from 'react-native-elements';
-import CategoryComponent from '../components/CategoryComponent';
 import DetailScreen from '../screens/DetailScreen';
 import FormScreen from '../screens/FormScreen';
 import SuccessOrder from '../screens/SuccessOrder';
@@ -23,6 +22,7 @@ import CanceledScreen from '../screens/CanceledScreen';
 import SearchPage from '../stacks/SearchStack/screens/SearchPage';
 import SubCategoryScreen from '../stacks/ServiceStack/screens/SubCategoryScreen';
 import CartScreen from '../stacks/CartStack/screens/CartScreen';
+import SetUpProfile from '../screens/SetupProfile';
 
 //SearchScreen
 const SearchNavigator = createStackNavigator(

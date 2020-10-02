@@ -4,7 +4,7 @@ import {
   StyleSheet,
   FlatList,
   ImageBackground,
-  TouchableOpacity,
+  Dimensions,
   View,
   Alert,
 } from 'react-native';
@@ -50,7 +50,13 @@ export default function OrderComponent(props) {
 
   if (loading) {
     return (
-      <View style={{flex: 1, backgroundColor: colors.lightPrimary}}>
+      <View
+        style={{
+          backgroundColor: colors.white,
+          height: Dimensions.get('window').height / 1.5,
+          margin: 10,
+          elevation: 5,
+        }}>
         <LoadingScreen />
       </View>
     );
@@ -93,7 +99,14 @@ export default function OrderComponent(props) {
     return (
       <View style={styles.category}>
         <Text style={styles.text}>YOUR ORDERS</Text>
-        <NullScreen />
+        <View
+          style={{
+            backgroundColor: colors.white,
+            height: Dimensions.get('window').height / 1.5,
+            margin: 10,
+          }}>
+          <NullScreen />
+        </View>
       </View>
     );
   }

@@ -32,73 +32,17 @@ export default function DetailScreen(props) {
             {props.navigation.getParam('name')}
           </Text>
           {/* RATE & PRICE  */}
-          {(() => {
-            if (props.navigation.getParam('rate')) {
-              return (
-                <View style={styles.title}>
-                  <Text style={styles.name}>
-                    PRICE : {props.navigation.getParam('rate')} /-
-                  </Text>
-                </View>
-              );
-            } else {
-              return (
-                <View>
-                  <View style={styles.title}>
-                    <Text style={styles.name}>
-                      RATE FOR REPAIR :{' '}
-                      {props.navigation.getParam('rateForRepair')}
-                    </Text>
-                  </View>
-                  <View style={styles.title}>
-                    <Text style={styles.name}>
-                      RATE FOR SERVICE :{' '}
-                      {props.navigation.getParam('rateForService')}
-                    </Text>
-                  </View>
-                </View>
-              );
-            }
-          })()}
+          <View style={styles.title}>
+            <Text style={styles.name}>
+              PRICE : {props.navigation.getParam('rate')} /-
+            </Text>
+          </View>
           {/* CATEGORY  */}
-          {(() => {
-            switch (props.navigation.getParam('category')) {
-              case 'Home':
-                return (
-                  <View style={styles.title}>
-                    <Text style={styles.name}>CATEGORY : HOME SERVICE </Text>
-                  </View>
-                );
-
-              case 'Kitchen':
-                return (
-                  <View style={styles.title}>
-                    <Text style={styles.name}>CATEGORY : KITCHEN SERVICE </Text>
-                  </View>
-                );
-
-              case 'Laundry':
-                return (
-                  <View style={styles.title}>
-                    <Text style={styles.name}>CATEGORY : LAUNDRY SERVICE </Text>
-                  </View>
-                );
-
-              case 'Saloon':
-                return (
-                  <View style={styles.title}>
-                    <Text style={styles.name}>CATEGORY : SALOON AT HOME </Text>
-                  </View>
-                );
-
-              default:
-                return (
-                  <View style={styles.title}>
-                    <Text style={styles.name}>CATEGORY : CATEGORY TYPE </Text>
-                  </View>
-                );
-            }
-          })()}
+          <View style={styles.title}>
+            <Text style={styles.name}>
+              CATEGORY : {props.navigation.getParam('category')}{' '}
+            </Text>
+          </View>
         </View>
         {/* Description  */}
         <View style={styles.title}>
@@ -107,16 +51,24 @@ export default function DetailScreen(props) {
         {/* Include  */}
         <View style={styles.bgGreen}>
           <Text style={styles.name}>Includes</Text>
-          <Text style={styles.paraRegular}> - Just Another Point</Text>
-          <Text style={styles.paraRegular}> - Just Another Point</Text>
-          <Text style={styles.paraRegular}> - Just Another Point</Text>
+          {props.navigation.getParam('includes') &&
+            props.navigation.getParam('includes').map((data) => (
+              <Text style={styles.paraRegular} key={data}>
+                {' '}
+                - {data}
+              </Text>
+            ))}
         </View>
         {/* Exclude  */}
         <View style={styles.bgRed}>
           <Text style={styles.name}>Excludes</Text>
-          <Text style={styles.paraRegular}> - Just Another Point</Text>
-          <Text style={styles.paraRegular}> - Just Another Point</Text>
-          <Text style={styles.paraRegular}> - Just Another Point</Text>
+          {props.navigation.getParam('excludes') &&
+            props.navigation.getParam('excludes').map((data) => (
+              <Text style={styles.paraRegular} key={data}>
+                {' '}
+                - {data}
+              </Text>
+            ))}
         </View>
         {/* Payment Procedure  */}
         <View style={styles.bgPrimary}>
@@ -183,10 +135,10 @@ export default function DetailScreen(props) {
               name: props.navigation.getParam('name'),
               url: props.navigation.getParam('url'),
               rate: props.navigation.getParam('rate'),
-              rateForService: props.navigation.getParam('rateForService'),
-              rateForRepair: props.navigation.getParam('rateForRepair'),
               category: props.navigation.getParam('category'),
               desc: props.navigation.getParam('desc'),
+              quantity: '1',
+              detail_screen: true,
             });
           }}>
           <Text style={styles.confirmButton}>PLACE ORDER</Text>

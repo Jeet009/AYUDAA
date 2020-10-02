@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, StyleSheet, Dimensions} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import colors from '../../../constants/colors';
 import {Icon} from 'react-native-elements';
 import {FlatList} from 'react-native-gesture-handler';
@@ -7,11 +7,12 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import PopUpComponent from '../../../screens/PopUpComponent';
 
-export default function CartScreen() {
+export default function CartScreen(props) {
   const [data, setData] = useState([]);
   const [removeFromCart, setRemoveFromCart] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalQuantity, setTotalQuantity] = useState(0);
+  const [services, setServices] = useState([]);
 
   useEffect(() => {
     let user = auth().currentUser;
@@ -31,7 +32,9 @@ export default function CartScreen() {
         setData(dataArray);
         let totalP = 0;
         let totalQ = 0;
+        let serviceArray = [];
         dataArray.forEach((data) => {
+          serviceArray.push(data.serviceName);
           totalQ = totalQ + parseInt(data.quantity);
 
           if (parseInt(data.quantity) > 1) {
@@ -43,6 +46,8 @@ export default function CartScreen() {
           }
 
           setTotalQuantity(totalQ);
+
+          setServices(serviceArray);
         });
       });
 
@@ -76,12 +81,14 @@ export default function CartScreen() {
   // Handling Quantity
 
   const quantityDecrease = (id) => {
-    firestore()
-      .collection('cart')
-      .doc(id)
-      .update({
-        quantity: firestore.FieldValue.increment(-1),
-      });
+    if (totalQuantity > services.length) {
+      firestore()
+        .collection('cart')
+        .doc(id)
+        .update({
+          quantity: firestore.FieldValue.increment(-1),
+        });
+    }
   };
 
   const quantityIncrease = (id) => {
@@ -155,10 +162,36 @@ export default function CartScreen() {
         data={data}
         numColumns={1}
         ListFooterComponent={
-          <View style={styles.containerFooter}>
-            <Text style={styles.name}>Total Price : {totalPrice} / -</Text>
-            <Text style={styles.para}>Total Quantity : {totalQuantity}</Text>
-          </View>
+          <>
+            <View style={styles.containerFooter}>
+              <Text style={styles.name}>Total Price : {totalPrice} / -</Text>
+              <Text style={styles.para}>Total Quantity : {totalQuantity}</Text>
+              {data.length > 0 && (
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    props.navigation.navigate('Enter Details', {
+                      name: services,
+                      rate: totalPrice,
+                      quantity: totalQuantity.toString(),
+                      cart_screen: true,
+                    });
+                  }}>
+                  <Text style={styles.confirmButton}>PLACE ORDER</Text>
+                </TouchableOpacity>
+              )}
+              {data.length == 0 && (
+                <Text style={styles.heading}>CART IS EMPTY</Text>
+              )}
+            </View>
+
+            <View style={styles.containerFooter}>
+              <Text style={styles.para}>
+                Thank You For Using Our Service, {'\n'}Ayudaa - Your Home
+                Service Assistance
+              </Text>
+            </View>
+          </>
         }
       />
       {removeFromCart && (
@@ -211,5 +244,19 @@ const styles = StyleSheet.create({
     marginTop: 20,
     textAlign: 'center',
     fontFamily: 'Poppins-SemiBold',
+  },
+  button: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: colors.primary,
+    padding: 15,
+    borderRadius: 10,
+    margin: 10,
+    elevation: 15,
+  },
+  confirmButton: {
+    alignSelf: 'center',
+    fontFamily: 'Poppins-Regular',
   },
 });
