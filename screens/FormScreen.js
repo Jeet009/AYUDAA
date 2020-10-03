@@ -34,6 +34,7 @@ export default function FormScreen(props) {
   const [quantity, setQuantity] = useState(
     props.navigation.getParam('quantity'),
   );
+  const [showPersonalInfo, setShowPersonalInfo] = useState(true);
 
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -135,9 +136,9 @@ export default function FormScreen(props) {
       <View style={styles.container}>
         <Text style={styles.text}>CONFIRM ADDRESS & ORDER</Text>
         <View style={styles.mainContainer}>
-          <Text style={styles.heading}>Service List</Text>
           {props.navigation.getParam('cart_screen') && (
             <>
+              <Text style={styles.heading}>Service List</Text>
               <View style={styles.title}>
                 {props.navigation.getParam('name').map((data) => (
                   <Text style={styles.para}>{data}</Text>
@@ -190,132 +191,153 @@ export default function FormScreen(props) {
               </View>
             </>
           )}
-          <Text style={styles.heading}>ADDRESS & DETAILS</Text>
+          {showPersonalInfo ? (
+            <Text style={styles.heading}>PERSONAL DETAILS</Text>
+          ) : (
+            <Text style={styles.heading}>ADDRESS & PAYMENT</Text>
+          )}
           <View>
-            <View style={styles.input}>
-              <Text style={styles.para}>NAME</Text>
-              <TextInput
-                value={name}
-                onChangeText={(text) => setName(text)}
-                style={styles.textInput}
-                maxLength={25}
-              />
-            </View>
+            {showPersonalInfo && (
+              <>
+                <View style={styles.input}>
+                  <Text style={styles.para}>NAME</Text>
+                  <TextInput
+                    value={name}
+                    onChangeText={(text) => setName(text)}
+                    style={styles.textInput}
+                    maxLength={25}
+                  />
+                </View>
 
-            <View style={styles.input}>
-              <Text style={styles.para}>PHONE</Text>
-              <TextInput
-                value={phone}
-                onChangeText={(text) => setPhone(text)}
-                keyboardType="numeric"
-                style={styles.textInput}
-                maxLength={10}
-              />
-            </View>
+                <View style={styles.input}>
+                  <Text style={styles.para}>PHONE</Text>
+                  <TextInput
+                    value={phone}
+                    onChangeText={(text) => setPhone(text)}
+                    keyboardType="numeric"
+                    style={styles.textInput}
+                    maxLength={10}
+                  />
+                </View>
 
-            <View style={styles.input}>
-              <Text style={styles.para}>Quantity</Text>
-              <TextInput
-                value={quantity}
-                onChangeText={(text) => setQuantity(text)}
-                keyboardType="phone-pad"
-                style={styles.textInput}
-                maxLength={2}
-              />
-            </View>
+                <View style={styles.input}>
+                  <Text style={styles.para}>Quantity</Text>
+                  <TextInput
+                    value={quantity}
+                    onChangeText={(text) => setQuantity(text)}
+                    keyboardType="phone-pad"
+                    style={styles.textInput}
+                    maxLength={2}
+                  />
+                </View>
 
-            <View style={styles.input}>
-              <Text style={styles.para}>EMAIL</Text>
-              <TextInput
-                value={email}
-                onChangeText={(text) => setEmail(text)}
-                style={styles.textInput}
-                maxLength={50}
-              />
-            </View>
-
-            <View style={styles.input}>
-              <Text style={styles.para}>SERVICE ADDRESS</Text>
-              <TextInput
-                value={serviceAddress}
-                onChangeText={(text) => setServiceAddress(text)}
-                style={styles.textInput}
-                maxLength={50}
-              />
-            </View>
-
-            <View style={styles.input}>
-              <Text style={styles.para}>PIN NUMBER</Text>
-              <TextInput
-                value={pincode}
-                onChangeText={(text) => setPincode(text)}
-                style={styles.textInput}
-                maxLength={6}
-                keyboardType="phone-pad"
-                onChange={handleChange}
-              />
-            </View>
-
-            <View style={styles.input}>
-              <Text style={styles.para}>SERVICE DATE & TIME</Text>
-              <DatePicker
-                defaultDate={new Date(Date.now())}
-                minimumDate={new Date(Date.now())}
-                maximumDate={new Date(2030, 12, 31)}
-                locale={'en'}
-                timeZoneOffsetInMinutes={undefined}
-                modalTransparent={false}
-                animationType={'fade'}
-                androidMode={'default'}
-                placeHolderText="Choose Date"
-                textStyle={{color: colors.ypsDark}}
-                placeHolderTextStyle={{color: '#d3d3d3'}}
-                disabled={false}
-                value={serviceDate}
-                selectedDate={serviceDate}
-                onDateChange={(itemValue) => setServiceDate(itemValue)}
-              />
-              <View>
+                <View style={styles.input}>
+                  <Text style={styles.para}>EMAIL</Text>
+                  <TextInput
+                    value={email}
+                    onChangeText={(text) => setEmail(text)}
+                    style={styles.textInput}
+                    maxLength={50}
+                  />
+                </View>
                 <TouchableOpacity
                   style={styles.button}
-                  onPress={showTimepicker}>
-                  <Text style={styles.confirmButton}>Choose Time</Text>
+                  onPress={() => {
+                    setShowPersonalInfo(false);
+                  }}>
+                  <Text style={styles.confirmButton}>Continue</Text>
                 </TouchableOpacity>
-              </View>
-              {show && (
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={serviceTime}
-                  mode="time"
-                  is24Hour={false}
-                  display="default"
-                  onChange={onChange}
-                />
-              )}
-            </View>
-            {/* PAYMENT METHODS  */}
-            {(() => {
-              if (props.navigation.getParam('rate')) {
-                return (
-                  <View style={styles.input}>
-                    <Text style={styles.para}>PAYMENT METHODS</Text>
-                    <Picker
-                      selectedValue={paymentMethod}
-                      onValueChange={(itemValue) =>
-                        setPaymentMethod(itemValue)
-                      }>
-                      <Picker.Item label="OFFLINE PAYMENT" value="offline" />
-                      <Picker.Item label="ONLINE PAYMENT" value="online" />
-                    </Picker>
+              </>
+            )}
+          </View>
+          {!showPersonalInfo && (
+            <>
+              <View>
+                <View style={styles.input}>
+                  <Text style={styles.para}>SERVICE ADDRESS</Text>
+                  <TextInput
+                    value={serviceAddress}
+                    onChangeText={(text) => setServiceAddress(text)}
+                    style={styles.textInput}
+                    maxLength={50}
+                  />
+                </View>
+
+                <View style={styles.input}>
+                  <Text style={styles.para}>PIN NUMBER</Text>
+                  <TextInput
+                    value={pincode}
+                    onChangeText={(text) => setPincode(text)}
+                    style={styles.textInput}
+                    maxLength={6}
+                    keyboardType="phone-pad"
+                    onChange={handleChange}
+                  />
+                </View>
+
+                <View style={styles.input}>
+                  <Text style={styles.para}>SERVICE DATE & TIME</Text>
+                  <DatePicker
+                    defaultDate={new Date(Date.now())}
+                    minimumDate={new Date(Date.now())}
+                    maximumDate={new Date(2030, 12, 31)}
+                    locale={'en'}
+                    timeZoneOffsetInMinutes={undefined}
+                    modalTransparent={false}
+                    animationType={'fade'}
+                    androidMode={'default'}
+                    placeHolderText="Choose Date"
+                    textStyle={{color: colors.ypsDark}}
+                    placeHolderTextStyle={{color: '#d3d3d3'}}
+                    disabled={false}
+                    value={serviceDate}
+                    selectedDate={serviceDate}
+                    onDateChange={(itemValue) => setServiceDate(itemValue)}
+                  />
+                  <View>
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={showTimepicker}>
+                      <Text style={styles.confirmButton}>Choose Time</Text>
+                    </TouchableOpacity>
                   </View>
-                );
-              } else {
-                return (
-                  <View style={styles.input}>
-                    <Text style={styles.para}>
-                      PAYMENT METHODS - OFFLINE PAYMENT
-                    </Text>
-                    {/* <Picker
+                  {show && (
+                    <DateTimePicker
+                      testID="dateTimePicker"
+                      value={serviceTime}
+                      mode="time"
+                      is24Hour={false}
+                      display="default"
+                      onChange={onChange}
+                    />
+                  )}
+                </View>
+                {/* PAYMENT METHODS  */}
+                {(() => {
+                  if (props.navigation.getParam('rate')) {
+                    return (
+                      <View style={styles.input}>
+                        <Text style={styles.para}>PAYMENT METHODS</Text>
+                        <Picker
+                          selectedValue={paymentMethod}
+                          onValueChange={(itemValue) =>
+                            setPaymentMethod(itemValue)
+                          }>
+                          <Picker.Item
+                            label="OFFLINE PAYMENT"
+                            value="offline"
+                          />
+                          <Picker.Item label="ONLINE PAYMENT" value="online" />
+                        </Picker>
+                      </View>
+                    );
+                  } else {
+                    return (
+                      <View style={styles.input}>
+                        <Text style={styles.para}>
+                          PAYMENT METHODS - OFFLINE PAYMENT
+                        </Text>
+                        {/* <Picker
                             selectedValue={paymentMethod}
                             onValueChange={(itemValue) =>
                               setPaymentMethod(itemValue)
@@ -325,195 +347,208 @@ export default function FormScreen(props) {
                               value="offline"
                             />
                           </Picker> */}
-                    <TextInput
-                      // value={paymentMethod}
-                      onChangeText={(text) => setPaymentMethod(text)}
-                      editable={false}
-                      selectTextOnFocus={false}
-                      label={'OFFLINE PAYMENT'}
-                    />
-                  </View>
-                );
-              }
-            })()}
-          </View>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              if (
-                name &&
-                email &&
-                phone &&
-                pincode &&
-                quantity &&
-                serviceAddress &&
-                serviceDate &&
-                serviceTime &&
-                paymentMethod
-              ) {
-                if (paymentMethod == 'online') {
-                  setLoading(true);
+                        <TextInput
+                          // value={paymentMethod}
+                          onChangeText={(text) => setPaymentMethod(text)}
+                          editable={false}
+                          selectTextOnFocus={false}
+                          label={'OFFLINE PAYMENT'}
+                        />
+                      </View>
+                    );
+                  }
+                })()}
+              </View>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  if (
+                    name &&
+                    email &&
+                    phone &&
+                    pincode &&
+                    quantity &&
+                    serviceAddress &&
+                    serviceDate &&
+                    serviceTime &&
+                    paymentMethod
+                  ) {
+                    if (paymentMethod == 'online') {
+                      setLoading(true);
 
-                  firestore()
-                    .collection('orders')
-                    .add({
-                      //SERVICE DETAILS
-                      name: props.navigation.getParam('name'),
-                      servicePhotoUrl: props.navigation.getParam('url'),
-                      totalAmount: props.navigation.getParam('rate'),
-                      category: props.navigation.getParam('category'),
-                      desc: props.navigation.getParam('desc'),
+                      firestore()
+                        .collection('orders')
+                        .add({
+                          //SERVICE DETAILS
+                          name: props.navigation.getParam('name'),
+                          servicePhotoUrl: props.navigation.getParam('url'),
+                          totalAmount: props.navigation.getParam('rate'),
+                          category: props.navigation.getParam('category'),
+                          desc: props.navigation.getParam('desc'),
 
-                      //CUSTOMER DETAILS
-                      customerId: user.uid,
-                      customerName: name,
-                      customerPhoneNumber: phone,
-                      customerEmail: email,
-                      customerServiceAddress: serviceAddress,
-                      pinCode: pincode,
-                      quantity: quantity,
-                      serviceDate: serviceDate,
-                      serviceTime: serviceTime,
-                      paymentMethod: paymentMethod,
+                          //CUSTOMER DETAILS
+                          customerId: user.uid,
+                          customerName: name,
+                          customerPhoneNumber: phone,
+                          customerEmail: email,
+                          customerServiceAddress: serviceAddress,
+                          pinCode: pincode,
+                          quantity: quantity,
+                          serviceDate: serviceDate,
+                          serviceTime: serviceTime,
+                          paymentMethod: paymentMethod,
 
-                      //ORDER DETAILS
-                      status: 3,
-                      technician: '',
-                      technicianPhoto: '',
-                      orderedAt: firestore.FieldValue.serverTimestamp(),
-                    })
-                    .then((docRef) => {
-                      fetch(`https://api.razorpay.com/v1/orders`, {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json',
-                          Authorization:
-                            'Basic cnpwX2xpdmVfeU12SVpKYkdjZmJXMDg6dXBtOTNWTndOZjFiRDB2TG5wU01oRG9j',
-                          Accept: 'application/json',
-                        },
-                        body: JSON.stringify({
-                          amount: props.navigation.getParam('rate') * 100,
-                          currency: 'INR',
-                        }),
-                        authorization: {
-                          username: 'rzp_live_yMvIZJbGcfbW08',
-                          password: 'upm93VNwNf1bD0vLnpSMhDoc',
-                        },
-                      })
-                        .then((res) => res.json())
-                        .then((order) => {
-                          var options = {
-                            description: props.navigation.getParam('name'),
-                            currency: 'INR',
-                            key: 'rzp_live_yMvIZJbGcfbW08',
-                            order_id: order.id,
-                            amount: order.amount,
-                            external: {
-                              wallets: ['paytm'],
-                            },
-                            name: name,
-                            prefill: {
-                              email: email,
-                              contact: phone,
-                              name: name,
-                            },
-                          };
-
-                          RazorpayCheckout.open(options)
-                            .then((data) => {
-                              // handle success
-                              if (
-                                hmacSHA256(
-                                  order.id + '|' + data.razorpay_payment_id,
-                                  'upm93VNwNf1bD0vLnpSMhDoc',
-                                ) == data.razorpay_signature
-                              ) {
-                                setLoading(false);
-                                props.navigation.navigate('Order Placed');
-                                firestore()
-                                  .collection('orders')
-                                  .doc(docRef.id)
-                                  .update({
-                                    successfulPayment: true,
-                                    razorpay_payment_id:
-                                      data.razorpay_payment_id,
-                                    razorpay_signature: data.razorpay_signature,
-                                    razorpay_order_id: data.razorpay_order_id,
-                                    amount_paid: order.amount_paid,
-                                    amount_due: order.amount_due,
-                                    status: order.status,
-                                  });
-                              } else {
-                                setLoading(false);
-                                alert('Payment Unauthorized, Try Again ');
-                              }
-                            })
-                            .catch((error) => {
-                              // handle failure
-                              setLoading(false);
-                              alert('Payment Failed, Try Again ');
-                              console.log(error);
-                            });
-                          RazorpayCheckout.onExternalWalletSelection((data) => {
-                            setLoading(false);
-                            alert(
-                              `External Wallet Selected: ${data.external_wallet} `,
-                            );
-                          });
+                          //ORDER DETAILS
+                          status: 3,
+                          technician: '',
+                          technicianPhoto: '',
+                          orderedAt: firestore.FieldValue.serverTimestamp(),
                         })
+                        .then((docRef) => {
+                          fetch(`https://api.razorpay.com/v1/orders`, {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json',
+                              Authorization:
+                                'Basic cnpwX2xpdmVfeU12SVpKYkdjZmJXMDg6dXBtOTNWTndOZjFiRDB2TG5wU01oRG9j',
+                              Accept: 'application/json',
+                            },
+                            body: JSON.stringify({
+                              amount: props.navigation.getParam('rate') * 100,
+                              currency: 'INR',
+                            }),
+                            authorization: {
+                              username: 'rzp_live_yMvIZJbGcfbW08',
+                              password: 'upm93VNwNf1bD0vLnpSMhDoc',
+                            },
+                          })
+                            .then((res) => res.json())
+                            .then((order) => {
+                              var options = {
+                                description: props.navigation.getParam('name'),
+                                currency: 'INR',
+                                key: 'rzp_live_yMvIZJbGcfbW08',
+                                order_id: order.id,
+                                amount: order.amount,
+                                external: {
+                                  wallets: ['paytm'],
+                                },
+                                name: name,
+                                prefill: {
+                                  email: email,
+                                  contact: phone,
+                                  name: name,
+                                },
+                              };
+
+                              RazorpayCheckout.open(options)
+                                .then((data) => {
+                                  // handle success
+                                  if (
+                                    hmacSHA256(
+                                      order.id + '|' + data.razorpay_payment_id,
+                                      'upm93VNwNf1bD0vLnpSMhDoc',
+                                    ) == data.razorpay_signature
+                                  ) {
+                                    setLoading(false);
+                                    props.navigation.navigate('Order Placed');
+                                    firestore()
+                                      .collection('orders')
+                                      .doc(docRef.id)
+                                      .update({
+                                        successfulPayment: true,
+                                        razorpay_payment_id:
+                                          data.razorpay_payment_id,
+                                        razorpay_signature:
+                                          data.razorpay_signature,
+                                        razorpay_order_id:
+                                          data.razorpay_order_id,
+                                        amount_paid: order.amount_paid,
+                                        amount_due: order.amount_due,
+                                        status: order.status,
+                                      });
+                                  } else {
+                                    setLoading(false);
+                                    alert('Payment Unauthorized, Try Again ');
+                                  }
+                                })
+                                .catch((error) => {
+                                  // handle failure
+                                  setLoading(false);
+                                  alert('Payment Failed, Try Again ');
+                                  console.log(error);
+                                });
+                              RazorpayCheckout.onExternalWalletSelection(
+                                (data) => {
+                                  setLoading(false);
+                                  alert(
+                                    `External Wallet Selected: ${data.external_wallet} `,
+                                  );
+                                },
+                              );
+                            })
+                            .catch((err) => {
+                              setLoading(false);
+                              console.log(err);
+                            });
+                        })
+
                         .catch((err) => {
                           setLoading(false);
                           console.log(err);
                         });
-                    })
+                    } else {
+                      setLoading(true);
+                      firestore()
+                        .collection('orders')
+                        .add({
+                          //SERVICE DETAILS
+                          name: props.navigation.getParam('name'),
+                          servicePhotoUrl: props.navigation.getParam('url'),
+                          totalAmount: props.navigation.getParam('rate'),
+                          category: props.navigation.getParam('category'),
+                          desc: props.navigation.getParam('desc'),
 
-                    .catch((err) => {
-                      setLoading(false);
-                      console.log(err);
-                    });
-                } else {
-                  setLoading(true);
-                  firestore()
-                    .collection('orders')
-                    .add({
-                      //SERVICE DETAILS
-                      name: props.navigation.getParam('name'),
-                      servicePhotoUrl: props.navigation.getParam('url'),
-                      totalAmount: props.navigation.getParam('rate'),
-                      category: props.navigation.getParam('category'),
-                      desc: props.navigation.getParam('desc'),
+                          //CUSTOMER DETAILS
+                          customerId: user.uid,
+                          customerName: name,
+                          customerPhoneNumber: phone,
+                          customerEmail: email,
+                          customerServiceAddress: serviceAddress,
+                          pinCode: pincode,
+                          quantity: quantity,
+                          serviceDate: serviceDate,
+                          serviceTime: serviceTime,
+                          paymentMethod: paymentMethod,
+                          successfulPayment: false,
 
-                      //CUSTOMER DETAILS
-                      customerId: user.uid,
-                      customerName: name,
-                      customerPhoneNumber: phone,
-                      customerEmail: email,
-                      customerServiceAddress: serviceAddress,
-                      pinCode: pincode,
-                      quantity: quantity,
-                      serviceDate: serviceDate,
-                      serviceTime: serviceTime,
-                      paymentMethod: paymentMethod,
-                      successfulPayment: false,
-
-                      //ORDER DETAILS
-                      status: 3,
-                      technician: '',
-                      technicianPhoto: '',
-                      orderedAt: firestore.FieldValue.serverTimestamp(),
-                    })
-                    .then(() => {
-                      //console.log('User updated!');
-                      props.navigation.navigate('Order Placed');
-                    })
-                    .catch((err) => console.log(err));
-                }
-              } else {
-                Alert.alert('INVALID DATA.', 'FILL UP THE FORM PROPERLY');
-              }
-            }}>
-            <Text style={styles.confirmButton}>CONFIRM ORDER</Text>
-          </TouchableOpacity>
+                          //ORDER DETAILS
+                          status: 3,
+                          technician: '',
+                          technicianPhoto: '',
+                          orderedAt: firestore.FieldValue.serverTimestamp(),
+                        })
+                        .then(() => {
+                          //console.log('User updated!');
+                          props.navigation.navigate('Order Placed');
+                        })
+                        .catch((err) => console.log(err));
+                    }
+                  } else {
+                    Alert.alert('INVALID DATA.', 'FILL UP THE FORM PROPERLY');
+                  }
+                }}>
+                <Text style={styles.confirmButton}>CONFIRM ORDER</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.buttonFloat}
+                onPress={() => {
+                  setShowPersonalInfo(true);
+                }}>
+                <Text style={styles.confirmButton}>Edit Personal Info</Text>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
       </View>
     </ScrollView>
@@ -572,15 +607,25 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 10,
   },
+  buttonFloat: {
+    backgroundColor: colors.smoke,
+    padding: 15,
+    borderRadius: 5,
+    marginTop: 10,
+    position: 'absolute',
+    top: 0,
+    right: 10,
+  },
   textInput: {
     borderColor: colors.ypsDark,
     borderWidth: 0,
     borderRadius: 5,
     marginTop: 5,
-    fontSize: 16,
+    fontSize: 15,
     // fontWeight: 'bold',
     backgroundColor: colors.white,
     paddingLeft: 10,
+    fontFamily: 'Poppins-Light',
   },
   input: {
     backgroundColor: colors.smoke,

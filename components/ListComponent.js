@@ -33,26 +33,15 @@ function ListComponent(props) {
           <View style={styles.title}>
             <Text style={styles.text}>{props.title}</Text>
             {/* RATE & PRICE  */}
-            {(() => {
-              if (props.rate) {
-                return <Text style={styles.para}>PRICE : {props.rate} /-</Text>;
-              } else {
-                return (
-                  <View>
-                    <View style={styles.title}>
-                      <Text style={styles.name}>
-                        RATE FOR REPAIR : {props.rateForRepair}
-                      </Text>
-                    </View>
-                    <View style={styles.title}>
-                      <Text style={styles.name}>
-                        RATE FOR SERVICE : {props.rateForService}
-                      </Text>
-                    </View>
-                  </View>
-                );
-              }
-            })()}
+            <Text style={styles.para}>PRICE : {props.rate} /-</Text>
+            <Text style={styles.verify}>
+              Payment Method : {props.paymentMethod}{' '}
+            </Text>
+            {props.successfulPayment ? (
+              <Text style={styles.verify}>Payment Status : COMPLETED </Text>
+            ) : (
+              <Text style={styles.verify}>Payment Status : PENDING </Text>
+            )}
           </View>
 
           {/* TECHNICIAN  */}
@@ -100,6 +89,18 @@ function ListComponent(props) {
             <Text style={styles.verify}>
               {props.serviceDate.toDate().toDateString()}
             </Text>
+          </View>
+          <View style={styles.status}>
+            <Text style={styles.verify}>SERVICE PINCODE : {props.pinCode}</Text>
+            {/* <Text style={styles.verify}>
+              {props.serviceDate.toDate().toDateString()}
+            </Text> */}
+          </View>
+          <View style={styles.status}>
+            <Text style={styles.verify}>SERVICE ADDRESS : {props.address}</Text>
+            {/* <Text style={styles.verify}>
+              {props.serviceDate.toDate().toDateString()}
+            </Text> */}
           </View>
 
           {/* <View style={styles.status}>
@@ -171,7 +172,8 @@ export default withNavigation(ListComponent);
 const styles = StyleSheet.create({
   text: {
     fontSize: 12,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins-SemiBold',
     textTransform: 'uppercase',
   },
   category: {
@@ -182,16 +184,19 @@ const styles = StyleSheet.create({
   },
   para: {
     fontSize: 15,
-    fontWeight: `100`,
+    fontFamily: 'Poppins-Regular',
+    // fontWeight: `100`,
   },
   name: {
     fontSize: 12,
-    fontWeight: `bold`,
+    // fontWeight: `bold`,
+    fontFamily: 'Poppins-SemiBold',
     textTransform: 'uppercase',
   },
   verify: {
     fontSize: 10,
-    fontWeight: `bold`,
+    // fontWeight: `bold`,
+    fontFamily: 'Poppins-SemiBold',
     textTransform: 'uppercase',
   },
   technician: {
@@ -226,12 +231,14 @@ const styles = StyleSheet.create({
   },
   currentStatus: {
     fontSize: 10,
-    fontWeight: `bold`,
+    // fontWeight: `bold`,
+    fontFamily: 'Poppins-SemiBold',
     color: 'lightgreen',
   },
   cancel: {
     fontSize: 12,
-    fontWeight: `bold`,
+    // fontWeight: `bold`,
+    fontFamily: 'Poppins-SemiBold',
     color: 'black',
     alignSelf: 'center',
   },

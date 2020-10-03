@@ -82,7 +82,9 @@ export default function ProfileScreen(props) {
 const styles = StyleSheet.create({
   text: {
     fontSize: 15,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+
+    fontFamily: 'Poppins-Regular',
     textTransform: 'uppercase',
   },
   category: {
@@ -91,14 +93,12 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
   },
-  para: {
-    fontSize: 15,
-    fontWeight: `100`,
-  },
+
   name: {
     fontSize: 12,
-    fontWeight: `bold`,
-    textTransform: 'uppercase',
+    // fontWeight: `bold`,
+    fontFamily: 'Poppins-Light',
+    // textTransform: 'uppercase',
   },
   title: {
     backgroundColor: colors.white,

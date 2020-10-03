@@ -71,14 +71,16 @@ export default function OrderComponent(props) {
           id={item.key}
           title={item.name}
           rate={item.totalAmount}
-          rateForService={item.rateForService}
-          rateForRepair={item.rateForRepair}
+          paymentMethod={item.paymentMethod}
+          successfulPayment={item.successfulPayment}
           url={item.url}
           serviceDate={item.serviceDate}
           orderDate={item.orderedAt}
           status={item.status}
           technician={item.technician}
           technicianPhoto={item.technicianPhoto}
+          pinCode={item.pinCode}
+          address={item.customerServiceAddress}
         />
       </View>
     );
@@ -123,6 +125,7 @@ const styles = StyleSheet.create({
   },
   category: {
     backgroundColor: colors.white,
+    elevation: 5,
     margin: 5,
     padding: 10,
     borderRadius: 5,

@@ -93,7 +93,7 @@ export default function DetailScreen(props) {
         <View style={styles.horizontal}>
           <TouchableOpacity
             onPress={() => {
-              Linking.openURL('https://wa.me/919832358173');
+              Linking.openURL('https://wa.me/919883828261');
             }}>
             <Icon name="whatsapp" type="font-awesome" style={styles.circle} />
           </TouchableOpacity>
@@ -119,7 +119,7 @@ export default function DetailScreen(props) {
 
           <TouchableOpacity
             onPress={() => {
-              Linking.openURL(`tel:${8001268005}`);
+              Linking.openURL(`tel:${9883828261}`);
             }}>
             <Icon
               name="phone-square"

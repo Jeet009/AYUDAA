@@ -17,6 +17,7 @@ import {TouchableNativeFeedback, TextInput} from 'react-native-gesture-handler';
 import colors from '../constants/colors';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import LinearGradient from 'react-native-linear-gradient';
 
 function SetUpProfile(props) {
   const [modalVisible, setModalVisible] = useState(true);
@@ -70,85 +71,89 @@ function SetUpProfile(props) {
   }
   return (
     <Modal animationType="slide" visible={modalVisible}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView style={styles.scrollview}>
-          <View style={styles.profile}>
-            <Text style={styles.text}>A Y U D A A</Text>
-            <Text style={styles.para}>SET UP YOUR PROFILE.</Text>
-          </View>
-          <View>
-            {!showOtherInfo && (
-              <View style={styles.input}>
-                <Text style={styles.label}>ENTER FULL NAME</Text>
-                <TextInput
-                  value={name}
-                  style={styles.textInput}
-                  textAlign="center"
-                  maxLength={25}
-                  onChangeText={(text) => setName(text)}
-                />
-              </View>
-            )}
-            {showOtherInfo && (
-              <>
+      <LinearGradient
+        colors={[colors.lightPrimary, '#fff']}
+        style={{flex: 1, paddingBottom: 20}}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <SafeAreaView style={styles.scrollview}>
+            <View style={styles.profile}>
+              <Text style={styles.para}>Welcome To The Family</Text>
+              <Text style={styles.name}>{name}</Text>
+            </View>
+            <View>
+              {!showOtherInfo && (
                 <View style={styles.input}>
-                  <Text style={styles.label}>ENTER EMAIL ID</Text>
+                  <Text style={styles.label}>ENTER FULL NAME</Text>
                   <TextInput
-                    value={ayudaaId}
+                    value={name}
                     style={styles.textInput}
                     textAlign="center"
-                    maxLength={30}
-                    onChangeText={(text) => setAyudaaId(text)}
-                  />
-                  <Text style={styles.label}>CONFIRM PHONE NUMBER</Text>
-                  <TextInput
-                    value={phoneno}
-                    style={styles.textInput}
-                    textAlign="center"
-                    maxLength={10}
-                    keyboardType="phone-pad"
-                    onChangeText={(text) => setPhoneno(text)}
+                    maxLength={25}
+                    onChangeText={(text) => setName(text)}
                   />
                 </View>
-              </>
-            )}
+              )}
+              {showOtherInfo && (
+                <>
+                  <View style={styles.input}>
+                    <Text style={styles.label}>ENTER EMAIL ID</Text>
+                    <TextInput
+                      value={ayudaaId}
+                      style={styles.textInput}
+                      textAlign="center"
+                      maxLength={30}
+                      onChangeText={(text) => setAyudaaId(text)}
+                    />
+                    <Text style={styles.label}>CONFIRM PHONE NUMBER</Text>
+                    <TextInput
+                      value={phoneno}
+                      style={styles.textInput}
+                      textAlign="center"
+                      maxLength={10}
+                      keyboardType="phone-pad"
+                      onChangeText={(text) => setPhoneno(text)}
+                    />
+                  </View>
+                </>
+              )}
 
-            {/* <Button title="Confirm Code" onPress={() => confirmCode()} /> */}
-          </View>
-          <View style={styles.profile}>
-            <Text style={styles.para}>Welcome To The Family</Text>
-            <Text style={styles.name}>{name}</Text>
-          </View>
-          {!showOtherInfo && (
-            <TouchableOpacity // eslint-disable-next-line prettier/prettier
-              style={styles.button}
-              onPress={() => {
-                setShowOtherInfo(true);
-              }}>
-              <Text style={styles.buttonText}>Continue</Text>
-            </TouchableOpacity>
-          )}
-          {showOtherInfo && (
-            <>
+              {/* <Button title="Confirm Code" onPress={() => confirmCode()} /> */}
+            </View>
+            <View style={styles.profile}>
+              <Text style={styles.text}>A Y U D A A</Text>
+              <Text style={styles.para}>SET UP YOUR PROFILE.</Text>
+            </View>
+            {!showOtherInfo && (
               <TouchableOpacity // eslint-disable-next-line prettier/prettier
                 style={styles.button}
                 onPress={() => {
-                  setSubmitButtonText('Creating...');
-                  confirmProfile();
+                  setShowOtherInfo(true);
                 }}>
-                <Text style={styles.buttonText}>{submitButtonText}</Text>
+                <Text style={styles.buttonText}>Continue</Text>
               </TouchableOpacity>
-              <TouchableOpacity // eslint-disable-next-line prettier/prettier
-                style={styles.buttonBack}
-                onPress={() => {
-                  setShowOtherInfo(false);
-                }}>
-                <Text style={styles.buttonText}>Back</Text>
-              </TouchableOpacity>
-            </>
-          )}
-        </SafeAreaView>
-      </TouchableWithoutFeedback>
+            )}
+            {showOtherInfo && (
+              <>
+                <TouchableOpacity // eslint-disable-next-line prettier/prettier
+                  style={styles.button}
+                  onPress={() => {
+                    setSubmitButtonText('Creating...');
+                    confirmProfile();
+                  }}>
+                  <Text style={styles.buttonText}>{submitButtonText}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity // eslint-disable-next-line prettier/prettier
+                  style={styles.buttonBack}
+                  onPress={() => {
+                    setShowOtherInfo(false);
+                  }}>
+                  <Text style={styles.buttonText}>Back</Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </SafeAreaView>
+        </TouchableWithoutFeedback>
+      </LinearGradient>
     </Modal>
   );
 }
@@ -192,13 +197,13 @@ const styles = StyleSheet.create({
   scrollview: {
     flex: 1,
     justifyContent: 'space-evenly',
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
   },
   textInput: {
-    borderRadius: 5,
+    borderRadius: 25,
     margin: 10,
     fontSize: 15,
-    elevation: 10,
+    elevation: 5,
     backgroundColor: colors.white,
     fontFamily: 'Poppins-Light',
   },

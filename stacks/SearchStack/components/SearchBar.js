@@ -41,7 +41,7 @@ function SearchBar({navigation}) {
           }}>
           <Icon
             onPress={() => {
-              Linking.openURL('https://wa.me/919832358173');
+              Linking.openURL('https://wa.me/919883828261');
             }}
             name="whatsapp"
             type="font-awesome"
